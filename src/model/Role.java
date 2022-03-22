@@ -4,5 +4,6 @@ public enum Role {
 
 	EJER,
 	LEDER,
-	MEDARBEJDER
+	MEDARBEJDER,
+	TILKALDER
 }
