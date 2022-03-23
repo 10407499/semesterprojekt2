@@ -4,12 +4,11 @@ public class Person {
 
 	private String name; 
 	private String address;
-	private int phoneNr;
+	private String phoneNr;
 	private String email;
 	private int zipCode;
 	
-	public Person(String name, String address, int phoneNr, String email, int zipCode) {
-		super();
+	public Person(String name, String address, String phoneNr, String email, int zipCode) {
 		this.name = name; 
 		this.address = address;
 		this.phoneNr = phoneNr;
@@ -35,11 +34,11 @@ public class Person {
 		this.address = address;
 	}
 
-	public int getPhoneNr() {
+	public String getPhoneNr() {
 		return phoneNr;
 	}
 
-	public void setPhoneNr(int phoneNr) {
+	public void setPhoneNr(String phoneNr) {
 		this.phoneNr = phoneNr;
 	}
 
