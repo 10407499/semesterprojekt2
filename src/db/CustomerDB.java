@@ -9,6 +9,11 @@ import java.util.List;
 
 import model.Customer;
 
+/**
+ * Flectning data from db and use it to build new Customer & returns it/them
+ * @author lassehas
+ */
+
 public class CustomerDB implements CustomerDBIF {
 
 	private static final String FIND_ALL_Q = "select * from customers";
@@ -58,26 +63,26 @@ public class CustomerDB implements CustomerDBIF {
 	}
 
 	/**
-	 * FIXME searching by name in db, can be difficult if there is more than one with the same name
-	 * maybe change it to search by phone something unique 
+	 * Search by name in db and returns list of all customers with the name
+	 * @param name : String 
 	 * @return Customer
 	 */
 	
 	@Override
-	public Customer findByName(String name) {
-		Customer customer = null;
+	public List<Customer> findByName(String name) {
+		List<Customer> customers = null;
 
 		try {
 			findByName.setString(1, name);
 			ResultSet rs = findByName.executeQuery();
 			if (rs.next()) {
-				customer = buildObject(rs);
+				customers = buildObjects(rs);
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
 		}
 
-		return customer;
+		return customers;
 	}
 
 	/**
@@ -90,12 +95,11 @@ public class CustomerDB implements CustomerDBIF {
 		List<Customer> customers = new ArrayList<>();
 		try {
 			while (rs.next()) {
-				String name = rs.getString(1);
-				String address = rs.getString(2);
-				String phone = rs.getString(3);
-				String email = rs.getString(4);
-				int zipcode = rs.getInt(5);
-				Customer c = new Customer(name, address, phone, email, zipcode);
+				//Create new customer as null;
+				Customer c = null;
+				//Builds the new customer object
+				c = buildObject(rs);
+				//Adds the new customers to the list
 				customers.add(c);
 			}
 		} catch (SQLException e) {
@@ -121,6 +125,7 @@ public class CustomerDB implements CustomerDBIF {
 			int zipcode = rs.getInt(5);
 			// builds new customer
 			c = new Customer(name, address, phone, email, zipcode);
+			//c = new Customer(rs.getString("name"), rs.getString("address"), rs.getString("phone"), rs.getString("email"), rs.getInt("zipcode"));
 		} catch (SQLException e) {
 			//TODO throw exception
 		}

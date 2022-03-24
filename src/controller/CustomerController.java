@@ -40,18 +40,18 @@ public class CustomerController {
 	}
 
 	/**
-	 * Goes into customerDB to get the customer object built and returned as a customer
+	 * Goes into customerDB to get the customer objects built and returned as a list of customers
 	 * @param name : String
-	 * @return Customer
+	 * @return Customers
 	 */
 	
-	public Customer findByName(String name) {
-		// Create new Customer object
-		Customer c = null;
-		// Sets customer to the object
-		c = customerDB.findByName(name);
-		// Returns the customer
-		return c;
+	public List<Customer> findByName(String name) {
+		// Create new list of customer objects
+		List<Customer> customers = null;
+		// Sets the list of customers to the object
+		customers = customerDB.findByName(name);
+		// Returns the list of customers
+		return customers;
 	}
 
 }

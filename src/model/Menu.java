@@ -9,11 +9,8 @@ public class Menu {
 	private List<Dish> dishes;
 	
 	
-	public Menu(String description) {
-		super();
-		this.description = description;
-		
-	
+	public Menu() {
+		//Do nothing yet
 	}
 
 

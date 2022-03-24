@@ -7,6 +7,6 @@ import model.Customer;
 public interface CustomerDBIF {
 
 	public List<Customer> findAll();
-	public Customer findByName(String name);
+	public List<Customer> findByName(String name);
 	
 }

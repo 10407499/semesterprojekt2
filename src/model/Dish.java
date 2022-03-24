@@ -10,7 +10,7 @@ public class Dish {
 	private List<Ingredient> ingredients; 
 	
 	public Dish() {
-		
+		//Do nothing yet
 	}
 
 	public String getDescription() {
