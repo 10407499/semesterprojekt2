@@ -1,24 +1,15 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Dish {
+public class Dish extends Product{
 
-	private String description;
-	private double totalWeight; 
-	private double price; 
+	private double totalWeight;
 	private List<Ingredient> ingredients; 
 	
 	public Dish() {
-		//Do nothing yet
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+		ingredients = new ArrayList<>();
 	}
 
 	public double getTotalWeight() {
@@ -27,14 +18,6 @@ public class Dish {
 
 	public void setTotalWeight(double totalWeight) {
 		this.totalWeight = totalWeight;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
 	}
 
 	public List<Ingredient> getIngredients() {

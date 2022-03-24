@@ -1,51 +1,26 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Menu {
-
-	private String description; 
-	private double price; 
+public class Menu extends Product {
+	
 	private List<Dish> dishes;
-	
-	
+
 	public Menu() {
-		//Do nothing yet
+		dishes = new ArrayList<>();
 	}
-
-
-	public String getDescription() {
-		return description;
-	}
-
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
 
 	public void setDishes(List<Dish> dishes) {
 		this.dishes = dishes;
 	}
-	
+
 	public void addDish(Dish dish) {
 		dishes.add(dish);
 	}
-	
-
-
-	public double getPrice() {
-		return price;
-	}
-
 
 	public List<Dish> getDishes() {
 		return dishes;
-	} 
-	
+	}
+
 }
