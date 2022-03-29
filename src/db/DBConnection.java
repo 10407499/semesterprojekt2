@@ -54,6 +54,11 @@ public class DBConnection {
 		return dbConnection;
 	}
 	
+	/**
+	 * Other methods 
+	 * @throws SQLException
+	 */
+	
 	public void startTransaction() throws SQLException {
 		connection.setAutoCommit(false);
 	}
