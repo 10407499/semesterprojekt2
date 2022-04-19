@@ -13,7 +13,7 @@ import model.Customer;
  *
  */
 
-public class CustomerController {
+public class CustomerController implements CustomerControllerIF {
 	
 	private CustomerDBIF customerDB;
 

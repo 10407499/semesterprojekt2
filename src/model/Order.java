@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -14,10 +15,24 @@ public class Order {
 	private String deliveryAddress; 
 	private ArrayList<OrderLine> orderLines;
 	private Customer customer;
+	private Date fulfillmentdate; 
 	
 	public Order() {
 		super();
 	}
+	
+	public Date getFulfillmentdate() {
+		return fulfillmentdate;
+		
+	}
+	
+	public void setFulfillmentdate(Date fulfillmentdate) {
+		this.fulfillmentdate = fulfillmentdate; 
+	}
+	
+	
+	
+	
 
 	public LocalDate getDeliveryDate() {
 		return deliveryDate;
