@@ -21,7 +21,7 @@ public class CustomerDB implements CustomerDBIF {
 	 */
 	
 	private static final String FIND_ALL_Q = "select * from customers";
-	private static final String FIND_BY_NAME_Q = " where name = ?";
+	private static final String FIND_BY_NAME_Q = "select * from customers where name = ?";
 	private static final String UPDATE_Q = "update persons set name = ?, address = ?, phone = ? , email = ?, zipcode = ? where name = ?";
 
 	private Connection con;
@@ -89,6 +89,23 @@ public class CustomerDB implements CustomerDBIF {
 		return customers;
 	}
 
+	@Override
+	public Customer findCustomer(String name) {
+		Customer customer = null;
+		
+		try {
+			findByName.setString(1, name);
+			ResultSet rs = findByName.executeQuery();
+			if(rs.next()) {
+				customer = buildObject(rs);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return customer;
+	}
+	
 	/**
 	 * Gets information about customer from the database, uses it to build customer objects and adds it to a list and returns it
 	 * @param rs : ResultSet

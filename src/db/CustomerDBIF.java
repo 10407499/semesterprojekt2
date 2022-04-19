@@ -12,5 +12,6 @@ public interface CustomerDBIF {
 	 */
 	public List<Customer> findAll();
 	public List<Customer> findByName(String name);
+	public Customer findCustomer(String name);
 	
 }

@@ -54,4 +54,10 @@ public class CustomerController {
 		return customers;
 	}
 
+	public Customer findCustomer(String name) {
+		Customer customer = null;
+		customer = customerDB.findCustomer(name);
+		return customer;
+	}
+	
 }
