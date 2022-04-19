@@ -137,6 +137,7 @@ public class CustomerDB implements CustomerDBIF {
 	
 	private Customer buildObject(ResultSet rs) {
 		Customer c = null;
+		//FIXME: Customer constructor is not updated yet
 		try {
 			// Flectning data from db needed to build customer
 			String name = rs.getString(1);
