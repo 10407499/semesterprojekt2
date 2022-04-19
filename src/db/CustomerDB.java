@@ -16,6 +16,10 @@ import model.Customer;
 
 public class CustomerDB implements CustomerDBIF {
 
+	/**
+	 * SQL injects
+	 */
+	
 	private static final String FIND_ALL_Q = "select * from customers";
 	private static final String FIND_BY_NAME_Q = " where name = ?";
 	private static final String UPDATE_Q = "update persons set name = ?, address = ?, phone = ? , email = ?, zipcode = ? where name = ?";
@@ -103,7 +107,7 @@ public class CustomerDB implements CustomerDBIF {
 				customers.add(c);
 			}
 		} catch (SQLException e) {
-			//TODO throw exception
+			System.out.println(e.getMessage());
 		}
 		return customers;
 	}
@@ -127,7 +131,7 @@ public class CustomerDB implements CustomerDBIF {
 			c = new Customer(name, address, phone, email, zipcode);
 			//c = new Customer(rs.getString("name"), rs.getString("address"), rs.getString("phone"), rs.getString("email"), rs.getInt("zipcode"));
 		} catch (SQLException e) {
-			//TODO throw exception
+			System.out.println(e.getMessage());
 		}
 		return c;
 	}
