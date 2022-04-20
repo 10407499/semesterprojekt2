@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Customer;
 import model.Order;
+import model.OrderLine;
 import model.Product;
 import model.Role;
 
@@ -59,6 +60,37 @@ public class OrderController implements OrderControllerIF {
 		products = productController.findProducts(description);
 		
 		return products;
+	}
+
+
+	@Override
+	public void addProduct(int productNo, int quantity) {
+		Product product = getProductByNo(productNo);
+		//	Creates new orderLine Object
+		OrderLine orderLine = new OrderLine(product, quantity);
+		//	Adds OrderLine object to Orders list of orderLines
+		order.addOrderLine(orderLine);
+	}
+
+
+	private Product getProductByNo(int productNo) {
+		Product product = null;
+		boolean res = false;
+		int index = 0;
+		
+		while(!res && index < products.size()) {
+			if(products.get(index).getProductNo() == productNo) {
+				res = true;
+				product = products.get(index);
+			}
+			index++;
+		}
+		
+		return product;
+	}
+	
+	public List<OrderLine> getOrderLines() { //TODO IS FOR TESING REMOVE THIS
+		return order.getOrderLines();
 	}
 	
 }

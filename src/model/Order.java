@@ -3,6 +3,7 @@ package model;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
 
@@ -13,12 +14,12 @@ public class Order {
 	private boolean request; 
 	private boolean delivery; 
 	private String deliveryAddress; 
-	private ArrayList<OrderLine> orderLines;
+	private List<OrderLine> orderLines;
 	private Customer customer;
 	private Date fulfillmentdate; 
 	
 	public Order() {
-		super();
+		orderLines = new ArrayList<>();
 	}
 	
 	public Date getFulfillmentdate() {
@@ -30,10 +31,6 @@ public class Order {
 		this.fulfillmentdate = fulfillmentdate; 
 	}
 	
-	
-	
-	
-
 	public LocalDate getDeliveryDate() {
 		return deliveryDate;
 	}
@@ -90,12 +87,12 @@ public class Order {
 		this.deliveryAddress = deliveryAddress;
 	}
 
-	public ArrayList<OrderLine> getOrderLines() {
+	public List<OrderLine> getOrderLines() {
 		return orderLines;
 	}
 
-	public void setOrderLines(ArrayList<OrderLine> orderLines) {
-		this.orderLines = orderLines;
+	public void addOrderLine(OrderLine orderLine) {
+		orderLines.add(orderLine);
 	}
 
 	public Customer getCustomer() {

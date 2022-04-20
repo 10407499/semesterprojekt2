@@ -2,44 +2,41 @@ package model;
 
 public class OrderLine {
 
-	private int quantityMenu;
-	private int quantityDish; 
-	private Dish dish; 
-	private Menu menu;
-	public OrderLine(int quantityMenu, Menu menu) {
-		super();
-		this.quantityMenu = quantityMenu;
-		this.menu = menu;
+	private int quantity;
+	private Product product;
+	
+	public OrderLine(Product product, int quantity) {
+		this.quantity = quantity;
+		this.product = product;
 	}
-	public OrderLine(int quantityDish, Dish dish) {
-		super();
-		this.quantityDish = quantityDish;
-		this.dish = dish;
+
+	/**
+	 * @return the quantity
+	 */
+	public int getQuantity() {
+		return quantity;
 	}
-	public int getQuantityMenu() {
-		return quantityMenu;
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
-	public void setQuantityMenu(int quantityMenu) {
-		this.quantityMenu = quantityMenu;
+
+	/**
+	 * @return the product
+	 */
+	public Product getProduct() {
+		return product;
 	}
-	public int getQuantityDish() {
-		return quantityDish;
+
+	/**
+	 * @param product the product to set
+	 */
+	public void setProduct(Product product) {
+		this.product = product;
 	}
-	public void setQuantityDish(int quantityDish) {
-		this.quantityDish = quantityDish;
-	}
-	public Dish getDish() {
-		return dish;
-	}
-	public void setDish(Dish dish) {
-		this.dish = dish;
-	}
-	public Menu getMenu() {
-		return menu;
-	}
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	} 
 	
 	
 	

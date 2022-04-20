@@ -6,8 +6,10 @@ import java.util.List;
 public class Menu extends Product {
 	
 	private List<Dish> dishes;
+	private String type;
 
-	public Menu() {
+	public Menu(String description, double price, int productNo, String type) {
+		super(description, price, productNo, type);
 		dishes = new ArrayList<>();
 	}
 
