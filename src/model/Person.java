@@ -2,61 +2,68 @@ package model;
 
 public class Person {
 
-	private String name; 
-	private String address;
-	private String phoneNr;
+	private String fName; 
+	private String lName; 
+	private String street;
+	private String houseNo;
+	private String phoneNo;
 	private String email;
-	private int zipCode;
+	private String zipCode;
 	
-	public Person(String name, String address, String phoneNr, String email, int zipCode) {
-		this.name = name; 
-		this.address = address;
-		this.phoneNr = phoneNr;
+	
+	
+	public Person(String fName, String lName, String street, String houseNo, String phoneNo, String email,
+			String zipCode) {
+		this.fName = fName;
+		this.lName = lName;
+		this.street = street;
+		this.houseNo = houseNo;
+		this.phoneNo = phoneNo;
 		this.email = email;
 		this.zipCode = zipCode;
 	}
 
 
 
-	public String getName() {
-		return name;
+	public String getfName() {
+		return fName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+
+	public String getlName() {
+		return lName;
 	}
 
-	public String getAddress() {
-		return address;
+
+
+	public String getStreet() {
+		return street;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+
+
+	public String getHouseNo() {
+		return houseNo;
 	}
 
-	public String getPhoneNr() {
-		return phoneNr;
+
+
+	public String getPhoneNo() {
+		return phoneNo;
 	}
 
-	public void setPhoneNr(String phoneNr) {
-		this.phoneNr = phoneNr;
-	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
-	public int getZipCode() {
+
+	public String getZipCode() {
 		return zipCode;
 	}
-
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	} 
 	
 	
 	

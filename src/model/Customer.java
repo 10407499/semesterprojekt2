@@ -2,8 +2,16 @@ package model;
 
 public class Customer extends Person{
 
-	public Customer(String name, String address, String phone, String email, int zipCode) {
-		super(name, address, phone, email, zipCode);
+	private int customerNo; 
+	
+	public Customer(String fName, String lName, String street, String houseNo, String phoneNo, String email,
+			String zipCode, int customerNo) {
+		super(fName, lName, street, houseNo, phoneNo, email, zipCode);
+		this.customerNo = customerNo;
+	}
+
+	public int getCustomerNo() {
+		return customerNo;
 	}
 
 }

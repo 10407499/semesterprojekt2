@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Delivery {
@@ -9,6 +10,7 @@ public class Delivery {
 	
 	public Delivery(String deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+		serviceLines = new ArrayList<>();
 	}
 
 	public String getDeliveryAddress() {
@@ -21,6 +23,10 @@ public class Delivery {
 
 	public void addService(ServiceLine serviceLine) {
 		serviceLines.add(serviceLine); 
+	}
+
+	public List<ServiceLine> getServiceLines() {
+		return serviceLines;
 	}
 
 	

@@ -9,8 +9,9 @@ public class ServiceController implements ServiceControllerIF {
 	private ServiceLine serviceLine; 
 	
 	@Override
-	public void setService(String deliveryAddress) {
-		delivery = new Delivery(deliveryAddress);
+	public Delivery setService(String deliveryAddress) {
+		return delivery = new Delivery(deliveryAddress);
+		
 		
 	}
 
@@ -18,6 +19,12 @@ public class ServiceController implements ServiceControllerIF {
 	public void addService(Role role) {
 		serviceLine = new ServiceLine(role);
 		delivery.addService(serviceLine);
+		
+	}
+
+	@Override
+	public void insertService(int orderNo) {
+		// TODO Auto-generated method stub
 		
 	}
 }

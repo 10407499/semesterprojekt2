@@ -3,11 +3,14 @@ package model;
 
 public class Employee extends Person {
 
-	private Role role; 
+	private Role role;
+
+	public Employee(String fName, String lName, String street, String houseNo, String phoneNo, String email,
+			String zipCode, Role role) {
+		super(fName, lName, street, houseNo, phoneNo, email, zipCode);
+		this.role = role;
+	} 
 	
-	public Employee(String name, String address, String phoneNr, String email, int zipCode, Role role) {
-		super(name, address, phoneNr, email, zipCode);
-		this.role = role; 
-	}
+	
 
 }

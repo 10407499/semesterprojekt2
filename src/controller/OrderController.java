@@ -3,7 +3,12 @@ package controller;
 import java.sql.Date;
 import java.util.List;
 
+import db.OrderDB;
+import db.OrderDBIF;
+import db.OrderLineDB;
+import db.OrderLineDBIF;
 import model.Customer;
+import model.Delivery;
 import model.Order;
 import model.OrderLine;
 import model.Product;
@@ -17,12 +22,18 @@ public class OrderController implements OrderControllerIF {
 	private CustomerControllerIF customerController; 
 	private ServiceControllerIF serviceController; 
 	private ProductControllerIF productController; 
+	private OrderDBIF orderDB;
+	private OrderLineDBIF orderLineDB;
+	
+	
 	
 	
 	public OrderController() {
 		customerController = new CustomerController();
 		serviceController = new ServiceController();
 		productController = new ProductController();
+		orderDB = new OrderDB();
+		orderLineDB = new OrderLineDB();
 	}
 	
 	
@@ -34,23 +45,24 @@ public class OrderController implements OrderControllerIF {
 	
 	public void setOrderInfo(int coverAmount, Date fulfillmentdate) {
 		order.setCoverAmount(coverAmount);
-		order.setFulfillmentdate(fulfillmentdate);
+		order.setFulfillmentDate(fulfillmentdate);
 	}
 	
 	public void setCustomer(String name) {
 		customer = customerController.findCustomer(name);
 		 order.setCustomer(customer);
 	}
-	
+	//Mulig fejl ved tilføjelsen af delivery FIXME
 	public void setDelivery(String deliveryAddress) {
-		serviceController.setService(deliveryAddress);
+		Delivery delivery = serviceController.setService(deliveryAddress);
+		order.setDelivery(delivery);
 	}
 
 
 	@Override
 	public void addService(Role role) {
 		serviceController.addService(role);
-		
+		//order.getDelivery().addService(null);
 	}
 
 
@@ -89,9 +101,23 @@ public class OrderController implements OrderControllerIF {
 		return product;
 	}
 	
-	public List<OrderLine> getOrderLines() { //TODO IS FOR TESING REMOVE THIS
-		return order.getOrderLines();
+	
+	@Override
+	public Order completeOrder() {
+		int orderNo = orderDB.insertOrder(order);
+		orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
+		serviceController.insertService(orderNo);
+		return order;
 	}
+
+
+	@Override
+	public Order getOrder() {
+		
+		return order;
+	}
+	
+	
 	
 }
 

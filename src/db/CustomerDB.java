@@ -137,17 +137,20 @@ public class CustomerDB implements CustomerDBIF {
 	
 	private Customer buildObject(ResultSet rs) {
 		Customer c = null;
-		//FIXME: Customer constructor is not updated yet
+	
 		try {
 			// Flectning data from db needed to build customer
-			String name = rs.getString(1);
-			String address = rs.getString(2);
-			String phone = rs.getString(3);
-			String email = rs.getString(4);
-			int zipcode = rs.getInt(5);
+			String fName = rs.getString("fname");
+			String lName = rs.getString("lname");
+			String street = rs.getString("street");
+			String houseNo = rs.getString("houseno");
+			String phoneNo = rs.getString("phoneno");
+			String email = rs.getString("email");
+			int customerNo = rs.getInt("customerno");
+			String zipCode = rs.getString("zipcode");
 			// builds new customer
-			c = new Customer(name, address, phone, email, zipcode);
-			//c = new Customer(rs.getString("name"), rs.getString("address"), rs.getString("phone"), rs.getString("email"), rs.getInt("zipcode"));
+			c = new Customer(fName,lName,street,houseNo,phoneNo, email,zipCode,customerNo);
+			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}

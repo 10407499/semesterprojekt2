@@ -24,5 +24,9 @@ public interface OrderControllerIF {
 	
 	public void addProduct(int productNo, int quantity);
 	
-	public List<OrderLine> getOrderLines(); //TODO REMOVE THIS IS FOR TESTING
+	public Order completeOrder();
+	
+	public Order getOrder();
+	
+	
 }

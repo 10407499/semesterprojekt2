@@ -7,102 +7,74 @@ import java.util.List;
 
 public class Order {
 
-	private LocalDate deliveryDate; 
-	private int coverAmount;
-	private int orderNr; 
+	private Date creationDate; 
+	private Date fulfillmentDate;
+	private int coverAmount; 
 	private boolean paid; 
-	private boolean request; 
-	private boolean delivery; 
-	private String deliveryAddress; 
-	private List<OrderLine> orderLines;
+	private boolean confimation;
+	private int orderNo; 
+	private Delivery delivery; 
+	private List<OrderLine> orderLines; 
 	private Customer customer;
-	private Date fulfillmentdate; 
 	
 	public Order() {
 		orderLines = new ArrayList<>();
+		creationDate = Date.valueOf(LocalDate.now()); 
+		paid = false; 
 	}
-	
-	public Date getFulfillmentdate() {
-		return fulfillmentdate;
-		
-	}
-	
-	public void setFulfillmentdate(Date fulfillmentdate) {
-		this.fulfillmentdate = fulfillmentdate; 
-	}
-	
-	public LocalDate getDeliveryDate() {
-		return deliveryDate;
+	public Date getCreationDate() {
+		return creationDate;
 	}
 
-	public void setDeliveryDate(LocalDate deliveryDate) {
-		this.deliveryDate = deliveryDate;
+	public Date getFulfillmentDate() {
+		return fulfillmentDate;
 	}
-
+	public void setFulfillmentDate(Date fulfillmentDate) {
+		this.fulfillmentDate = fulfillmentDate;
+	}
 	public int getCoverAmount() {
 		return coverAmount;
 	}
-
 	public void setCoverAmount(int coverAmount) {
 		this.coverAmount = coverAmount;
 	}
-
-	public int getOrderNr() {
-		return orderNr;
-	}
-
-	public void setOrderNr(int orderNr) {
-		this.orderNr = orderNr;
-	}
-
 	public boolean isPaid() {
 		return paid;
 	}
-
 	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
-
-	public boolean isRequest() {
-		return request;
+	public boolean isConfimation() {
+		return confimation;
 	}
-
-	public void setRequest(boolean request) {
-		this.request = request;
+	public void setConfimation(boolean confimation) {
+		this.confimation = confimation;
 	}
-
-	public boolean isDelivery() {
+	public int getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
+	}
+	public Delivery getDelivery() {
 		return delivery;
 	}
-
-	public void setDelivery(boolean delivery) {
+	public void setDelivery(Delivery delivery) {
 		this.delivery = delivery;
 	}
-
-	public String getDeliveryAddress() {
-		return deliveryAddress;
-	}
-
-	public void setDeliveryAddress(String deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
-
 	public List<OrderLine> getOrderLines() {
 		return orderLines;
 	}
-
 	public void addOrderLine(OrderLine orderLine) {
 		orderLines.add(orderLine);
 	}
-
+	
 	public Customer getCustomer() {
 		return customer;
 	}
-
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-	
+	} 
 	
 	
 }

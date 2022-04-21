@@ -1,9 +1,12 @@
 package controller;
 
+import model.Delivery;
 import model.Role;
 
 public interface ServiceControllerIF {
-	public void setService(String deliveryAddress);
+	public Delivery setService(String deliveryAddress);
 
 	public void addService(Role role);
+	
+	public void insertService(int orderNo);
 }
