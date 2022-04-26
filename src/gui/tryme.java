@@ -21,14 +21,9 @@ public class tryme {
 		System.out.println(oc.getOrder().getDelivery().getServiceLines().get(1).getRole());
 		List<Product> products = oc.findProducts("med");
 		
-		
 		System.out.println(products.get(0).getDescription());
 		System.out.println(products.get(1).getDescription());
 		
-		
 		oc.addProduct(products.get(0).getProductNo(), 10);
-		
-		
-		
 	}
 }

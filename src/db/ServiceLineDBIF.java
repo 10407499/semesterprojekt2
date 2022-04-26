@@ -2,6 +2,7 @@ package db;
 
 import java.util.List;
 
+import model.Delivery;
 import model.ServiceLine;
 
 public interface ServiceLineDBIF {
