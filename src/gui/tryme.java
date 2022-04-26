@@ -13,7 +13,7 @@ public class tryme {
 		
 		oc.createOrder();
 		
-		oc.setDelivery("fff");
+		oc.setDelivery("fff", "fff", "fff", "fff");
 		oc.addService(Role.EJER);
 		oc.addService(Role.LEDER);
 		

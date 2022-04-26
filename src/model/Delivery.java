@@ -5,20 +5,50 @@ import java.util.List;
 
 public class Delivery {
 
-	private String deliveryAddress;
+	private String street;
+	private String houseNo;
+	private String city;
+	private String zipcode;
 	private List<ServiceLine> serviceLines; 
-	
-	public Delivery(String deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
+
+	public Delivery(String street, String houseNo, String city, String zipcode) {
+		this.street = street;
+		this.houseNo = houseNo;
+		this.city = city;
+		this.zipcode = zipcode;
 		serviceLines = new ArrayList<>();
 	}
 
-	public String getDeliveryAddress() {
-		return deliveryAddress;
+	public String getStreet() {
+		return street;
 	}
 
-	public void setDeliveryAddress(String deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getHouseNo() {
+		return houseNo;
+	}
+
+	public void setHouseNo(String houseNo) {
+		this.houseNo = houseNo;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 	public void addService(ServiceLine serviceLine) {

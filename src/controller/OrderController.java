@@ -53,8 +53,8 @@ public class OrderController implements OrderControllerIF {
 		 order.setCustomer(customer);
 	}
 	//Mulig fejl ved tilføjelsen af delivery FIXME
-	public void setDelivery(String deliveryAddress) {
-		Delivery delivery = serviceController.setService(deliveryAddress);
+	public void setDelivery(String houseNo, String street, String city, String zipcode) {
+		Delivery delivery = serviceController.setService(houseNo, street, city, zipcode);
 		order.setDelivery(delivery);
 	}
 

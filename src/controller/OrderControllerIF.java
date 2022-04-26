@@ -16,7 +16,7 @@ public interface OrderControllerIF {
 	
 	public void setCustomer(String name); 
 	
-	public void setDelivery(String deliveryAddress); 
+	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	
 	public void addService(Role role);
 	
