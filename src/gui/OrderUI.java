@@ -14,6 +14,10 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
+import controller.OrderController;
+import controller.OrderControllerIF;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -24,11 +28,18 @@ import javax.swing.JSplitPane;
 import javax.swing.JList;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
 
 public class OrderUI extends JFrame {
 
+	//	Imports
+	private OrderControllerIF orderController;
+	
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField coverField;
 	private JPanel orderInfoPanel;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -57,6 +68,12 @@ public class OrderUI extends JFrame {
 	private JLabel lblEfternavn_12;
 	private JPanel deliveryPanel2;
 
+	private JCheckBox chckbxDelivery;
+	private JComboBox comboBox;
+	private JCheckBox chckbxPickup;
+	private JCheckBox chckbxBillingAddress;
+	
+	private String btnCompleteText = "Færdiggøre order";
 	/**
 	 * Create the frame.
 	 */
@@ -93,10 +110,10 @@ public class OrderUI extends JFrame {
 		lblCovers.setBounds(21, 90, 141, 20);
 		orderInfoPanel.add(lblCovers);
 		
-		textField = new JTextField();
-		textField.setBounds(21, 121, 245, 20);
-		orderInfoPanel.add(textField);
-		textField.setColumns(10);
+		coverField = new JTextField();
+		coverField.setBounds(21, 121, 245, 20);
+		orderInfoPanel.add(coverField);
+		coverField.setColumns(10);
 		
 		customerorderInfoPanel = new JPanel();
 		String titleCustomer = "Kunde";
@@ -262,15 +279,15 @@ public class OrderUI extends JFrame {
 		  deliveryPanel.add(textField_11);
 		  textField_11.setColumns(10);
 		  
-		  JCheckBox chckbxDelivery = new JCheckBox("Levering");
+		  chckbxDelivery = new JCheckBox("Levering");
 		  chckbxDelivery.setBounds(28, 29, 97, 23);
 		  deliveryPanel.add(chckbxDelivery);
 		  
-		  JCheckBox chckbxPickup = new JCheckBox("Afhentning");
+		  chckbxPickup = new JCheckBox("Afhentning");
 		  chckbxPickup.setBounds(28, 69, 97, 23);
 		  deliveryPanel.add(chckbxPickup);
 		  
-		  JCheckBox chckbxBillingAddress = new JCheckBox("Brug faktureringsadresse");
+		  chckbxBillingAddress = new JCheckBox("Brug faktureringsadresse");
 		  chckbxBillingAddress.setBounds(28, 107, 191, 23);
 		  deliveryPanel.add(chckbxBillingAddress);
 		  
@@ -327,7 +344,7 @@ public class OrderUI extends JFrame {
 		  lblEfternavn_12.setHorizontalAlignment(SwingConstants.LEFT);
 		  lblEfternavn_12.setFont(new Font("Tahoma", Font.BOLD, 14));
 		  
-		  JComboBox comboBox = new JComboBox();
+		  comboBox = new JComboBox();
 		  comboBox.setBounds(30, 102, 120, 22);
 		  deliveryPanel2.add(comboBox);
 		  
@@ -335,14 +352,32 @@ public class OrderUI extends JFrame {
 		  btnAddServiceRole.setBounds(160, 102, 89, 23);
 		  deliveryPanel2.add(btnAddServiceRole);
 		  
-		  JButton btnFrdiggrOrdre = new JButton("F\u00E6rdigg\u00F8r ordre");
+		  JButton btnFrdiggrOrdre = new JButton(btnCompleteText);
+		  btnFrdiggrOrdre.addMouseListener(new MouseAdapter() {
+		  	@Override
+		  	public void mousePressed(MouseEvent e) {
+		  		completeOrder();
+		  	}
+		  });
 		  btnFrdiggrOrdre.setBounds(1077, 629, 150, 23);
 		  contentPane.add(btnFrdiggrOrdre);
 		  
 		  init();
 	}
 	
+	private void completeOrder() {
+		// 1. method call
+		orderController.setOrderInfo(coverField.getText() != null && Integer.parseInt(coverField.getText()) >= 4 ? Integer.parseInt(coverField.getText()) : 0, DatePicker.getDateValue());
+		// 2. method call
+		
+	}
+	
 	private void init() {
+		orderController = new OrderController();
+		
+		orderController.createOrder();
+		
 		DatePicker.createDatePicker(orderInfoPanel, 22, 43, 245, 20);
 	}
+	
 }

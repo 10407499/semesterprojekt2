@@ -1,5 +1,6 @@
 package gui;
 
+import java.sql.Date;
 import java.util.Properties;
 
 import javax.swing.JPanel;
@@ -11,9 +12,9 @@ import org.jdatepicker.impl.UtilDateModel;
 public abstract class DatePicker {
 	private static JDatePickerImpl datePicker;
 	
-	public static String getDateValue() {
-		return datePicker.getJFormattedTextField().getText();
-		
+	public static Date getDateValue() {
+		Date date = Date.valueOf(datePicker.getJFormattedTextField().getText());
+		return date;
 	}
 	
 	public static void createDatePicker(JPanel panel, int x, int y, int width, int height) {
