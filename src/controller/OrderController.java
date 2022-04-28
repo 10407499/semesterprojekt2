@@ -16,18 +16,15 @@ import model.Role;
 
 public class OrderController implements OrderControllerIF {
 
-	private List<Product> products; 
+	private List<Product> products;
 	private Order order;
 	private Customer customer;
-	private CustomerControllerIF customerController; 
-	private ServiceControllerIF serviceController; 
-	private ProductControllerIF productController; 
+	private CustomerControllerIF customerController;
+	private ServiceControllerIF serviceController;
+	private ProductControllerIF productController;
 	private OrderDBIF orderDB;
 	private OrderLineDBIF orderLineDB;
-	
-	
-	
-	
+
 	public OrderController() {
 		customerController = new CustomerController();
 		serviceController = new ServiceController();
@@ -35,97 +32,85 @@ public class OrderController implements OrderControllerIF {
 		orderDB = new OrderDB();
 		orderLineDB = new OrderLineDB();
 	}
-	
-	
+
 	public Order createOrder() {
 		order = new Order();
 		return order;
-		
+
 	}
-	
+
 	public void setOrderInfo(int coverAmount, Date fulfillmentdate) {
-		order.setCoverAmount(coverAmount);
+		if (coverAmount >= 4) {
+			order.setCoverAmount(coverAmount);
+		}
 		order.setFulfillmentDate(fulfillmentdate);
 	}
-	
+
 	public void setCustomer(String name) {
 		customer = customerController.findCustomer(name);
-		 order.setCustomer(customer);
+		order.setCustomer(customer);
 	}
+
 	public void setDelivery(String houseNo, String street, String city, String zipcode) {
 		Delivery delivery = serviceController.setService(houseNo, street, city, zipcode);
 		order.setDelivery(delivery);
 	}
 
-
 	@Override
 	public void addService(Role role) {
 		serviceController.addService(role);
-		//order.getDelivery().addService(null);
+		// order.getDelivery().addService(null);
 	}
-
 
 	@Override
 	public List<Product> findProducts(String description) {
-		
+
 		products = productController.findProducts(description);
-		
+
 		return products;
 	}
-
 
 	@Override
 	public void addProduct(int productNo, int quantity) {
 		Product product = getProductByNo(productNo);
-		//	Creates new orderLine Object
+		// Creates new orderLine Object
 		OrderLine orderLine = new OrderLine(product, quantity);
-		//	Adds OrderLine object to Orders list of orderLines
+		// Adds OrderLine object to Orders list of orderLines
 		order.addOrderLine(orderLine);
 	}
-
 
 	private Product getProductByNo(int productNo) {
 		Product product = null;
 		boolean res = false;
 		int index = 0;
-		
-		while(!res && index < products.size()) {
-			if(products.get(index).getProductNo() == productNo) {
+
+		while (!res && index < products.size()) {
+			if (products.get(index).getProductNo() == productNo) {
 				res = true;
 				product = products.get(index);
 			}
 			index++;
 		}
-		
+
 		return product;
 	}
-	
-	
+
 	@Override
 	public Order completeOrder() {
-		int orderNo = orderDB.insertOrder(order);
-		orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
-		if(order.getDelivery() != null) {
-			serviceController.insertService(orderNo);
+		if (order.getCoverAmount() >= 4) {
+			int orderNo = orderDB.insertOrder(order);
+			orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
+			if (order.getDelivery() != null) {
+				serviceController.insertService(orderNo);
+			}
 		}
-		
 		return order;
 	}
-
 
 	@Override
 	public Order getOrder() {
-		
+
 		return order;
 	}
-	
-	
-	
+
 }
-
-
-
-
-
-
-

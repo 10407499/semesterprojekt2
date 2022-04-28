@@ -45,7 +45,7 @@ public class TestCreateOrder {
 	}
 
 	@Test
-	public void test() {
+	public void SuccessfulCreationOfanOrdertest() {
 		
 		//Arrange
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
@@ -65,8 +65,86 @@ public class TestCreateOrder {
 		assertEquals(order.getCoverAmount(), cover);
 		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
 		assertEquals(order.getFulfillmentDate(), d);
+	}
+	
+	/* FIXME
+	
+	public void CutomerWantsToCancel() {
+		//Arrange
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		int cover = 20;
+		Product p = new Menu("Menu1", 20.00, 1, "MENU");
+		Date d =  Date.valueOf("2023-01-01");
+		//Act
+		orderController.createOrder();
+		orderController.setOrderInfo(cover, d);
+		orderController.setCustomer("IB");
+		List<Product> s = orderController.findProducts("Menu1");
+		int productNo = s.get(0).getProductNo();
+		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
+		Order order = orderController.completeOrder();
+		//Assert
+		assertEquals(order.getCustomer().getfName(), c.getfName());
+		assertEquals(order.getCoverAmount(), cover);
+		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
+		assertEquals(order.getFulfillmentDate(), d);
+	}
+	
+	*/
+	
+	/* FIXME
+	public void Overbooking() {
 		
 		
 	}
+	*/
+	@Test
+	public void OrderWithoutProducts(){
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		int cover = 20;
+		
+		Date d =  Date.valueOf("2023-01-01");
+		//Act
+		orderController.createOrder();
+		orderController.setOrderInfo(cover, d);
+		orderController.setCustomer("IB");
+		
+		Order order = orderController.completeOrder();
+		//Assert
+		assertEquals(order.getCustomer().getfName(), c.getfName());
+		assertEquals(order.getCoverAmount(), cover);
+		assertEquals(order.getFulfillmentDate(), d);
+		
+	
+	}
+	
+	@Test
+	public void OrderWithoutCover() {
+		
+		//Arrange
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		int cover = 0; 
+		Product p = new Menu("Menu1", 20.00, 1, "MENU");
+		Date d =  Date.valueOf("2023-01-01");
+		//Act
+		orderController.createOrder();
+		orderController.setOrderInfo(cover, d);
+		orderController.setCustomer("IB");
+		List<Product> s = orderController.findProducts("Menu1");
+		int productNo = s.get(0).getProductNo();
+		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
+		Order order = orderController.completeOrder();
+		//Assert
 
+		
+		//orderController.setOrderInfo(coverField.getText() != null && Integer.parseInt(coverField.getText()) >= 4 ? Integer.parseInt(coverField.getText()) : 0, DatePicker.getDateValue());
+
+	
+
+	}
+	
+	
+	
+	
+	
 }
