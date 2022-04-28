@@ -105,7 +105,10 @@ public class OrderController implements OrderControllerIF {
 	public Order completeOrder() {
 		int orderNo = orderDB.insertOrder(order);
 		orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
-		serviceController.insertService(orderNo);
+		if(order.getDelivery() != null) {
+			serviceController.insertService(orderNo);
+		}
+		
 		return order;
 	}
 

@@ -28,8 +28,8 @@ public class OrderLineDB implements OrderLineDBIF {
 		try {
 		for(OrderLine orderLine: orderLines) {
 			insertOrderLinesPS.setInt(1, orderLine.getQuantity());
-			insertOrderLinesPS.setInt(1, orderNo);
-			insertOrderLinesPS.setInt(1, orderLine.getProduct().getProductNo());
+			insertOrderLinesPS.setInt(2, orderNo);
+			insertOrderLinesPS.setInt(3, orderLine.getProduct().getProductNo());
 			insertOrderLinesPS.executeUpdate();
 			}
 		} catch (Exception e) {

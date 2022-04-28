@@ -20,9 +20,9 @@ public class CustomerDB implements CustomerDBIF {
 	 * SQL injects
 	 */
 	
-	private static final String FIND_ALL_Q = "select * from customers";
-	private static final String FIND_BY_NAME_Q = "select * from customers where name = ?";
-	private static final String UPDATE_Q = "update persons set name = ?, address = ?, phone = ? , email = ?, zipcode = ? where name = ?";
+	private static final String FIND_ALL_Q = "select * from Customer";
+	private static final String FIND_BY_NAME_Q = "select * from Customer where fname = ?";
+	private static final String UPDATE_Q = "update Customer set fname = ?, address = ?, phone = ? , email = ?, zipcode = ? where fname = ?"; //FIXME
 
 	private Connection con;
 
@@ -73,11 +73,11 @@ public class CustomerDB implements CustomerDBIF {
 	 */
 	
 	@Override
-	public List<Customer> findByName(String name) {
+	public List<Customer> findByName(String fname) {
 		List<Customer> customers = null;
 
 		try {
-			findByName.setString(1, name);
+			findByName.setString(1, fname);
 			ResultSet rs = findByName.executeQuery();
 			if (rs.next()) {
 				customers = buildObjects(rs);

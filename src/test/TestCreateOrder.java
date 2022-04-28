@@ -3,6 +3,8 @@ package test;
 import static org.junit.Assert.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +22,7 @@ import model.Customer;
 import model.Dish;
 import model.Menu;
 import model.Order;
+import model.OrderLine;
 import model.Product;
 
 public class TestCreateOrder {
@@ -49,24 +52,21 @@ public class TestCreateOrder {
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d =  Date.valueOf("2023-01-01");
-		
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
 		orderController.setCustomer("IB");
-		orderController.findProducts("Menu1");
-		orderController.addProduct(1, 20); //TODO: Valg ud fra liste
+		List<Product> s = orderController.findProducts("Menu1");
+		int productNo = s.get(0).getProductNo();
+		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
 		Order order = orderController.completeOrder();
-		
-		
 		//Assert
-		
-		assertEquals(order.getCustomer(), c);
+		assertEquals(order.getCustomer().getfName(), c.getfName());
 		assertEquals(order.getCoverAmount(), cover);
-		assertEquals(order.getOrderLines().get(0), p);
+		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
 		assertEquals(order.getFulfillmentDate(), d);
 		
-		fail("Not yet implemented");
+		
 	}
 
 }
