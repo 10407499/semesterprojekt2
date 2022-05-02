@@ -117,6 +117,6 @@ public class MainUI extends JFrame {
 	}
 	
 	private void init() {
-		DatePicker.createDatePicker(contentPane, 737, 47, 286, 22);
+		DatePicker.createDatePicker(contentPane, 737, 47, 286, 30);
 	}
 }

@@ -377,7 +377,6 @@ public class OrderUI extends JFrame {
 		
 		orderController.createOrder();
 		
-		DatePicker.createDatePicker(orderInfoPanel, 22, 43, 245, 20);
+		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
 	}
-	
 }
