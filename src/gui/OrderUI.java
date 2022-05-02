@@ -32,6 +32,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class OrderUI extends JFrame {
 
@@ -280,6 +282,14 @@ public class OrderUI extends JFrame {
 		  textField_11.setColumns(10);
 		  
 		  chckbxDelivery = new JCheckBox("Levering");
+		  chckbxDelivery.addKeyListener(new KeyAdapter() {
+		  	@Override
+		  	public void keyReleased(KeyEvent e) {
+		  		if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+		  			chckbxDelivery.setSelected(true);
+		  		}
+		  	}
+		  });
 		  chckbxDelivery.setBounds(28, 29, 97, 23);
 		  deliveryPanel.add(chckbxDelivery);
 		  
