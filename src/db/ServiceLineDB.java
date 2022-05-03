@@ -9,7 +9,7 @@ import model.Delivery;
 import model.ServiceLine;
 
 public class ServiceLineDB implements ServiceLineDBIF {
-	public final static String INSERT_SERVICELINE_Q = "insert into ServiceLine values(?,?,?,?,?)";
+	public final static String INSERT_SERVICELINE_Q = "insert into ServiceLine values(?,null,null,?,null)";
 	public PreparedStatement insertServiceLinesPS;
 	public Connection con;
 
@@ -23,15 +23,21 @@ public class ServiceLineDB implements ServiceLineDBIF {
 
 	}
 	
+	/*FIXME Problemstillingen er at databasen har brug for et employee nr dog når
+	 * der bliver tilføjet en serviceline i forbindelsen med en oprettelse af order
+	 * har vi som udgangspunkt ikke fundet den medarbejder som skal bruges til at løse
+	 * opgaven. Derved er det nødtvendigt at lave en ændring i enten databasen eller 
+	 *systemet. 	
+	*/
 	@Override
 	public void insertServiceLines(List<ServiceLine> serviceLines, int orderNo) {
 		try {
 			for(ServiceLine s : serviceLines) {
 				insertServiceLinesPS.setString(1, s.getRole().toString());
-				insertServiceLinesPS.setString(2, s.getStartTime());
-				insertServiceLinesPS.setString(3, s.getEndTime());
-				insertServiceLinesPS.setInt(4, orderNo);
-				insertServiceLinesPS.setInt(5, s.getEmployee().getEmployeeNo());
+				//insertServiceLinesPS.setString(2, s.getStartTime());
+				//insertServiceLinesPS.setString(3, s.getEndTime());
+				insertServiceLinesPS.setInt(2, orderNo);
+				//insertServiceLinesPS.setInt(5, 0);// 0 erstatter = s.getEmployee().getEmployeeNo()
 				insertServiceLinesPS.executeUpdate();
 			}
 		} catch (SQLException e) {
