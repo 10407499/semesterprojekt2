@@ -16,7 +16,7 @@ public class tryme {
 		oc.createOrder();
 	  
 		
-		oc.setCustomer("IB");
+		//oc.setCustomer("IB");
 		System.out.println(oc.getOrder().getCustomer());   
 		
 		oc.setOrderInfo(20, Date.valueOf("2023-01-01"));

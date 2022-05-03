@@ -30,34 +30,13 @@ public class CustomerController implements CustomerControllerIF {
 	 * @return Customers
 	 */
 	
-	public List<Customer> findAll() {
+	public List<Customer> findCustomers(String name) {
 		// Create new List of customer objects
 		List<Customer> customers = null;
 		// Adds customers to the list
-		customers = customerDB.findAll();
+		customers = customerDB.findCustomers(name);
 		// Returns the list with customers
 		return customers;
-	}
-
-	/**
-	 * Goes into customerDB to get the customer objects built and returned as a list of customers
-	 * @param name : String
-	 * @return Customers
-	 */
-	
-	public List<Customer> findByName(String name) {
-		// Create new list of customer objects
-		List<Customer> customers = null;
-		// Sets the list of customers to the object
-		customers = customerDB.findByName(name);
-		// Returns the list of customers
-		return customers;
-	}
-
-	public Customer findCustomer(String name) {
-		Customer customer = null;
-		customer = customerDB.findCustomer(name);
-		return customer;
 	}
 	
 }

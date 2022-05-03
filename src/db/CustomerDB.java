@@ -20,13 +20,10 @@ public class CustomerDB implements CustomerDBIF {
 	 * SQL injects
 	 */
 	
-	private static final String FIND_ALL_Q = "select * from Customer";
-	private static final String FIND_BY_NAME_Q = "select * from Customer where fname = ?";
+	private static final String FIND_BY_NAME_Q = "select * from Customer where fname like ?";
 	private static final String UPDATE_Q = "update Customer set fname = ?, address = ?, phone = ? , email = ?, zipcode = ? where fname = ?"; //FIXME
 
 	private Connection con;
-
-	private PreparedStatement findAll;
 	private PreparedStatement findByName;
 	private PreparedStatement update;
 
@@ -38,7 +35,6 @@ public class CustomerDB implements CustomerDBIF {
 	public CustomerDB() {
 		con = DBConnection.getInstance().getConnection();
 		try {
-			findAll = con.prepareStatement(FIND_ALL_Q);
 			findByName = con.prepareStatement(FIND_BY_NAME_Q);
 			update = con.prepareStatement(UPDATE_Q);
 		} catch (SQLException e) {
@@ -46,25 +42,6 @@ public class CustomerDB implements CustomerDBIF {
 		}
 	}
 
-	/**
-	 * Holds the logic for going into database and uses buildObject method to build the customer objects and returns it
-	 * @return Customers 
-	 */
-	
-	@Override
-	public List<Customer> findAll() {
-		List<Customer> customers = new ArrayList<Customer>();
-
-		try {
-			ResultSet rs;
-			rs = findAll.executeQuery();
-			customers = buildObjects(rs);
-		} catch (SQLException e) {
-			// TODO: handle exception
-		}
-
-		return customers;
-	}
 
 	/**
 	 * Search by name in db and returns list of all customers with the name
@@ -73,11 +50,11 @@ public class CustomerDB implements CustomerDBIF {
 	 */
 	
 	@Override
-	public List<Customer> findByName(String fname) {
+	public List<Customer> findCustomers(String name) {
 		List<Customer> customers = null;
 
 		try {
-			findByName.setString(1, fname);
+			findByName.setString(1, name);
 			ResultSet rs = findByName.executeQuery();
 			if (rs.next()) {
 				customers = buildObjects(rs);
@@ -87,23 +64,6 @@ public class CustomerDB implements CustomerDBIF {
 		}
 
 		return customers;
-	}
-
-	@Override
-	public Customer findCustomer(String name) {
-		Customer customer = null;
-		
-		try {
-			findByName.setString(1, name);
-			ResultSet rs = findByName.executeQuery();
-			if(rs.next()) {
-				customer = buildObject(rs);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		return customer;
 	}
 	
 	/**

@@ -18,7 +18,7 @@ public class OrderController implements OrderControllerIF {
 
 	private List<Product> products;
 	private Order order;
-	private Customer customer;
+	private List<Customer> customers;
 	private CustomerControllerIF customerController;
 	private ServiceControllerIF serviceController;
 	private ProductControllerIF productController;
@@ -45,10 +45,14 @@ public class OrderController implements OrderControllerIF {
 		}
 		order.setFulfillmentDate(fulfillmentdate);
 	}
+	
+	public List<Customer> findCustomers(String name) {
+		customers = customerController.findCustomers(name);
+		return customers;
+	}
 
-	public void setCustomer(String name) {
-		customer = customerController.findCustomer(name);
-		order.setCustomer(customer);
+	public void setCustomer() {
+		//order.setCustomer(customer); FIXME
 	}
 
 	public void setDelivery(String houseNo, String street, String city, String zipcode) {

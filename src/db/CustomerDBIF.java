@@ -10,8 +10,6 @@ public interface CustomerDBIF {
 	 * Part of a DAO pattern
 	 * @return List of Customers
 	 */
-	public List<Customer> findAll();
-	public List<Customer> findByName(String name);
-	public Customer findCustomer(String name);
+	public List<Customer> findCustomers(String name);
 	
 }

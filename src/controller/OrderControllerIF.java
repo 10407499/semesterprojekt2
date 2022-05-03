@@ -3,6 +3,7 @@ package controller;
 import java.sql.Date;
 import java.util.List;
 
+import model.Customer;
 import model.Order;
 import model.OrderLine;
 import model.Product;
@@ -14,7 +15,9 @@ public interface OrderControllerIF {
 	
 	public void setOrderInfo(int coverAmount, Date fulfillmentdate);
 	
-	public void setCustomer(String name); 
+	public List<Customer> findCustomers(String name);
+	
+	public void setCustomer(); 
 	
 	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	
@@ -27,6 +30,7 @@ public interface OrderControllerIF {
 	public Order completeOrder();
 	
 	public Order getOrder();
+	
 	
 	
 }
