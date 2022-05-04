@@ -13,7 +13,7 @@ public interface OrderControllerIF {
 
 	public Order createOrder();
 	
-	public void setOrderInfo(int coverAmount, Date fulfillmentdate);
+	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate);
 	
 	public List<Customer> findCustomers(String name);
 	

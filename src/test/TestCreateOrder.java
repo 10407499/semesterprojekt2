@@ -71,6 +71,7 @@ public class TestCreateOrder {
 		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
 		assertEquals(order.getFulfillmentDate(), d);
 	}
+	// test case 2
 	@Test
 	public void CustomerWantsToCancel() {
 		//Arrange
@@ -92,32 +93,23 @@ public class TestCreateOrder {
 		assertEquals(orderController.getOrder(), null);
 
 	}
+	// test case 3
 	@Test
-	public void Overbooking() { // 
+	public void Overbooking() {  
 		//Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
-		int cover = 20;
-		Product p = new Menu("Menu1", 20.00, 1, "MENU");
+		int cover = 51;
 		Date d =  Date.valueOf("2023-03-02");
+		
 		//Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
-		
-		List<Customer> customers = orderController.findCustomers("IB");
-		int customerNo = customers.get(0).getCustomerNo();
-		orderController.setCustomer(customerNo);
-		List<Product> s = orderController.findProducts("Menu1");
-		int productNo = s.get(0).getProductNo();
-		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
-		Order order = orderController.completeOrder();
+		// orderController.setOrderInfo(cover, d);
+	
 		//Assert
-		assertEquals(order.getCustomer().getfName(), c.getfName());
-		assertEquals(order.getCoverAmount(), cover);
-		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
-		assertEquals(order.getFulfillmentDate(), d);
+		assertEquals(orderController.setOrderInfo(cover, d), false);
+
 		
 	}
-
+	// test case 4
 	@Test
 	public void OrderWithoutProducts(){ // test case 4 
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
@@ -240,7 +232,8 @@ public class TestCreateOrder {
 		
 	}
 	
-	
+	//test case 9
+	// FIXME lars Spørgsmål
 	
 	
 
@@ -267,9 +260,9 @@ public class TestCreateOrder {
 //		
 //	}
 	
-	
+	// test case 11 
 	@Test
-	public void OrderWithoutCover() { // test case 11 
+	public void OrderWithoutCover() { 
 		
 		//Arrange
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 3);

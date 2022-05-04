@@ -40,13 +40,14 @@ public class OrderController implements OrderControllerIF {
 
 	}
 
-	public void setOrderInfo(int coverAmount, Date fulfillmentdate) {
+	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate) {
 		if (coverAmount >= 4) {
 			order.setCoverAmount(coverAmount);
 		}
 		order.setFulfillmentDate(fulfillmentdate);
+		return checkCoverAmountOnDate(coverAmount, fulfillmentdate);
 	}
-	
+
 	public List<Customer> findCustomers(String name) {
 		customers = customerController.findCustomers(name);
 		return customers;
@@ -54,7 +55,7 @@ public class OrderController implements OrderControllerIF {
 
 	public void setCustomer(int customerNo) {
 		Customer customer = getCustomerByNo(customerNo);
-		
+
 		order.setCustomer(customer);
 	}
 
@@ -62,9 +63,9 @@ public class OrderController implements OrderControllerIF {
 		Customer customer = null;
 		boolean res = false;
 		int index = 0;
-		
-		while(!res &&  index < customers.size()) {
-			if(customers.get(index).getCustomerNo() == customerNo) {
+
+		while (!res && index < customers.size()) {
+			if (customers.get(index).getCustomerNo() == customerNo) {
 				res = true;
 				customer = customers.get(index);
 			}
@@ -141,7 +142,7 @@ public class OrderController implements OrderControllerIF {
 		customers = findCustomers(fname);
 		if (customers != null) {
 			for (Customer c : customers) {
-				String currStr =  "<html>"+ c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
+				String currStr = "<html>" + c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
 				res.add(currStr);
 			}
 		}
@@ -151,18 +152,22 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public void cancelCreateOrder() {
 		order = null;
-		
+
 	}
 
 	@Override
 	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate) {
-		orderDb.checkCoverAmountOnDate(fulfillmentdate);
-		
-		if();
-		return false;
+		List<Order> orders = orderDB.checkCoverAmountOnDate(fulfillmentdate);
+		int sumCover = 0;
+		int maxCover = 50;
+		boolean success = true;
+		for (Order o : orders) {
+			sumCover += o.getCoverAmount();
+		}
+		if (sumCover + coverAmount > maxCover) {
+			success = false;
+		}
+		return success;
 	}
-	
-	
-	
 
 }

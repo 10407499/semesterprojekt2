@@ -22,6 +22,19 @@ public class Order {
 		creationDate = Date.valueOf(LocalDate.now()); 
 		paid = false; 
 	}
+	
+	public Order(Date creationDate, Date fulfillmentDate, int coverAmount, boolean paid, boolean confimation,
+			int orderNo) {
+		this.creationDate = creationDate;
+		this.fulfillmentDate = fulfillmentDate;
+		this.coverAmount = coverAmount;
+		this.paid = paid;
+		this.confimation = confimation;
+		this.orderNo = orderNo;
+		
+		
+	}
+
 	public Date getCreationDate() {
 		return creationDate;
 	}

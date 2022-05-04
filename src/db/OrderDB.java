@@ -90,12 +90,20 @@ public class OrderDB implements OrderDBIF {
 
 	private Order buildOrder(ResultSet rs) {
 		Order order = null;
+		
 		try {
-			
+			Date creationDate = rs.getDate("date");
+			Date fulfillmentDate = rs.getDate("fulfillmentDate");
+			int coverAmount = rs.getInt("coverAmount");
+			boolean paid = rs.getBoolean("paid");
+			boolean confirmation = rs.getBoolean("confirmation");
+			int orderNo = rs.getInt("orderNo");
+			int customerNo = rs.getInt("customerNo");
+			order = new Order(creationDate, fulfillmentDate, coverAmount, paid, confirmation, orderNo);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return null;
+		return order;
 	}
 
 }
