@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.OrderDB;
@@ -133,5 +134,19 @@ public class OrderController implements OrderControllerIF {
 
 		return order;
 	}
+
+	@Override
+	public List<String> customerDetailsToString(String fname) {
+		List<String> res = new ArrayList<>();
+		customers = findCustomers(fname);
+		if (customers != null) {
+			for (Customer c : customers) {
+				String currStr =  "<html>"+ c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
+				res.add(currStr);
+			}
+		}
+		return res;
+	}
+	
 
 }

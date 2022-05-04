@@ -178,20 +178,8 @@ public class OrderUI extends JFrame {
 		textFieldFName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				//if (textFieldFName.getText().length() > 1) {
-					comboBoxFName.removeAllItems();
-					List<Customer> customers = orderController.findCustomers(textFieldFName.getText());
-					if (customers != null) {
-						for (Customer c : customers) {
-							String toAdd = "<html>"+ c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
-							if(model.getIndexOf(toAdd) == -1) {
-								model.addElement(toAdd);
-							}
-							comboBoxFName.showPopup();
-						}
-					}	
-				}
-			//}
+				addElementsToComboBoxCustomer();
+			}
 		});
 		textFieldFName.setColumns(10);
 		textFieldFName.setBounds(21, 62, 165, 20);
@@ -243,12 +231,12 @@ public class OrderUI extends JFrame {
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(21, 303, 328, 20);
 		customerorderInfoPanel.add(textFieldEmail);
-		
+
 		model = new DefaultComboBoxModel();
 		comboBoxFName = new JComboBox(model);
 		comboBoxFName.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if(e.getSource() == comboBoxFName) {
+				if (e.getSource() == comboBoxFName) {
 					comboBoxFName.getSelectedItem();
 				}
 			}
@@ -436,7 +424,7 @@ public class OrderUI extends JFrame {
 		orderController.createOrder();
 
 		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
-		
+
 		comboBoxFName.setEnabled(false);
 	}
 
@@ -453,4 +441,21 @@ public class OrderUI extends JFrame {
 
 		}
 	}
+	
+	private void addElementsToComboBoxCustomer() {
+		if (textFieldFName.getText().length() > 0) {
+			comboBoxFName.removeAllItems();
+			List<String> customerStr = orderController.customerDetailsToString(textFieldFName.getText());
+			for (String s : customerStr) {
+				if (model.getIndexOf(s) == -1) {
+					model.addElement(s);
+				}
+
+			}
+			comboBoxFName.showPopup();
+		} else {
+			comboBoxFName.removeAllItems();
+		}
+	}
+
 }

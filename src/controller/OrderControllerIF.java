@@ -31,6 +31,8 @@ public interface OrderControllerIF {
 	
 	public Order getOrder();
 	
+	public List<String> customerDetailsToString(String fname);
+	
 	
 	
 }
