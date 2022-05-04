@@ -25,17 +25,13 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JSplitPane;
 import javax.swing.JList;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JMenu;
 
 public class OrderUI extends JFrame {
 
@@ -237,7 +233,7 @@ public class OrderUI extends JFrame {
 		comboBoxFName.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getSource() == comboBoxFName) {
-					comboBoxFName.getSelectedItem();
+					setCustomer();
 				}
 			}
 		});
@@ -410,12 +406,18 @@ public class OrderUI extends JFrame {
 		// 1. method call
 		setOrderInfo();
 		// 2. method call
-		setCustomer();
-
 	}
 
 	private void setCustomer() {
-
+		Customer c = null;
+		c = orderController.getCustomers().get(0);
+		textFieldFName.setText(c.getfName());
+		textFieldLName.setText(c.getlName());
+		textFieldAdresse.setText(c.getStreet());
+		textHouseNo.setText(c.getHouseNo());
+		textFieldZipCode.setText(c.getZipCode());
+		textFieldPhoneNo.setText(c.getPhoneNo());
+		textFieldEmail.setText(c.getEmail());
 	}
 
 	private void init() {
@@ -453,7 +455,6 @@ public class OrderUI extends JFrame {
 				if (model.getIndexOf(s) == -1) {
 					model.addElement(s);
 				}
-
 			}
 			comboBoxFName.showPopup();
 		} else {

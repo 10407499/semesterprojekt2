@@ -35,6 +35,6 @@ public interface OrderControllerIF {
 	
 	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate);
 	
-	
+	public List<Customer> getCustomers();
 	
 }
