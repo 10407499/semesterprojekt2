@@ -152,14 +152,15 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public void cancelCreateOrder() {
 		order = null;
-
+		products = null; 
+		customers = null; 
 	}
 
 	@Override
 	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate) {
 		List<Order> orders = orderDB.checkCoverAmountOnDate(fulfillmentdate);
 		int sumCover = 0;
-		int maxCover = 50;
+		int maxCover = 50; //FIXME lav det til en slags "global variable" som kan tilgåes fra GUI og ændres
 		boolean success = true;
 		for (Order o : orders) {
 			sumCover += o.getCoverAmount();

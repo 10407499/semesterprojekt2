@@ -92,6 +92,7 @@ public class OrderDB implements OrderDBIF {
 		Order order = null;
 		
 		try {
+			//FIXME Hvad skal der med til en Order osv. 
 			Date creationDate = rs.getDate("date");
 			Date fulfillmentDate = rs.getDate("fulfillmentDate");
 			int coverAmount = rs.getInt("coverAmount");
