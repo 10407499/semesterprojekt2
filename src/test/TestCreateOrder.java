@@ -179,7 +179,7 @@ public class TestCreateOrder {
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-		orderController.setDelivery(c.getHouseNo(), c.getStreet(), c.getZipCode(), "Ibby");
+		orderController.setDelivery(c.getHouseNo(), c.getStreet(), "Ibby", c.getZipCode());
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
