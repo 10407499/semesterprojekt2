@@ -7,7 +7,7 @@ import model.Customer;
 import model.Order;
 import model.OrderLine;
 import model.Product;
-import model.Role;
+import model.EmployeeRole;
 
 public interface OrderControllerIF {
 
@@ -17,11 +17,11 @@ public interface OrderControllerIF {
 	
 	public List<Customer> findCustomers(String name);
 	
-	public void setCustomer(int customerNo); 
+	public void setCustomer(int customerNo);
 	
 	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	
-	public void addService(Role role);
+	public void addService(EmployeeRole employeeRole);
 	
 	public List<Product> findProducts(String description); 
 	
@@ -36,5 +36,4 @@ public interface OrderControllerIF {
 	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate);
 	
 	public List<Customer> getCustomers();
-	
 }

@@ -9,11 +9,12 @@ public class Person {
 	private String phoneNo;
 	private String email;
 	private String zipCode;
+	private String city;
 	
 	
 	
 	public Person(String fName, String lName, String street, String houseNo, String phoneNo, String email,
-			String zipCode) {
+			String zipCode, String city) {
 		this.fName = fName;
 		this.lName = lName;
 		this.street = street;
@@ -21,6 +22,7 @@ public class Person {
 		this.phoneNo = phoneNo;
 		this.email = email;
 		this.zipCode = zipCode;
+		this.city = city;
 	}
 
 
@@ -29,14 +31,10 @@ public class Person {
 		return fName;
 	}
 
-
-
 	public String getlName() {
 		return lName;
 	}
-
-
-
+	
 	public String getStreet() {
 		return street;
 	}
@@ -65,9 +63,7 @@ public class Person {
 		return zipCode;
 	}
 	
-	
-	
-	
-	
-	
+	public String getCity() {
+		return city;
+	}
 }

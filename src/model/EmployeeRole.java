@@ -1,7 +1,6 @@
 package model;
 
-public enum Role {
-
+public enum EmployeeRole {
 	EJER,
 	LEDER,
 	MEDARBEJDER,

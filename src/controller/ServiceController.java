@@ -4,7 +4,7 @@ import db.DeliveryDBIF;
 import db.ServiceLineDB;
 import db.ServiceLineDBIF;
 import model.Delivery;
-import model.Role;
+import model.EmployeeRole;
 import model.ServiceLine;
 
 public class ServiceController implements ServiceControllerIF {
@@ -25,8 +25,8 @@ public class ServiceController implements ServiceControllerIF {
 	}
 
 	@Override
-	public void addService(Role role) {
-		serviceLine = new ServiceLine(role);
+	public void addService(EmployeeRole employeeRole) {
+		serviceLine = new ServiceLine(employeeRole);
 		delivery.addService(serviceLine);
 	}
 

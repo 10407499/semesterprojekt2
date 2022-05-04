@@ -8,7 +8,7 @@ import controller.OrderControllerIF;
 import model.Customer;
 import model.Employee;
 import model.Product;
-import model.Role;
+import model.EmployeeRole;
 
 public class tryme {
 	public static void main(String[] args) {

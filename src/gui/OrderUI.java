@@ -3,6 +3,7 @@ package gui;
 import java.awt.Font;
 import java.awt.Toolkit;
 
+import javax.management.relation.Role;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import java.awt.Color;
 import controller.OrderController;
 import controller.OrderControllerIF;
 import model.Customer;
+import model.EmployeeRole;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -29,6 +31,8 @@ import javax.swing.JList;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -78,6 +82,9 @@ public class OrderUI extends JFrame {
 	private boolean textBoxError = false;
 	private JComboBox comboBoxFName;
 	private DefaultComboBoxModel model;
+
+	// FIXME THIS IS TESTING CUSTOMER
+	private int customerNo;
 
 	/**
 	 * Create the frame.
@@ -233,9 +240,17 @@ public class OrderUI extends JFrame {
 		comboBoxFName.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getSource() == comboBoxFName) {
-					if(!textFieldLName.getText().equals(null)) {
-						setCustomer(comboBoxFName.getSelectedIndex());
-					}
+					comboBoxFName.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if (e.getModifiers() != 0) { // This if checks if its anything other than keyboard picking
+															// the combobox
+								if (!textFieldLName.getText().equals(null)) {
+									setCustomerToTextFields(comboBoxFName.getSelectedIndex());
+								}
+							}
+						}
+					});
 				}
 			}
 		});
@@ -408,6 +423,7 @@ public class OrderUI extends JFrame {
 		// 1. method call
 		setOrderInfo();
 		// 2. method call
+		setCustomer();
 	}
 
 	private void resetCustomer() {
@@ -417,28 +433,37 @@ public class OrderUI extends JFrame {
 		textFieldZipCode.setText(null);
 		textFieldPhoneNo.setText(null);
 		textFieldEmail.setText(null);
+		customerNo = 0;
 	}
 	
-	private void setCustomer(int no) {
+	private void setCustomerToTextFields(int no) {
 		Customer c = null;
-		c = orderController.getCustomers().get(no);
-		textFieldFName.setText(c.getfName());
-		textFieldLName.setText(c.getlName());
-		textFieldAdresse.setText(c.getStreet());
-		textHouseNo.setText(c.getHouseNo());
-		textFieldZipCode.setText(c.getZipCode());
-		textFieldPhoneNo.setText(c.getPhoneNo());
-		textFieldEmail.setText(c.getEmail());
+		if (orderController.getCustomers().get(no) != null) {
+			c = orderController.getCustomers().get(no);
+			textFieldFName.setText(c.getfName());
+			textFieldLName.setText(c.getlName());
+			textFieldAdresse.setText(c.getStreet());
+			textHouseNo.setText(c.getHouseNo());
+			textFieldZipCode.setText(c.getZipCode());
+			textFieldCity.setText(c.getCity());
+			textFieldPhoneNo.setText(c.getPhoneNo());
+			textFieldEmail.setText(c.getEmail());
+			customerNo = c.getCustomerNo();
+		}
+	}
+	
+	private void setCustomer() {
+		if(textFieldFName.getText() != null && textFieldLName.getText() != null && textFieldAdresse.getText() != null && textHouseNo.getText() != null && textFieldZipCode.getText() != null && textFieldCity.getText() != null && textFieldPhoneNo.getText() != null && textFieldEmail.getText() != null && customerNo != 0) {
+			orderController.setCustomer(customerNo);
+		}
 	}
 
 	private void init() {
 		orderController = new OrderController();
-
 		orderController.createOrder();
-
 		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
-
 		comboBoxFName.setEnabled(false);
+		addElementsToComboBoxRole();
 	}
 
 	private void setOrderInfo() {
@@ -447,7 +472,8 @@ public class OrderUI extends JFrame {
 			if (Integer.parseInt(coverField.getText()) >= coverAmount) {
 				coverAmount = Integer.parseInt(coverField.getText());
 				orderController.setOrderInfo(coverAmount, DatePicker.getDateValue());
-			}else {
+				lblFailureCovers.setText(null);
+			} else {
 				textBoxError = true;
 				lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 			}
@@ -457,7 +483,7 @@ public class OrderUI extends JFrame {
 
 		}
 	}
-	
+
 	private void addElementsToComboBoxCustomer() {
 		if (textFieldFName.getText().length() > 0) {
 			comboBoxFName.removeAllItems();
@@ -472,6 +498,13 @@ public class OrderUI extends JFrame {
 		} else {
 			comboBoxFName.removeAllItems();
 			resetCustomer();
+		}
+	}
+	
+	private void addElementsToComboBoxRole() {
+		EmployeeRole role[] = EmployeeRole.values();
+		for(EmployeeRole r : role) {
+			comboBoxRole.addItem(r);
 		}
 	}
 

@@ -25,7 +25,7 @@ import model.Menu;
 import model.Order;
 import model.OrderLine;
 import model.Product;
-import model.Role;
+import model.EmployeeRole;
 
 public class TestCreateOrder {
 	private OrderControllerIF orderController;
@@ -187,7 +187,7 @@ public class TestCreateOrder {
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
-		orderController.addService(Role.MEDARBEJDER);
+		orderController.addService(EmployeeRole.MEDARBEJDER);
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20); // TODO: Valg ud fra liste
@@ -196,7 +196,7 @@ public class TestCreateOrder {
 		assertEquals(delivery.getCity(), order.getDelivery().getCity());
 		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
 		assertEquals(delivery.getStreet(), order.getDelivery().getStreet());
-		assertEquals(Role.MEDARBEJDER, order.getDelivery().getServiceLines().get(0).getRole());
+		assertEquals(EmployeeRole.MEDARBEJDER, order.getDelivery().getServiceLines().get(0).getRole());
 
 	}
 
@@ -227,7 +227,7 @@ public class TestCreateOrder {
 	}
 
 	// test case 9
-	// FIXME lars Spørgsmål
+	// FIXME lars Spï¿½rgsmï¿½l
 
 	@Test 
 	public void NotEnoughCovers() {

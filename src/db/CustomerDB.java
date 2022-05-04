@@ -27,14 +27,17 @@ public class CustomerDB implements CustomerDBIF {
 	private PreparedStatement findByName;
 	private PreparedStatement update;
 
+	private ZipCityDBIF zipCity;
+	
 	/**
 	 * The constructor of the class.
 	 * Try to make connection with the database and prepares statements, when created
 	 */
 	
 	public CustomerDB() {
-		con = DBConnection.getInstance().getConnection();
+		zipCity = new ZipCityDB();
 		try {
+			con = DBConnection.getInstance().getConnection();
 			findByName = con.prepareStatement(FIND_BY_NAME_Q);
 			update = con.prepareStatement(UPDATE_Q);
 		} catch (SQLException e) {
@@ -105,9 +108,9 @@ public class CustomerDB implements CustomerDBIF {
 			String email = rs.getString("email");
 			int customerNo = rs.getInt("customerno");
 			String zipCode = rs.getString("zipcode");
+			String city = zipCity.getCityByZipCode(zipCode);
 			// builds new customer
-			c = new Customer(fName,lName,street,houseNo,phoneNo, email,zipCode,customerNo);
-			
+			c = new Customer(fName,lName,street,houseNo,phoneNo, email,zipCode,city,customerNo);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}

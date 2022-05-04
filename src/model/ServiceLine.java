@@ -6,23 +6,23 @@ import java.time.format.DateTimeFormatter;
 
 public class ServiceLine {
 	
-	private Role role;
+	private EmployeeRole employeeRole;
 	private String startTime;
 	private String endTime;
 	private Employee employee;
 
-	public ServiceLine(Role role) {
-		this.role = role;
+	public ServiceLine(EmployeeRole employeeRole) {
+		this.employeeRole = employeeRole;
 	}
 	
-	public ServiceLine(Role role, String startTime, String endTime) {
-		this.role = role;
+	public ServiceLine(EmployeeRole employeeRole, String startTime, String endTime) {
+		this.employeeRole = employeeRole;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
 	
-	public ServiceLine(Role role, String startTime, String endTime, Employee employee) {
-		this.role = role;
+	public ServiceLine(EmployeeRole employeeRole, String startTime, String endTime, Employee employee) {
+		this.employeeRole = employeeRole;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.employee = employee;
@@ -54,11 +54,11 @@ public class ServiceLine {
 		this.employee = employee;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRole(EmployeeRole employeeRole) {
+		this.employeeRole = employeeRole;
 	}
 
-	public Role getRole() {
-		return role;
+	public EmployeeRole getRole() {
+		return employeeRole;
 	}
 }

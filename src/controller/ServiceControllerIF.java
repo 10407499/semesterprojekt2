@@ -1,11 +1,11 @@
 package controller;
 
 import model.Delivery;
-import model.Role;
+import model.EmployeeRole;
 
 public interface ServiceControllerIF {
 
-	public void addService(Role role);
+	public void addService(EmployeeRole employeeRole);
 	
 	public void insertService(int orderNo);
 

@@ -8,12 +8,14 @@ import db.OrderDB;
 import db.OrderDBIF;
 import db.OrderLineDB;
 import db.OrderLineDBIF;
+import db.ZipCityDB;
+import db.ZipCityDBIF;
 import model.Customer;
 import model.Delivery;
 import model.Order;
 import model.OrderLine;
 import model.Product;
-import model.Role;
+import model.EmployeeRole;
 
 public class OrderController implements OrderControllerIF {
 
@@ -23,9 +25,10 @@ public class OrderController implements OrderControllerIF {
 	private CustomerControllerIF customerController;
 	private ServiceControllerIF serviceController;
 	private ProductControllerIF productController;
+	
 	private OrderDBIF orderDB;
 	private OrderLineDBIF orderLineDB;
-
+	
 	public OrderController() {
 		customerController = new CustomerController();
 		serviceController = new ServiceController();
@@ -74,7 +77,6 @@ public class OrderController implements OrderControllerIF {
 
 	public void setCustomer(int customerNo) {
 		Customer customer = getCustomerByNo(customerNo);
-
 		order.setCustomer(customer);
 	}
 
@@ -99,8 +101,8 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public void addService(Role role) {
-		serviceController.addService(role);
+	public void addService(EmployeeRole employeeRole) {
+		serviceController.addService(employeeRole);
 		// order.getDelivery().addService(null);
 	}
 
@@ -150,7 +152,6 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public Order getOrder() {
-
 		return order;
 	}
 
