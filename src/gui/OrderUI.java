@@ -178,7 +178,7 @@ public class OrderUI extends JFrame {
 		textFieldFName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textFieldFName.getText().length() > 1) {
+				//if (textFieldFName.getText().length() > 1) {
 					comboBoxFName.removeAllItems();
 					List<Customer> customers = orderController.findCustomers(textFieldFName.getText());
 					if (customers != null) {
@@ -190,10 +190,8 @@ public class OrderUI extends JFrame {
 							comboBoxFName.showPopup();
 						}
 					}	
-				}else {
-					comboBoxFName.removeAllItems();
 				}
-			}
+			//}
 		});
 		textFieldFName.setColumns(10);
 		textFieldFName.setBounds(21, 62, 165, 20);

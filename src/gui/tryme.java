@@ -17,8 +17,9 @@ public class tryme {
 		oc.createOrder();
 	  
 		
-		List<Customer> customers = oc.findCustomers("ibe");
+		List<Customer> customers = oc.findCustomers("ib");
 		System.out.println(customers.get(0).getfName());   
+		System.out.println(customers.get(1).getfName());   
 		
 		//oc.setOrderInfo(20, Date.valueOf("2023-01-01"));
 		

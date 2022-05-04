@@ -54,7 +54,7 @@ public class CustomerDB implements CustomerDBIF {
 		List<Customer> customers = null;
 
 		try {
-			findByName.setString(1, name);
+			findByName.setString(1, "%" + name + "%");
 			ResultSet rs = findByName.executeQuery();
 			customers = buildObjects(rs);
 		} catch (SQLException e) {
