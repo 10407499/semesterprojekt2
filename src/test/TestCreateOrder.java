@@ -47,7 +47,7 @@ public class TestCreateOrder {
 	}
 	// Test case 1
 	@Test
-	public void SuccessfulCreationOfanOrdertest() { 
+	public void SuccessfullCreationOfanOrdertest() { 
 		
 		//Arrange
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
@@ -71,10 +71,8 @@ public class TestCreateOrder {
 		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
 		assertEquals(order.getFulfillmentDate(), d);
 	}
-	
-	/* FIXME
-	
-	public void CutomerWantsToCancel() {
+	@Test
+	public void CustomerWantsToCancel() {
 		//Arrange
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
 		int cover = 20;
@@ -83,21 +81,18 @@ public class TestCreateOrder {
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);		
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
-		Order order = orderController.completeOrder();
+		orderController.cancelCreateOrder();
 		//Assert
-		assertEquals(order.getCustomer().getfName(), c.getfName());
-		assertEquals(order.getCoverAmount(), cover);
-		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
-		assertEquals(order.getFulfillmentDate(), d);
+		assertEquals(orderController.getOrder(), null);
+
 	}
-	
-	*/
-	
-	
+	@Test
 	public void Overbooking() { // 
 		//Arrange
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
