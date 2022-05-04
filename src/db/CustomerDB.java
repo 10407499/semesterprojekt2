@@ -38,7 +38,7 @@ public class CustomerDB implements CustomerDBIF {
 			findByName = con.prepareStatement(FIND_BY_NAME_Q);
 			update = con.prepareStatement(UPDATE_Q);
 		} catch (SQLException e) {
-			// TODO throw exception
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -56,11 +56,9 @@ public class CustomerDB implements CustomerDBIF {
 		try {
 			findByName.setString(1, name);
 			ResultSet rs = findByName.executeQuery();
-			if (rs.next()) {
-				customers = buildObjects(rs);
-			}
+			customers = buildObjects(rs);
 		} catch (SQLException e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 
 		return customers;
@@ -97,7 +95,6 @@ public class CustomerDB implements CustomerDBIF {
 	
 	private Customer buildObject(ResultSet rs) {
 		Customer c = null;
-	
 		try {
 			// Flectning data from db needed to build customer
 			String fName = rs.getString("fname");

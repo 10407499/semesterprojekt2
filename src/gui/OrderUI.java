@@ -1,11 +1,10 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,7 +12,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
 
 import controller.OrderController;
 import controller.OrderControllerIF;
@@ -83,6 +81,7 @@ public class OrderUI extends JFrame {
 	private JLabel lblFailureCovers;
 	private boolean textBoxError = false;
 	private JComboBox comboBoxFName;
+	private DefaultComboBoxModel model;
 
 	/**
 	 * Create the frame.
@@ -179,15 +178,20 @@ public class OrderUI extends JFrame {
 		textFieldFName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				comboBoxFName.showPopup();
-				List<Customer> customers = orderController.findCustomers(textFieldFName.getText());
-				System.out.println(customers.get(0).getfName());
-				if (textFieldFName.getText().length() >= 2) {
+				if (textFieldFName.getText().length() > 1) {
+					comboBoxFName.removeAllItems();
+					List<Customer> customers = orderController.findCustomers(textFieldFName.getText());
 					if (customers != null) {
 						for (Customer c : customers) {
-							comboBoxFName.addItem(c.getfName());
+							String toAdd = "<html>"+ c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
+							if(model.getIndexOf(toAdd) == -1) {
+								model.addElement(toAdd);
+							}
+							comboBoxFName.showPopup();
 						}
-					}
+					}	
+				}else {
+					comboBoxFName.removeAllItems();
 				}
 			}
 		});
@@ -242,7 +246,8 @@ public class OrderUI extends JFrame {
 		textFieldEmail.setBounds(21, 303, 328, 20);
 		customerorderInfoPanel.add(textFieldEmail);
 		
-		comboBoxFName = new JComboBox();
+		model = new DefaultComboBoxModel();
+		comboBoxFName = new JComboBox(model);
 		comboBoxFName.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getSource() == comboBoxFName) {
@@ -397,7 +402,6 @@ public class OrderUI extends JFrame {
 		comboBoxRole = new JComboBox();
 		comboBoxRole.setBounds(30, 102, 120, 22);
 		deliveryPanel2.add(comboBoxRole);
-		// comboBox.showPopup();
 
 		JButton btnAddServiceRole = new JButton("Tilf\u00F8j");
 		btnAddServiceRole.setBounds(160, 102, 89, 23);
@@ -436,7 +440,6 @@ public class OrderUI extends JFrame {
 		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
 		
 		comboBoxFName.setEnabled(false);
-		comboBoxFName.addItem("<html>hej lasse <br> flere ord");
 	}
 
 	private void setOrderInfo() {
