@@ -233,7 +233,9 @@ public class OrderUI extends JFrame {
 		comboBoxFName.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getSource() == comboBoxFName) {
-					setCustomer();
+					if(!textFieldLName.getText().equals(null)) {
+						setCustomer(comboBoxFName.getSelectedIndex());
+					}
 				}
 			}
 		});
@@ -408,9 +410,18 @@ public class OrderUI extends JFrame {
 		// 2. method call
 	}
 
-	private void setCustomer() {
+	private void resetCustomer() {
+		textFieldLName.setText(null);
+		textFieldAdresse.setText(null);
+		textHouseNo.setText(null);
+		textFieldZipCode.setText(null);
+		textFieldPhoneNo.setText(null);
+		textFieldEmail.setText(null);
+	}
+	
+	private void setCustomer(int no) {
 		Customer c = null;
-		c = orderController.getCustomers().get(0);
+		c = orderController.getCustomers().get(no);
 		textFieldFName.setText(c.getfName());
 		textFieldLName.setText(c.getlName());
 		textFieldAdresse.setText(c.getStreet());
@@ -450,6 +461,7 @@ public class OrderUI extends JFrame {
 	private void addElementsToComboBoxCustomer() {
 		if (textFieldFName.getText().length() > 0) {
 			comboBoxFName.removeAllItems();
+			resetCustomer();
 			List<String> customerStr = orderController.customerDetailsToString(textFieldFName.getText());
 			for (String s : customerStr) {
 				if (model.getIndexOf(s) == -1) {
@@ -459,6 +471,7 @@ public class OrderUI extends JFrame {
 			comboBoxFName.showPopup();
 		} else {
 			comboBoxFName.removeAllItems();
+			resetCustomer();
 		}
 	}
 
