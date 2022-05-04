@@ -51,8 +51,25 @@ public class OrderController implements OrderControllerIF {
 		return customers;
 	}
 
-	public void setCustomer() {
-		//order.setCustomer(customer); FIXME
+	public void setCustomer(int customerNo) {
+		Customer customer = getCustomerByNo(customerNo);
+		
+		order.setCustomer(customer);
+	}
+
+	private Customer getCustomerByNo(int customerNo) {
+		Customer customer = null;
+		boolean res = false;
+		int index = 0;
+		
+		while(!res &&  index < customers.size()) {
+			if(customers.get(index).getCustomerNo() == customerNo) {
+				res = true;
+				customer = customers.get(index);
+			}
+			index++;
+		}
+		return customer;
 	}
 
 	public void setDelivery(String houseNo, String street, String city, String zipcode) {

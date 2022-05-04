@@ -54,10 +54,13 @@ public class TestCreateOrder {
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d =  Date.valueOf("2023-01-01");
+		
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
@@ -105,7 +108,9 @@ public class TestCreateOrder {
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
 		
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
@@ -127,7 +132,9 @@ public class TestCreateOrder {
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		
 		Order order = orderController.completeOrder();
 		//Assert
@@ -149,7 +156,9 @@ public class TestCreateOrder {
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("WrongProduct");
 		
 		//Assert
@@ -167,7 +176,9 @@ public class TestCreateOrder {
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		orderController.setDelivery(c.getHouseNo(), c.getStreet(), c.getZipCode(), "Ibby");
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
@@ -191,7 +202,9 @@ public class TestCreateOrder {
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
 		orderController.addService(Role.MEDARBEJDER);
 		List<Product> s = orderController.findProducts("Menu1");
@@ -217,7 +230,9 @@ public class TestCreateOrder {
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
@@ -237,25 +252,25 @@ public class TestCreateOrder {
 	
 	
 	//test case 10
-	@Test 
-	public void NotEnoughCovers() {
-		//Arrange
-				Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
-				int cover = 3;
-				Product p = new Menu("Menu1", 20.00, 1, "MENU");
-				Date d =  Date.valueOf("2023-01-01");
-				//Act
-				orderController.createOrder();
-				orderController.setOrderInfo(cover, d);
-				orderController.setCustomer("IB");
-				List<Product> s = orderController.findProducts("Menu1");
-				int productNo = s.get(0).getProductNo();
-				orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
-				Order order = orderController.completeOrder();
-				//Assert
-				assertEquals(3, );
-		
-	}
+//	@Test 
+//	public void NotEnoughCovers() {
+//		//Arrange
+//				Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+//				int cover = 3;
+//				Product p = new Menu("Menu1", 20.00, 1, "MENU");
+//				Date d =  Date.valueOf("2023-01-01");
+//				//Act
+//				orderController.createOrder();
+//				orderController.setOrderInfo(cover, d);
+//				orderController.setCustomer("IB");
+//				List<Product> s = orderController.findProducts("Menu1");
+//				int productNo = s.get(0).getProductNo();
+//				orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
+//				Order order = orderController.completeOrder();
+//				//Assert
+//				assertEquals(3, );
+//		
+//	}
 	
 	
 	@Test
@@ -269,7 +284,9 @@ public class TestCreateOrder {
 		//Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
-		orderController.setCustomer("IB");
+		List<Customer> customers = orderController.findCustomers("IB");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste

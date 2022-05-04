@@ -17,7 +17,7 @@ public interface OrderControllerIF {
 	
 	public List<Customer> findCustomers(String name);
 	
-	public void setCustomer(); 
+	public void setCustomer(int customerNo); 
 	
 	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	
