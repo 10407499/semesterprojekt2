@@ -147,6 +147,22 @@ public class OrderController implements OrderControllerIF {
 		}
 		return res;
 	}
+
+	@Override
+	public void cancelCreateOrder() {
+		order = null;
+		
+	}
+
+	@Override
+	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate) {
+		orderDb.checkCoverAmountOnDate(fulfillmentdate);
+		
+		if();
+		return false;
+	}
+	
+	
 	
 
 }
