@@ -33,8 +33,6 @@ public interface OrderControllerIF {
 	
 	public List<String> customerDetailsToString(String fname);
 	
-	public void cancelCreateOrder();
-	
 	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate);
 	
 	

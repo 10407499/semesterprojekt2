@@ -434,6 +434,9 @@ public class OrderUI extends JFrame {
 			if (Integer.parseInt(coverField.getText()) >= coverAmount) {
 				coverAmount = Integer.parseInt(coverField.getText());
 				orderController.setOrderInfo(coverAmount, DatePicker.getDateValue());
+			}else {
+				textBoxError = true;
+				lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 			}
 		} else {
 			textBoxError = true;

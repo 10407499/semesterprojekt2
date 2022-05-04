@@ -41,12 +41,31 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate) {
+		boolean succes = false; 
 		if (coverAmount >= 4) {
+			order.setCoverAmount(coverAmount);
+			succes = checkCoverAmountOnDate(coverAmount, fulfillmentdate);
+		}
+		order.setFulfillmentDate(fulfillmentdate);
+		return succes;
+	}
+	
+	
+	
+	public boolean setOrderInfo1(int coverAmount, Date fulfillmentdate) {
+		boolean succes = false; 
+		if (checkCoverAmountOnDate(coverAmount, fulfillmentdate)) {
+			order.setCoverAmount(coverAmount);
+			succes = true; 
+		}else {
+			//call dialog
 			order.setCoverAmount(coverAmount);
 		}
 		order.setFulfillmentDate(fulfillmentdate);
-		return checkCoverAmountOnDate(coverAmount, fulfillmentdate);
+		return succes;
 	}
+
+	
 
 	public List<Customer> findCustomers(String name) {
 		customers = customerController.findCustomers(name);
@@ -114,7 +133,6 @@ public class OrderController implements OrderControllerIF {
 			}
 			index++;
 		}
-
 		return product;
 	}
 
@@ -149,12 +167,6 @@ public class OrderController implements OrderControllerIF {
 		return res;
 	}
 
-	@Override
-	public void cancelCreateOrder() {
-		order = null;
-		products = null; 
-		customers = null; 
-	}
 
 	@Override
 	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate) {
