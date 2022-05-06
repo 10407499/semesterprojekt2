@@ -16,8 +16,11 @@ import java.awt.Color;
 
 import controller.OrderController;
 import controller.OrderControllerIF;
+import ctrl.ACtrl;
 import model.Customer;
 import model.EmployeeRole;
+import model.Member;
+import model.Product;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -36,6 +39,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JTable;
 
 public class OrderUI extends JFrame {
 
@@ -57,8 +61,8 @@ public class OrderUI extends JFrame {
 	private JTextField textFieldEmail;
 	private JButton btnNewButton;
 	private JPanel customerorderInfoPanel;
-	private JTextField textField_9;
-	private JTextField textField_10;
+	private JTextField textFieldProduct;
+	private JTextField textFieldProductQuantity;
 	private JPanel deliveryPanel;
 	private JTextField textField_11;
 	private JTextField textField_12;
@@ -68,7 +72,7 @@ public class OrderUI extends JFrame {
 	private JLabel lblEfternavn_9;
 	private JLabel lblEfternavn_10;
 	private JTextField textField_14;
-	private JTextField textField_16;
+	private JComboBox comboBoxEatClock;
 	private JLabel lblEfternavn_12;
 	private JPanel deliveryPanel2;
 
@@ -76,15 +80,21 @@ public class OrderUI extends JFrame {
 	private JComboBox comboBoxRole;
 	private JCheckBox chckbxPickup;
 	private JCheckBox chckbxBillingAddress;
+	private JComboBox comboBoxProduct; 
 
 	private String btnCompleteText = "F�rdigg�re order";
 	private JLabel lblFailureCovers;
 	private boolean textBoxError = false;
 	private JComboBox comboBoxFName;
 	private DefaultComboBoxModel model;
+	private DefaultComboBoxModel modelProduct;
+	private JLabel lblProductQuantityError;
 
 	// FIXME THIS IS TESTING CUSTOMER
 	private int customerNo;
+	private JTable table;
+
+	private ProductListModel productModel;
 
 	/**
 	 * Create the frame.
@@ -274,17 +284,32 @@ public class OrderUI extends JFrame {
 		contentPane.add(productPanel);
 		productPanel.setLayout(null);
 
-		textField_9 = new JTextField();
-		textField_9.setBounds(26, 59, 500, 20);
-		productPanel.add(textField_9);
-		textField_9.setColumns(10);
+		textFieldProduct = new JTextField();
+		textFieldProduct.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				addElementsToComboBoxProduct();
+			}
+		});
+		textFieldProduct.setBounds(26, 59, 500, 20);
+		productPanel.add(textFieldProduct);
+		textFieldProduct.setColumns(10);
 
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBounds(536, 59, 86, 20);
-		productPanel.add(textField_10);
+		textFieldProductQuantity = new JTextField();
+		textFieldProductQuantity.setColumns(10);
+		textFieldProductQuantity.setBounds(536, 59, 86, 20);
+		productPanel.add(textFieldProductQuantity);
 
 		JButton btnAdd = new JButton("Tilf\u00F8j");
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				addProductToTable();
+				
+			}
+
+			
+		});
 		btnAdd.setBounds(632, 58, 117, 23);
 		productPanel.add(btnAdd);
 
@@ -297,15 +322,24 @@ public class OrderUI extends JFrame {
 		JLabel lblQuantity = new JLabel("Antal");
 		lblQuantity.setHorizontalAlignment(SwingConstants.LEFT);
 		lblQuantity.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblQuantity.setBounds(536, 28, 82, 20);
+		lblQuantity.setBounds(536, 29, 82, 20);
 		productPanel.add(lblQuantity);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(26, 98, 723, 242);
 		productPanel.add(scrollPane);
-
-		JList list = new JList();
-		scrollPane.setViewportView(list);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		modelProduct = new DefaultComboBoxModel();
+		comboBoxProduct = new JComboBox(modelProduct);
+		comboBoxProduct.setBounds(26, 59, 500, 20);
+		productPanel.add(comboBoxProduct);
+		
+		 lblProductQuantityError = new JLabel("");
+		lblProductQuantityError.setBounds(638, 28, 45, 19);
+		productPanel.add(lblProductQuantityError);
 		deliveryPanel = new JPanel();
 		String titleDelivery = "Levering/afhentning";
 		Border borderDelivery = BorderFactory.createTitledBorder(titleDelivery);
@@ -387,11 +421,10 @@ public class OrderUI extends JFrame {
 		contentPane.add(deliveryPanel2);
 		deliveryPanel2.setLayout(null);
 
-		textField_16 = new JTextField();
-		textField_16.setBounds(30, 58, 120, 20);
-		deliveryPanel2.add(textField_16);
-		textField_16.setColumns(10);
-
+		comboBoxEatClock = new JComboBox();
+		comboBoxEatClock.setBounds(30, 58, 120, 20);
+		deliveryPanel2.add(comboBoxEatClock);
+	
 		lblEfternavn_12 = new JLabel("Spise tidspunkt");
 		lblEfternavn_12.setBounds(30, 30, 106, 17);
 		deliveryPanel2.add(lblEfternavn_12);
@@ -464,6 +497,12 @@ public class OrderUI extends JFrame {
 		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
 		comboBoxFName.setEnabled(false);
 		addElementsToComboBoxRole();
+		addElementsToComboBoxTime();
+		
+		this.productModel = new ProductListModel();
+		table.setModel(productModel);
+		updateMemberTable();
+		
 	}
 
 	private void setOrderInfo() {
@@ -507,5 +546,57 @@ public class OrderUI extends JFrame {
 			comboBoxRole.addItem(r);
 		}
 	}
+	
+	private void addElementsToComboBoxTime() {
+		for(String s: TimePicker.generateTime())
+			comboBoxEatClock.addItem(s);
+	}
+	
+	
+	private void addElementsToComboBoxProduct() {
+		if (textFieldProduct.getText().length() > 0) {
+			comboBoxProduct.removeAllItems();
+		
+			List<String> productStr = orderController.productDetailsToString(textFieldProduct.getText());
+			for (String s : productStr) {
+				if (modelProduct.getIndexOf(s) == -1) {
+					modelProduct.addElement(s);
+				}
+			}
+			comboBoxProduct.showPopup();
+		} else {
+			comboBoxProduct.removeAllItems();
+			
+		}
+	}
+	
+	
+	private void addProductToOrder(int index) {
+		Product p = null; 
+		if(orderController.getProducts().get(index) != null && textFieldProductQuantity.getText() != null) {
+			p = orderController.getProducts().get(index); 
+			orderController.addProduct(p.getProductNo(), Integer.parseInt(textFieldProductQuantity.getText()));
+			
+		}else {
+			textBoxError = true; 
+		}
+	}
+	
+	
+	private void updateProductTable() {
+		List<Product> products = orderController.getProducts();
+		//table.setModel(memberModel);
+		this.memberModel.setModelData(mems);
+		
+	}
 
+	
+	
+	
+	
+	
+	private void addProductToTable() {
+		
+		
+	}
 }

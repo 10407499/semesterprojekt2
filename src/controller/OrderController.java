@@ -189,4 +189,25 @@ public class OrderController implements OrderControllerIF {
 		return customers;
 	}
 
+	@Override
+	public List<String> productDetailsToString(String description) {
+		List<String> res = new ArrayList<>();
+		products = findProducts(description);
+		if (products != null) {
+			for (Product p : products) {
+				String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
+				res.add(currStr);
+			}
+		}
+		return res;
+	
+	}
+
+	@Override
+	public List<Product> getProducts() {
+		return products;
+	}
+	
+	
+
 }
