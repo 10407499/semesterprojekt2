@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.Font;
 import java.awt.Toolkit;
-
-import javax.management.relation.Role;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -16,10 +14,9 @@ import java.awt.Color;
 
 import controller.OrderController;
 import controller.OrderControllerIF;
-import ctrl.ACtrl;
 import model.Customer;
 import model.EmployeeRole;
-import model.Member;
+import model.OrderLine;
 import model.Product;
 
 import javax.swing.JTextField;
@@ -30,7 +27,6 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JList;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.awt.event.ItemListener;
@@ -80,7 +76,7 @@ public class OrderUI extends JFrame {
 	private JComboBox comboBoxRole;
 	private JCheckBox chckbxPickup;
 	private JCheckBox chckbxBillingAddress;
-	private JComboBox comboBoxProduct; 
+	private JComboBox comboBoxProduct;
 
 	private String btnCompleteText = "F�rdigg�re order";
 	private JLabel lblFailureCovers;
@@ -304,11 +300,10 @@ public class OrderUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				addProductToTable();
-				
+				addProductToOrder(comboBoxProduct.getSelectedIndex());
+				updateProductTable();
 			}
 
-			
 		});
 		btnAdd.setBounds(632, 58, 117, 23);
 		productPanel.add(btnAdd);
@@ -328,16 +323,31 @@ public class OrderUI extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(26, 98, 723, 242);
 		productPanel.add(scrollPane);
-		
+
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		
+
 		modelProduct = new DefaultComboBoxModel();
 		comboBoxProduct = new JComboBox(modelProduct);
+		comboBoxProduct.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getSource() == comboBoxProduct) {
+					comboBoxProduct.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if (e.getModifiers() != 0) { // This if checks if its anything other than keyboard picking
+															// the combobox
+								textFieldProduct.setText(orderController.getProducts().get(comboBoxProduct.getSelectedIndex()).getDescription());
+							}
+						}
+					});
+				}
+			}
+		});
 		comboBoxProduct.setBounds(26, 59, 500, 20);
 		productPanel.add(comboBoxProduct);
-		
-		 lblProductQuantityError = new JLabel("");
+
+		lblProductQuantityError = new JLabel("");
 		lblProductQuantityError.setBounds(638, 28, 45, 19);
 		productPanel.add(lblProductQuantityError);
 		deliveryPanel = new JPanel();
@@ -424,7 +434,7 @@ public class OrderUI extends JFrame {
 		comboBoxEatClock = new JComboBox();
 		comboBoxEatClock.setBounds(30, 58, 120, 20);
 		deliveryPanel2.add(comboBoxEatClock);
-	
+
 		lblEfternavn_12 = new JLabel("Spise tidspunkt");
 		lblEfternavn_12.setBounds(30, 30, 106, 17);
 		deliveryPanel2.add(lblEfternavn_12);
@@ -468,7 +478,7 @@ public class OrderUI extends JFrame {
 		textFieldEmail.setText(null);
 		customerNo = 0;
 	}
-	
+
 	private void setCustomerToTextFields(int no) {
 		Customer c = null;
 		if (orderController.getCustomers().get(no) != null) {
@@ -484,9 +494,13 @@ public class OrderUI extends JFrame {
 			customerNo = c.getCustomerNo();
 		}
 	}
-	
+
 	private void setCustomer() {
-		if(textFieldFName.getText() != null && textFieldLName.getText() != null && textFieldAdresse.getText() != null && textHouseNo.getText() != null && textFieldZipCode.getText() != null && textFieldCity.getText() != null && textFieldPhoneNo.getText() != null && textFieldEmail.getText() != null && customerNo != 0) {
+		// This checks if all the textFields in customer panel isnt null
+		if (textFieldFName.getText() != null && textFieldLName.getText() != null && textFieldAdresse.getText() != null
+				&& textHouseNo.getText() != null && textFieldZipCode.getText() != null
+				&& textFieldCity.getText() != null && textFieldPhoneNo.getText() != null
+				&& textFieldEmail.getText() != null && customerNo != 0) {
 			orderController.setCustomer(customerNo);
 		}
 	}
@@ -494,19 +508,21 @@ public class OrderUI extends JFrame {
 	private void init() {
 		orderController = new OrderController();
 		orderController.createOrder();
+
 		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
 		comboBoxFName.setEnabled(false);
 		addElementsToComboBoxRole();
 		addElementsToComboBoxTime();
-		
+
 		this.productModel = new ProductListModel();
 		table.setModel(productModel);
-		updateMemberTable();
-		
+		updateProductTable();
+
 	}
 
 	private void setOrderInfo() {
-		int coverAmount = 4; // Special requirement, cover amount must be minimum 4
+		int coverAmount = 4; // Special requirement, cover amount must be minimum 4 | Maybe get it from
+								// database
 		if (!coverField.getText().equals("")) {
 			if (Integer.parseInt(coverField.getText()) >= coverAmount) {
 				coverAmount = Integer.parseInt(coverField.getText());
@@ -539,24 +555,23 @@ public class OrderUI extends JFrame {
 			resetCustomer();
 		}
 	}
-	
+
 	private void addElementsToComboBoxRole() {
 		EmployeeRole role[] = EmployeeRole.values();
-		for(EmployeeRole r : role) {
+		for (EmployeeRole r : role) {
 			comboBoxRole.addItem(r);
 		}
 	}
-	
+
 	private void addElementsToComboBoxTime() {
-		for(String s: TimePicker.generateTime())
+		for (String s : TimePicker.generateTime())
 			comboBoxEatClock.addItem(s);
 	}
-	
-	
+
 	private void addElementsToComboBoxProduct() {
 		if (textFieldProduct.getText().length() > 0) {
 			comboBoxProduct.removeAllItems();
-		
+
 			List<String> productStr = orderController.productDetailsToString(textFieldProduct.getText());
 			for (String s : productStr) {
 				if (modelProduct.getIndexOf(s) == -1) {
@@ -566,37 +581,23 @@ public class OrderUI extends JFrame {
 			comboBoxProduct.showPopup();
 		} else {
 			comboBoxProduct.removeAllItems();
-			
+
 		}
-	}
-	
-	
-	private void addProductToOrder(int index) {
-		Product p = null; 
-		if(orderController.getProducts().get(index) != null && textFieldProductQuantity.getText() != null) {
-			p = orderController.getProducts().get(index); 
-			orderController.addProduct(p.getProductNo(), Integer.parseInt(textFieldProductQuantity.getText()));
-			
-		}else {
-			textBoxError = true; 
-		}
-	}
-	
-	
-	private void updateProductTable() {
-		List<Product> products = orderController.getProducts();
-		//table.setModel(memberModel);
-		this.memberModel.setModelData(mems);
-		
 	}
 
-	
-	
-	
-	
-	
-	private void addProductToTable() {
-		
-		
+	private void addProductToOrder(int index) {
+		Product p = null;
+		if (orderController.getProducts().get(index) != null && textFieldProductQuantity.getText() != null) {
+			p = orderController.getProducts().get(index);
+			orderController.addProduct(p.getProductNo(), Integer.parseInt(textFieldProductQuantity.getText()));
+		} else {
+			textBoxError = true;
+		}
+	}
+
+	private void updateProductTable() {
+		List<OrderLine> orderLines = orderController.getOrder().getOrderLines();
+		// table.setModel(memberModel);
+		this.productModel.setModelData(orderLines);
 	}
 }

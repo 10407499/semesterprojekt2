@@ -5,20 +5,21 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
+import model.OrderLine;
 import model.Product;
 
 public class ProductListModel extends DefaultTableModel{
 	private static final long serialVersionUID = 1L;
-	private static final String []COL_NAMES = {"Description", "Price"};
+	private static final String []COL_NAMES = {"Beskrivelse", "Antal", "Pris pr. kurvert"};
 	
-	private List<Product> data;
+	private List<OrderLine> data;
 	
 	public ProductListModel() {
 		super();
 		data = new ArrayList<>();
 	}
 	
-	public void setModelData(List<Product> data) {
+	public void setModelData(List<OrderLine> data) {
 		this.data = data;
 		super.fireTableDataChanged();
 	}
@@ -45,15 +46,16 @@ public class ProductListModel extends DefaultTableModel{
 	@Override
 	public Object getValueAt(int row, int column) {
 		String res = "UNKNOWN";
-		Product currProduct = data.get(row);
+		OrderLine currProduct = data.get(row);
 		switch(column) {
 		case 0:	
-			res = currProduct.getDescription();
+			res = currProduct.getProduct().getDescription();
 			break;
 		case 1: 
-			res = ""+currProduct.getPrice(); //TODO Tjek ny løsning
+			res = "" + currProduct.getQuantity(); //TODO Tjek ny lï¿½sning
 			break;
-		
+		case 2:
+			res = "" +currProduct.getProduct().getPrice(); //TODO Tjek for ny lÃ¸sning
 		}
 		return res;
 	}
