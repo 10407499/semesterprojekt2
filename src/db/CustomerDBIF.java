@@ -11,5 +11,6 @@ public interface CustomerDBIF {
 	 * @return List of Customers
 	 */
 	public List<Customer> findCustomers(String name);
-	
+	public int insertCustomer(Customer customer);
 }
+

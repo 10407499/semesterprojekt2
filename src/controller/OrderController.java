@@ -68,8 +68,6 @@ public class OrderController implements OrderControllerIF {
 		return succes;
 	}
 
-	
-
 	public List<Customer> findCustomers(String name) {
 		customers = customerController.findCustomers(name);
 		return customers;
@@ -110,7 +108,6 @@ public class OrderController implements OrderControllerIF {
 	public List<Product> findProducts(String description) {
 
 		products = productController.findProducts(description);
-
 		return products;
 	}
 
@@ -127,7 +124,6 @@ public class OrderController implements OrderControllerIF {
 		Product product = null;
 		boolean res = false;
 		int index = 0;
-
 		while (!res && index < products.size()) {
 			if (products.get(index).getProductNo() == productNo) {
 				res = true;
@@ -168,7 +164,6 @@ public class OrderController implements OrderControllerIF {
 		return res;
 	}
 
-
 	@Override
 	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate) {
 		List<Order> orders = orderDB.checkCoverAmountOnDate(fulfillmentdate);
@@ -200,14 +195,19 @@ public class OrderController implements OrderControllerIF {
 			}
 		}
 		return res;
-	
 	}
 
 	@Override
 	public List<Product> getProducts() {
 		return products;
 	}
-	
-	
 
+	@Override
+	public void insertNewCustomer(String fName, String lName, String street, String houseNo, String phoneNo,
+			String email, String zipCode, String city) {
+		Customer customer = customerController.insertCustomer(fName, lName, street, houseNo, phoneNo, email, zipCode, city);
+		if(customer != null) {
+			order.setCustomer(customer);
+		}
+	}
 }

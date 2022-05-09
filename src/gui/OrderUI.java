@@ -71,6 +71,7 @@ public class OrderUI extends JFrame {
 	private JComboBox comboBoxEatClock;
 	private JLabel lblEfternavn_12;
 	private JPanel deliveryPanel2;
+	private JLabel lblCustomerError;
 
 	private JCheckBox chckbxDelivery;
 	private JComboBox comboBoxRole;
@@ -85,9 +86,10 @@ public class OrderUI extends JFrame {
 	private DefaultComboBoxModel model;
 	private DefaultComboBoxModel modelProduct;
 	private JLabel lblProductQuantityError;
+	private JScrollPane scrollPane;
 
 	// FIXME THIS IS TESTING CUSTOMER
-	private int customerNo;
+	private int customerNo = 0;
 	private JTable table;
 
 	private ProductListModel productModel;
@@ -262,6 +264,11 @@ public class OrderUI extends JFrame {
 		});
 		comboBoxFName.setBounds(21, 62, 165, 20);
 		customerorderInfoPanel.add(comboBoxFName);
+		
+		lblCustomerError = new JLabel("");
+		lblCustomerError.setBounds(118, 11, 244, 14);
+		customerorderInfoPanel.add(lblCustomerError);
+		lblCustomerError.setForeground(Color.RED);
 
 		btnNewButton = new JButton("Annuller");
 		btnNewButton.addActionListener(e -> {
@@ -320,7 +327,7 @@ public class OrderUI extends JFrame {
 		lblQuantity.setBounds(536, 29, 82, 20);
 		productPanel.add(lblQuantity);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(26, 98, 723, 242);
 		productPanel.add(scrollPane);
 
@@ -497,12 +504,17 @@ public class OrderUI extends JFrame {
 
 	private void setCustomer() {
 		// This checks if all the textFields in customer panel isnt null
-		if (textFieldFName.getText() != null && textFieldLName.getText() != null && textFieldAdresse.getText() != null
-				&& textHouseNo.getText() != null && textFieldZipCode.getText() != null
-				&& textFieldCity.getText() != null && textFieldPhoneNo.getText() != null
-				&& textFieldEmail.getText() != null && customerNo != 0) {
+		System.out.println(checkCustomerTextFields());
+		if (checkCustomerTextFields() && customerNo != 0) {
 			orderController.setCustomer(customerNo);
 		}
+		else if(checkCustomerTextFields() && customerNo == 0) {
+			orderController.insertNewCustomer(textFieldFName.getText(), textFieldLName.getText(), 
+					textFieldAdresse.getText(), textHouseNo.getText(), textFieldPhoneNo.getText(), textFieldEmail.getText(),
+					textFieldZipCode.getText(), 
+					textFieldCity.getText());
+		}
+		
 	}
 
 	private void init() {
@@ -597,7 +609,22 @@ public class OrderUI extends JFrame {
 
 	private void updateProductTable() {
 		List<OrderLine> orderLines = orderController.getOrder().getOrderLines();
-		// table.setModel(memberModel);
 		this.productModel.setModelData(orderLines);
+	}
+	
+	private boolean checkCustomerTextFields() {
+		boolean res = false;
+		if(!textFieldFName.getText().isEmpty() && !textFieldLName.getText().isEmpty() && !textFieldAdresse.getText().isEmpty()
+				&& !textHouseNo.getText().isEmpty() && !textFieldZipCode.getText().isEmpty()
+				&& !textFieldCity.getText().isEmpty() && !textFieldPhoneNo.getText().isEmpty()
+				&& !textFieldEmail.getText().isEmpty()) {
+			res = true;
+			lblCustomerError.setText("");
+		}
+		else {
+			textBoxError = true;
+			lblCustomerError.setText("Alle felter skal udfyldes");
+		}
+		return res;
 	}
 }

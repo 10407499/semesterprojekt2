@@ -44,8 +44,7 @@ public class OrderDB implements OrderDBIF {
 			insertOrderPS.setInt(3, order.getCoverAmount());
 			insertOrderPS.setBoolean(4, order.isPaid());
 			insertOrderPS.setBoolean(5, order.isConfimation());
-			insertOrderPS.setInt(6, order.getCustomer().getCustomerNo());
-			//res = insertOrderPS.executeUpdate(); //FIXME som udgangspunkt så virker det ikke at benytte den metode neden for. 
+			insertOrderPS.setInt(6, order.getCustomer().getCustomerNo()); 
 			res = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
 			
 		} catch (SQLException e) {

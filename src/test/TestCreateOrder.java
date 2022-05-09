@@ -44,7 +44,7 @@ public class TestCreateOrder {
 	public void SuccessfullCreationOfanOrdertest() {
 
 		// Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
@@ -106,7 +106,7 @@ public class TestCreateOrder {
 	// test case 4
 	@Test
 	public void OrderWithoutProducts() { // test case 4
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 20;
 
 		Date d = Date.valueOf("2023-01-01");
@@ -130,7 +130,7 @@ public class TestCreateOrder {
 	public void ProductNotFound() {
 
 		// Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",1);
 		int cover = 20;
 		Date d = Date.valueOf("2023-01-01");
 		// Act
@@ -149,7 +149,7 @@ public class TestCreateOrder {
 	// test case 6
 	@Test
 	public void addDelivery() {
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",1);
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
@@ -175,7 +175,7 @@ public class TestCreateOrder {
 	// test case 7
 	@Test
 	public void addDeliveryAndService() {
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818","Ibby", 1);
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
@@ -203,7 +203,7 @@ public class TestCreateOrder {
 	// test case 8
 	// FIXME
 	public void AlternativeDeliveryAddress() {
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",1);
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
@@ -232,7 +232,7 @@ public class TestCreateOrder {
 	@Test 
 	public void NotEnoughCovers() {
 		//Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 2;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
@@ -251,7 +251,7 @@ public class TestCreateOrder {
 	public void OrderWithoutCover() {
 
 		// Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 3);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",3);
 		int cover = 0;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");

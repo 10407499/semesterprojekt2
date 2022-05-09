@@ -19,6 +19,9 @@ public interface OrderControllerIF {
 	
 	public void setCustomer(int customerNo);
 	
+	public void insertNewCustomer(String fName, String lName, String street, String houseNo, 
+			String phoneNo, String email, String zipCode, String city);
+	
 	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	
 	public void addService(EmployeeRole employeeRole);

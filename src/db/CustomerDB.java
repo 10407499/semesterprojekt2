@@ -22,10 +22,12 @@ public class CustomerDB implements CustomerDBIF {
 	
 	private static final String FIND_BY_NAME_Q = "select * from Customer where fname like ?";
 	private static final String UPDATE_Q = "update Customer set fname = ?, address = ?, phone = ? , email = ?, zipcode = ? where fname = ?"; //FIXME
-
+	private static final String INSERT_Q = "insert into Customer values (?, ?, ?, ?, ?, ?, ?)";
+	
 	private Connection con;
 	private PreparedStatement findByName;
 	private PreparedStatement update;
+	private PreparedStatement insertCustomerPS;
 
 	private ZipCityDBIF zipCity;
 	
@@ -40,6 +42,7 @@ public class CustomerDB implements CustomerDBIF {
 			con = DBConnection.getInstance().getConnection();
 			findByName = con.prepareStatement(FIND_BY_NAME_Q);
 			update = con.prepareStatement(UPDATE_Q);
+			insertCustomerPS = con.prepareStatement(INSERT_Q, insertCustomerPS.RETURN_GENERATED_KEYS);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -115,6 +118,26 @@ public class CustomerDB implements CustomerDBIF {
 			System.out.println(e.getMessage());
 		}
 		return c;
+	}
+
+
+	@Override
+	public int insertCustomer(Customer customer) {
+		int res = -1;
+		try {
+			insertCustomerPS.setString(1, customer.getfName());
+			insertCustomerPS.setString(2, customer.getlName());
+			insertCustomerPS.setString(3, customer.getStreet());
+			insertCustomerPS.setString(4, customer.getHouseNo());
+			insertCustomerPS.setString(5, customer.getPhoneNo());
+			insertCustomerPS.setString(6, customer.getEmail());
+			insertCustomerPS.setString(7, customer.getZipCode());
+			System.out.println(customer.getZipCode());
+			res = DBConnection.getInstance().executeInsertWithIdentity(insertCustomerPS);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}	
+		return res;
 	}
 
 }

@@ -38,5 +38,15 @@ public class CustomerController implements CustomerControllerIF {
 		// Returns the list with customers
 		return customers;
 	}
+
+	@Override
+	public Customer insertCustomer(String fName, String lName, String street, String houseNo, String phoneNo, String email,
+			String zipCode, String city) {
+		//FIXME spørgsmål til vejleder. Skal vi gøre det her, eller i customerDB?
+		Customer customer = new Customer(fName, lName, street, houseNo, phoneNo, email, zipCode, city);
+		int customerNo = customerDB.insertCustomer(customer);
+		customer.setCustomerNo(customerNo);
+		return customer;
+	}
 	
 }
