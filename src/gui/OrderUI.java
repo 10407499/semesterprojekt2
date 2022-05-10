@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -36,6 +38,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTable;
+import javax.swing.JList;
 
 public class OrderUI extends JFrame {
 
@@ -62,7 +65,7 @@ public class OrderUI extends JFrame {
 	private JPanel deliveryPanel;
 	private JTextField textFieldDeliveryCity;
 	private JTextField textFieldDeliveryAdd;
-	private JTextField textFieldZipCodeDelivery;
+	private JTextField textFieldDeliveryZipCode;
 	private JLabel lblEfternavn_7;
 	private JLabel lblEfternavn_8;
 	private JLabel lblEfternavn_9;
@@ -93,6 +96,8 @@ public class OrderUI extends JFrame {
 	private JTable table;
 
 	private ProductListModel productModel;
+	private DefaultListModel eList;
+	private JList serviceList;
 
 	/**
 	 * Create the frame.
@@ -131,15 +136,26 @@ public class OrderUI extends JFrame {
 		orderInfoPanel.add(lblCovers);
 
 		coverField = new JTextField();
-		coverField.setBounds(21, 121, 245, 20);
+		coverField.setBounds(21, 121, 98, 20);
 		orderInfoPanel.add(coverField);
 		coverField.setColumns(10);
 
 		lblFailureCovers = new JLabel("");
+		lblFailureCovers.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblFailureCovers.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblFailureCovers.setForeground(Color.RED);
-		lblFailureCovers.setBounds(130, 95, 194, 14);
+		lblFailureCovers.setBounds(168, 11, 194, 14);
 		orderInfoPanel.add(lblFailureCovers);
+
+		comboBoxEatClock = new JComboBox();
+		comboBoxEatClock.setBounds(192, 121, 120, 20);
+		orderInfoPanel.add(comboBoxEatClock);
+
+		lblEfternavn_12 = new JLabel("Spise tidspunkt");
+		lblEfternavn_12.setBounds(192, 92, 106, 17);
+		orderInfoPanel.add(lblEfternavn_12);
+		lblEfternavn_12.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEfternavn_12.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		customerorderInfoPanel = new JPanel();
 		String titleCustomer = "Kunde";
@@ -264,8 +280,9 @@ public class OrderUI extends JFrame {
 		});
 		comboBoxFName.setBounds(21, 62, 165, 20);
 		customerorderInfoPanel.add(comboBoxFName);
-		
+
 		lblCustomerError = new JLabel("");
+		lblCustomerError.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCustomerError.setBounds(118, 11, 244, 14);
 		customerorderInfoPanel.add(lblCustomerError);
 		lblCustomerError.setForeground(Color.RED);
@@ -307,10 +324,11 @@ public class OrderUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				addProductToOrder(comboBoxProduct.getSelectedIndex());
-				updateProductTable();
+				if(comboBoxProduct.getSelectedIndex() != -1) {
+					addProductToOrder(comboBoxProduct.getSelectedIndex());
+					updateProductTable();
+				}
 			}
-
 		});
 		btnAdd.setBounds(632, 58, 117, 23);
 		productPanel.add(btnAdd);
@@ -344,7 +362,8 @@ public class OrderUI extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							if (e.getModifiers() != 0) { // This if checks if its anything other than keyboard picking
 															// the combobox
-								textFieldProduct.setText(orderController.getProducts().get(comboBoxProduct.getSelectedIndex()).getDescription());
+								textFieldProduct.setText(orderController.getProducts()
+										.get(comboBoxProduct.getSelectedIndex()).getDescription());
 							}
 						}
 					});
@@ -384,14 +403,6 @@ public class OrderUI extends JFrame {
 				chckbxAlternativeAdd.setSelected(false);
 			}
 		});
-		chckbxDelivery.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					chckbxDelivery.setSelected(true);
-				}
-			}
-		});
 		chckbxDelivery.setBounds(28, 68, 97, 23);
 		deliveryPanel.add(chckbxDelivery);
 
@@ -417,10 +428,10 @@ public class OrderUI extends JFrame {
 		chckbxAlternativeAdd.setBounds(28, 107, 191, 23);
 		deliveryPanel.add(chckbxAlternativeAdd);
 
-		textFieldZipCodeDelivery = new JTextField();
-		textFieldZipCodeDelivery.setColumns(10);
-		textFieldZipCodeDelivery.setBounds(225, 108, 82, 20);
-		deliveryPanel.add(textFieldZipCodeDelivery);
+		textFieldDeliveryZipCode = new JTextField();
+		textFieldDeliveryZipCode.setColumns(10);
+		textFieldDeliveryZipCode.setBounds(225, 108, 82, 20);
+		deliveryPanel.add(textFieldDeliveryZipCode);
 
 		lblEfternavn_7 = new JLabel("Adresse");
 		lblEfternavn_7.setHorizontalAlignment(SwingConstants.LEFT);
@@ -448,37 +459,44 @@ public class OrderUI extends JFrame {
 
 		textFieldDeliveryHouseNo = new JTextField();
 		textFieldDeliveryHouseNo.setColumns(10);
-		textFieldDeliveryHouseNo.setBounds(403, 54, 80, 20);
+		textFieldDeliveryHouseNo.setBounds(405, 54, 80, 20);
 		deliveryPanel.add(textFieldDeliveryHouseNo);
 
 		deliveryPanel2 = new JPanel();
-		String titleDelivery2 = "Tidspunkt";
+		String titleDelivery2 = "Service";
 		Border borderDelivery2 = BorderFactory.createTitledBorder(titleDelivery2);
 		deliveryPanel2.setBorder(borderDelivery2);
 		deliveryPanel2.setBounds(966, 442, 261, 153);
 		contentPane.add(deliveryPanel2);
 		deliveryPanel2.setLayout(null);
 
-		comboBoxEatClock = new JComboBox();
-		comboBoxEatClock.setBounds(30, 58, 120, 20);
-		deliveryPanel2.add(comboBoxEatClock);
-
-		lblEfternavn_12 = new JLabel("Spise tidspunkt");
-		lblEfternavn_12.setBounds(30, 30, 106, 17);
-		deliveryPanel2.add(lblEfternavn_12);
-		lblEfternavn_12.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEfternavn_12.setFont(new Font("Tahoma", Font.BOLD, 14));
-
 		comboBoxRole = new JComboBox();
-		comboBoxRole.setBounds(30, 102, 120, 22);
+		comboBoxRole.setBounds(22, 28, 120, 22);
 		deliveryPanel2.add(comboBoxRole);
-		
+
 		JButton btnAddServiceRole = new JButton("Tilf\u00F8j");
 		btnAddServiceRole.addActionListener(e -> {
-		
+			addService();
 		});
-		btnAddServiceRole.setBounds(160, 102, 89, 23);
+
+		btnAddServiceRole.setBounds(152, 28, 89, 23);
 		deliveryPanel2.add(btnAddServiceRole);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(22, 67, 219, 63);
+		deliveryPanel2.add(scrollPane_1);
+
+		eList = new DefaultListModel();
+		serviceList = new JList(eList);
+		serviceList.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					eList.remove(serviceList.getSelectedIndex());
+				}
+			}
+		});
+		scrollPane_1.setViewportView(serviceList);
 
 		JButton btnFrdiggrOrdre = new JButton("F\u00EF\u00BF\u00BDrdigg\u00EF\u00BF\u00BDre ordre");
 		btnFrdiggrOrdre.addMouseListener(new MouseAdapter() {
@@ -498,8 +516,10 @@ public class OrderUI extends JFrame {
 		setOrderInfo();
 		// 2nd method call
 		setCustomer();
-		//3rd method call
-		
+		// 3rd method call
+		setService();
+		// 4th method call
+		orderController.completeOrder();
 	}
 
 	private void resetCustomer() {
@@ -533,14 +553,12 @@ public class OrderUI extends JFrame {
 		System.out.println(checkCustomerTextFields());
 		if (checkCustomerTextFields() && customerNo != 0) {
 			orderController.setCustomer(customerNo);
+		} else if (checkCustomerTextFields() && customerNo == 0) {
+			orderController.insertNewCustomer(textFieldFName.getText(), textFieldLName.getText(),
+					textFieldAdresse.getText(), textHouseNo.getText(), textFieldPhoneNo.getText(),
+					textFieldEmail.getText(), textFieldZipCode.getText(), textFieldCity.getText());
 		}
-		else if(checkCustomerTextFields() && customerNo == 0) {
-			orderController.insertNewCustomer(textFieldFName.getText(), textFieldLName.getText(), 
-					textFieldAdresse.getText(), textHouseNo.getText(), textFieldPhoneNo.getText(), textFieldEmail.getText(),
-					textFieldZipCode.getText(), 
-					textFieldCity.getText());
-		}
-		
+
 	}
 
 	private void init() {
@@ -638,28 +656,48 @@ public class OrderUI extends JFrame {
 		List<OrderLine> orderLines = orderController.getOrder().getOrderLines();
 		this.productModel.setModelData(orderLines);
 	}
-	
+
 	private boolean checkCustomerTextFields() {
 		boolean res = false;
-		if(!textFieldFName.getText().isEmpty() && !textFieldLName.getText().isEmpty() && !textFieldAdresse.getText().isEmpty()
-				&& !textHouseNo.getText().isEmpty() && !textFieldZipCode.getText().isEmpty()
-				&& !textFieldCity.getText().isEmpty() && !textFieldPhoneNo.getText().isEmpty()
-				&& !textFieldEmail.getText().isEmpty()) {
+		if (!textFieldFName.getText().isEmpty() && !textFieldLName.getText().isEmpty()
+				&& !textFieldAdresse.getText().isEmpty() && !textHouseNo.getText().isEmpty()
+				&& !textFieldZipCode.getText().isEmpty() && !textFieldCity.getText().isEmpty()
+				&& !textFieldPhoneNo.getText().isEmpty() && !textFieldEmail.getText().isEmpty()) {
 			res = true;
 			lblCustomerError.setText("");
-		}
-		else {
+		} else {
 			textBoxError = true;
 			lblCustomerError.setText("Alle felter skal udfyldes");
 		}
 		return res;
 	}
-	private void setService() {
-		EmployeeRole er = (EmployeeRole) comboBoxRole.getSelectedItem();
-		orderController.addService(er);
-		if(chckbxAlternativeAdd.isEnabled()) {
-			
+
+	private void setService() { //FIXME Vi er kommet hertil, check database
+		setDelivery();
+		List<EmployeeRole> er = new ArrayList<>();
+		for (int i = 0; i < serviceList.getModel().getSize(); i++) {
+			String s =  serviceList.getModel().getElementAt(i).toString();
+			EmployeeRole e = EmployeeRole.valueOf(s);
+			er.add(e);
 		}
-		//orderController.setDelivery();
+		orderController.addService(er);
+	}
+
+	private void setDelivery() {
+		if (chckbxAlternativeAdd.isSelected()) {
+			if (!textFieldDeliveryAdd.getText().isEmpty() && !textFieldDeliveryCity.getText().isEmpty()
+					&& !textFieldDeliveryZipCode.getText().isEmpty() && !textFieldDeliveryHouseNo.getText().isEmpty()) {
+				orderController.setDelivery(textFieldDeliveryHouseNo.getText(), textFieldDeliveryAdd.getText(),
+						textFieldDeliveryCity.getText(), textFieldDeliveryZipCode.getText());
+			}
+		} else if (chckbxDelivery.isSelected() && checkCustomerTextFields()) {
+			orderController.setDelivery(textHouseNo.getText(), textFieldAdresse.getText(), textFieldCity.getText(),
+					textFieldZipCode.getText());
+		}
+	}
+
+	private void addService() {
+		EmployeeRole er = (EmployeeRole) comboBoxRole.getSelectedItem();
+		eList.addElement(er);
 	}
 }

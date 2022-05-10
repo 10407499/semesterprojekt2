@@ -21,7 +21,8 @@ public class ServiceController implements ServiceControllerIF {
 	
 	@Override
 	public Delivery setDelivery(String houseNo, String street, String city, String zipcode) {
-		return delivery = new Delivery(houseNo, street, city, zipcode);
+		delivery = new Delivery(houseNo, street, city, zipcode);
+		return delivery;
 	}
 
 	@Override

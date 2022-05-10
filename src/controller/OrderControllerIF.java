@@ -24,8 +24,6 @@ public interface OrderControllerIF {
 	
 	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	
-	public void addService(EmployeeRole employeeRole);
-	
 	public List<Product> findProducts(String description); 
 	
 	public void addProduct(int productNo, int quantity);
@@ -43,4 +41,6 @@ public interface OrderControllerIF {
 	public List<String> productDetailsToString(String description);
 	
 	public List<Product> getProducts();
+
+	public void addService(List<EmployeeRole> employeeRoles);
 }

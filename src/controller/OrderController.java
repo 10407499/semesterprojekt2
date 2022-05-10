@@ -94,16 +94,17 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	public void setDelivery(String houseNo, String street, String city, String zipcode) {
-		if(order.getDelivery() != null) {
+		if(order.getDelivery() == null) { 
 			Delivery delivery = serviceController.setDelivery(houseNo, street, city, zipcode);
 			order.setDelivery(delivery);
 		}
 	}
 
 	@Override
-	public void addService(EmployeeRole employeeRole) {
-		serviceController.addService(employeeRole);
-		// order.getDelivery().addService(null);
+	public void addService(List<EmployeeRole> employeeRoles) {
+		for(EmployeeRole er : employeeRoles) {
+			serviceController.addService(er);
+		}
 	}
 
 	@Override
