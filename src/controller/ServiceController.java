@@ -20,7 +20,7 @@ public class ServiceController implements ServiceControllerIF {
 	}
 	
 	@Override
-	public Delivery setService(String houseNo, String street, String city, String zipcode) {
+	public Delivery setDelivery(String houseNo, String street, String city, String zipcode) {
 		return delivery = new Delivery(houseNo, street, city, zipcode);
 	}
 

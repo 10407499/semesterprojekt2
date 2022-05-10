@@ -60,14 +60,14 @@ public class OrderUI extends JFrame {
 	private JTextField textFieldProduct;
 	private JTextField textFieldProductQuantity;
 	private JPanel deliveryPanel;
-	private JTextField textField_11;
-	private JTextField textField_12;
-	private JTextField textField_13;
+	private JTextField textFieldDeliveryCity;
+	private JTextField textFieldDeliveryAdd;
+	private JTextField textFieldZipCodeDelivery;
 	private JLabel lblEfternavn_7;
 	private JLabel lblEfternavn_8;
 	private JLabel lblEfternavn_9;
 	private JLabel lblEfternavn_10;
-	private JTextField textField_14;
+	private JTextField textFieldDeliveryHouseNo;
 	private JComboBox comboBoxEatClock;
 	private JLabel lblEfternavn_12;
 	private JPanel deliveryPanel2;
@@ -76,7 +76,7 @@ public class OrderUI extends JFrame {
 	private JCheckBox chckbxDelivery;
 	private JComboBox comboBoxRole;
 	private JCheckBox chckbxPickup;
-	private JCheckBox chckbxBillingAddress;
+	private JCheckBox chckbxAlternativeAdd;
 	private JComboBox comboBoxProduct;
 
 	private String btnCompleteText = "F�rdigg�re order";
@@ -270,7 +270,7 @@ public class OrderUI extends JFrame {
 		customerorderInfoPanel.add(lblCustomerError);
 		lblCustomerError.setForeground(Color.RED);
 
-		btnNewButton = new JButton("Annuller");
+		btnNewButton = new JButton("Tilbage");
 		btnNewButton.addActionListener(e -> {
 			JFrameManager.goToMainUI(this);
 			setVisible(false);
@@ -366,17 +366,24 @@ public class OrderUI extends JFrame {
 		deliveryPanel.setLayout(null);
 		deliveryPanel.add(new JSeparator());
 
-		textField_12 = new JTextField();
-		textField_12.setBounds(225, 54, 170, 20);
-		textField_12.setColumns(10);
-		deliveryPanel.add(textField_12);
+		textFieldDeliveryAdd = new JTextField();
+		textFieldDeliveryAdd.setBounds(225, 54, 170, 20);
+		textFieldDeliveryAdd.setColumns(10);
+		deliveryPanel.add(textFieldDeliveryAdd);
 
-		textField_11 = new JTextField();
-		textField_11.setBounds(317, 108, 166, 20);
-		deliveryPanel.add(textField_11);
-		textField_11.setColumns(10);
+		textFieldDeliveryCity = new JTextField();
+		textFieldDeliveryCity.setBounds(317, 108, 166, 20);
+		deliveryPanel.add(textFieldDeliveryCity);
+		textFieldDeliveryCity.setColumns(10);
 
 		chckbxDelivery = new JCheckBox("Levering");
+		chckbxDelivery.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				chckbxPickup.setSelected(false);
+				chckbxAlternativeAdd.setSelected(false);
+			}
+		});
 		chckbxDelivery.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -385,21 +392,35 @@ public class OrderUI extends JFrame {
 				}
 			}
 		});
-		chckbxDelivery.setBounds(28, 29, 97, 23);
+		chckbxDelivery.setBounds(28, 68, 97, 23);
 		deliveryPanel.add(chckbxDelivery);
 
 		chckbxPickup = new JCheckBox("Afhentning");
-		chckbxPickup.setBounds(28, 69, 97, 23);
+		chckbxPickup.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				chckbxDelivery.setSelected(false);
+				chckbxAlternativeAdd.setSelected(false);
+			}
+		});
+		chckbxPickup.setBounds(28, 29, 97, 23);
 		deliveryPanel.add(chckbxPickup);
 
-		chckbxBillingAddress = new JCheckBox("Brug faktureringsadresse");
-		chckbxBillingAddress.setBounds(28, 107, 191, 23);
-		deliveryPanel.add(chckbxBillingAddress);
+		chckbxAlternativeAdd = new JCheckBox("Levering til anden adresse");
+		chckbxAlternativeAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				chckbxDelivery.setSelected(false);
+				chckbxPickup.setSelected(false);
+			}
+		});
+		chckbxAlternativeAdd.setBounds(28, 107, 191, 23);
+		deliveryPanel.add(chckbxAlternativeAdd);
 
-		textField_13 = new JTextField();
-		textField_13.setColumns(10);
-		textField_13.setBounds(225, 108, 82, 20);
-		deliveryPanel.add(textField_13);
+		textFieldZipCodeDelivery = new JTextField();
+		textFieldZipCodeDelivery.setColumns(10);
+		textFieldZipCodeDelivery.setBounds(225, 108, 82, 20);
+		deliveryPanel.add(textFieldZipCodeDelivery);
 
 		lblEfternavn_7 = new JLabel("Adresse");
 		lblEfternavn_7.setHorizontalAlignment(SwingConstants.LEFT);
@@ -425,10 +446,10 @@ public class OrderUI extends JFrame {
 		lblEfternavn_10.setBounds(401, 28, 82, 20);
 		deliveryPanel.add(lblEfternavn_10);
 
-		textField_14 = new JTextField();
-		textField_14.setColumns(10);
-		textField_14.setBounds(403, 54, 80, 20);
-		deliveryPanel.add(textField_14);
+		textFieldDeliveryHouseNo = new JTextField();
+		textFieldDeliveryHouseNo.setColumns(10);
+		textFieldDeliveryHouseNo.setBounds(403, 54, 80, 20);
+		deliveryPanel.add(textFieldDeliveryHouseNo);
 
 		deliveryPanel2 = new JPanel();
 		String titleDelivery2 = "Tidspunkt";
@@ -451,12 +472,15 @@ public class OrderUI extends JFrame {
 		comboBoxRole = new JComboBox();
 		comboBoxRole.setBounds(30, 102, 120, 22);
 		deliveryPanel2.add(comboBoxRole);
-
+		
 		JButton btnAddServiceRole = new JButton("Tilf\u00F8j");
+		btnAddServiceRole.addActionListener(e -> {
+		
+		});
 		btnAddServiceRole.setBounds(160, 102, 89, 23);
 		deliveryPanel2.add(btnAddServiceRole);
 
-		JButton btnFrdiggrOrdre = new JButton(btnCompleteText);
+		JButton btnFrdiggrOrdre = new JButton("F\u00EF\u00BF\u00BDrdigg\u00EF\u00BF\u00BDre ordre");
 		btnFrdiggrOrdre.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -470,10 +494,12 @@ public class OrderUI extends JFrame {
 	}
 
 	private void completeOrder() {
-		// 1. method call
+		// 1st method call
 		setOrderInfo();
-		// 2. method call
+		// 2nd method call
 		setCustomer();
+		//3rd method call
+		
 	}
 
 	private void resetCustomer() {
@@ -529,6 +555,7 @@ public class OrderUI extends JFrame {
 		this.productModel = new ProductListModel();
 		table.setModel(productModel);
 		updateProductTable();
+		chckbxPickup.setSelected(true);
 
 	}
 
@@ -626,5 +653,13 @@ public class OrderUI extends JFrame {
 			lblCustomerError.setText("Alle felter skal udfyldes");
 		}
 		return res;
+	}
+	private void setService() {
+		EmployeeRole er = (EmployeeRole) comboBoxRole.getSelectedItem();
+		orderController.addService(er);
+		if(chckbxAlternativeAdd.isEnabled()) {
+			
+		}
+		//orderController.setDelivery();
 	}
 }

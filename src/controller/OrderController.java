@@ -94,8 +94,10 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	public void setDelivery(String houseNo, String street, String city, String zipcode) {
-		Delivery delivery = serviceController.setService(houseNo, street, city, zipcode);
-		order.setDelivery(delivery);
+		if(order.getDelivery() != null) {
+			Delivery delivery = serviceController.setDelivery(houseNo, street, city, zipcode);
+			order.setDelivery(delivery);
+		}
 	}
 
 	@Override

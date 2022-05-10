@@ -9,5 +9,5 @@ public interface ServiceControllerIF {
 	
 	public void insertService(int orderNo);
 
-	public Delivery setService(String houseNo, String street, String city, String zipcode);
+	public Delivery setDelivery(String houseNo, String street, String city, String zipcode);
 }
