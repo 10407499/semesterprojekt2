@@ -41,7 +41,7 @@ public class TestCreateOrder {
 
 	// Test case 1
 	@Test
-	public void SuccessfullCreationOfanOrdertest() {
+	public void SuccessfullCreationOfOrdertest() {
 
 		// Arrange
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
@@ -57,7 +57,7 @@ public class TestCreateOrder {
 		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
-		orderController.addProduct(productNo, 20); // TODO: Valg ud fra liste
+		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
 		// Assert
 		assertEquals(order.getCustomer().getfName(), c.getfName());
@@ -66,27 +66,7 @@ public class TestCreateOrder {
 		assertEquals(order.getFulfillmentDate(), d);
 	}
 
-//	// test case 2
-//	@Test
-//	public void CustomerWantsToCancel() {
-//		//Arrange
-//		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", 1);
-//		int cover = 20;
-//		Product p = new Menu("Menu1", 20.00, 1, "MENU");
-//		Date d =  Date.valueOf("2023-01-01");
-//		//Act
-//		orderController.createOrder();
-//		orderController.setOrderInfo(cover, d);
-//		List<Customer> customers = orderController.findCustomers("IB");
-//		int customerNo = customers.get(0).getCustomerNo();
-//		orderController.setCustomer(customerNo);		
-//		List<Product> s = orderController.findProducts("Menu1");
-//		int productNo = s.get(0).getProductNo();
-//		orderController.addProduct(productNo, 20); //TODO: Valg ud fra liste
-//		orderController.cancelCreateOrder();
-//		//Assert
-//		assertEquals(orderController.getOrder(), null);
-//	}
+//	
 	// test case 3
 	@Test
 	public void Overbooking() {
@@ -96,10 +76,10 @@ public class TestCreateOrder {
 
 		// Act
 		orderController.createOrder();
-		// orderController.setOrderInfo(cover, d);
+		boolean expected = orderController.setOrderInfo(cover, d);
 
 		// Assert
-		assertEquals(orderController.setOrderInfo(cover, d), false);
+		assertEquals(expected, false);
 
 	}
 
@@ -108,16 +88,16 @@ public class TestCreateOrder {
 	public void OrderWithoutProducts() { // test case 4
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 20;
-
 		Date d = Date.valueOf("2023-01-01");
+		
 		// Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-
 		Order order = orderController.completeOrder();
+		
 		// Assert
 		assertEquals(order.getCustomer().getfName(), c.getfName());
 		assertEquals(order.getCoverAmount(), cover);
@@ -154,6 +134,7 @@ public class TestCreateOrder {
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
+		
 		// Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
@@ -161,10 +142,11 @@ public class TestCreateOrder {
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
 		orderController.setDelivery(c.getHouseNo(), c.getStreet(), "Ibby", c.getZipCode());
-		List<Product> s = orderController.findProducts("Menu1");
-		int productNo = s.get(0).getProductNo();
-		orderController.addProduct(productNo, 20); // TODO: Valg ud fra liste
+		orderController.findProducts("Menu1");
+		int productNo = orderController.getProducts().get(0).getProductNo();
+		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
+		
 		// Assert
 		assertEquals(delivery.getCity(), order.getDelivery().getCity());
 		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
@@ -180,6 +162,8 @@ public class TestCreateOrder {
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
+		List<EmployeeRole> er = new ArrayList<>();
+		er.add(EmployeeRole.Kok);
 		// Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
@@ -187,27 +171,27 @@ public class TestCreateOrder {
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
-		orderController.addService(EmployeeRole.MEDARBEJDER);
+		orderController.addService(er);
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
-		orderController.addProduct(productNo, 20); // TODO: Valg ud fra liste
+		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
 		// Assert
 		assertEquals(delivery.getCity(), order.getDelivery().getCity());
 		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
 		assertEquals(delivery.getStreet(), order.getDelivery().getStreet());
-		assertEquals(EmployeeRole.MEDARBEJDER, order.getDelivery().getServiceLines().get(0).getRole());
+		assertEquals(EmployeeRole.Kok, order.getDelivery().getServiceLines().get(0).getRole());
 
 	}
 
 	// test case 8
-	// FIXME
 	public void AlternativeDeliveryAddress() {
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",1);
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
+		
 		// Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
@@ -217,8 +201,9 @@ public class TestCreateOrder {
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
-		orderController.addProduct(productNo, 20); // TODO: Valg ud fra liste
+		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
+		
 		// Assert
 		assertEquals(delivery.getCity(), order.getDelivery().getCity());
 		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
@@ -227,7 +212,7 @@ public class TestCreateOrder {
 	}
 
 	// test case 9
-	// FIXME lars Sp�rgsm�l
+	// FIXME lars Sp�rgsm�l !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	@Test 
 	public void NotEnoughCovers() {
@@ -263,7 +248,7 @@ public class TestCreateOrder {
 		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
-		orderController.addProduct(productNo, 20); // TODO: Valg ud fra liste
+		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
 		// Assert
 		assertEquals(order.getCustomer().getCustomerNo(), c.getCustomerNo());
