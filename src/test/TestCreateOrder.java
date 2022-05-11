@@ -110,19 +110,13 @@ public class TestCreateOrder {
 	public void ProductNotFound() {
 
 		// Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",1);
-		int cover = 20;
-		Date d = Date.valueOf("2023-01-01");
+		
+		
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
-		List<Customer> customers = orderController.findCustomers("IB");
-		int customerNo = customers.get(0).getCustomerNo();
-		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("WrongProduct");
 
 		// Assert
-
 		assertEquals(s.size(), 0);
 	}
 
@@ -131,7 +125,6 @@ public class TestCreateOrder {
 	public void addDelivery() {
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",1);
 		int cover = 20;
-		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
 		
@@ -164,6 +157,7 @@ public class TestCreateOrder {
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
 		List<EmployeeRole> er = new ArrayList<>();
 		er.add(EmployeeRole.Kok);
+		
 		// Act
 		orderController.createOrder();
 		orderController.setOrderInfo(cover, d);
@@ -173,9 +167,10 @@ public class TestCreateOrder {
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
 		orderController.addService(er);
 		List<Product> s = orderController.findProducts("Menu1");
-		int productNo = s.get(0).getProductNo();
+		int productNo = orderController.getProducts().get(0).getProductNo();
 		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
+		
 		// Assert
 		assertEquals(delivery.getCity(), order.getDelivery().getCity());
 		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
@@ -200,7 +195,7 @@ public class TestCreateOrder {
 		orderController.setCustomer(customerNo);
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
 		List<Product> s = orderController.findProducts("Menu1");
-		int productNo = s.get(0).getProductNo();
+		int productNo = orderController.getProducts().get(0).getProductNo();
 		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
 		
@@ -247,7 +242,7 @@ public class TestCreateOrder {
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
 		List<Product> s = orderController.findProducts("Menu1");
-		int productNo = s.get(0).getProductNo();
+		int productNo = orderController.getProducts().get(0).getProductNo();
 		orderController.addProduct(productNo, 20);
 		Order order = orderController.completeOrder();
 		// Assert
