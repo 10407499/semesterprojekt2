@@ -6,8 +6,9 @@ public class OrderLine {
 	private Product product;
 	
 	public OrderLine(Product product, int quantity) {
-		this.quantity = quantity;
 		this.product = product;
+		this.quantity = quantity;
+		
 	}
 
 	/**

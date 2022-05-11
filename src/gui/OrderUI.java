@@ -550,7 +550,6 @@ public class OrderUI extends JFrame {
 
 	private void setCustomer() {
 		// This checks if all the textFields in customer panel isnt null
-		System.out.println(checkCustomerTextFields());
 		if (checkCustomerTextFields() && customerNo != 0) {
 			orderController.setCustomer(customerNo);
 		} else if (checkCustomerTextFields() && customerNo == 0) {

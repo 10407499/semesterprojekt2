@@ -25,8 +25,12 @@ public abstract class Product {
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
 	}
-	public String getDescription() {return description;}
-	public double getPrice() {return price;}
+	public String getDescription() {
+		return description;
+	}
+	public double getPrice() {
+		return price;
+	}
 	
 	public void setDescription(String description) {
 		this.description = description;
