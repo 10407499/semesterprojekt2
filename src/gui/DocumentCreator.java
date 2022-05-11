@@ -1,14 +1,10 @@
 package gui;
 
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-
 import com.spire.doc.Document;
 import com.spire.doc.Section;
 import com.spire.doc.documents.Paragraph;
+import com.spire.doc.documents.VerticalOrigin;
 import com.spire.doc.fields.DocPicture;
 
 public class DocumentCreator {
@@ -25,6 +21,10 @@ public class DocumentCreator {
 	DocPicture iconPicture = paraIcon.appendPicture(iconstream);
 	
 	public DocumentCreator() {
+		iconPicture.setHorizontalPosition(422);
+        iconPicture.setVerticalOrigin(VerticalOrigin.Top_Margin_Area);
+        iconPicture.setVerticalPosition(0);
+        
 		doc.saveToFile("outputWordOrder.docx");
 		System.out.println("called");
 	}
