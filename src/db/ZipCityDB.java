@@ -7,7 +7,9 @@ import java.sql.SQLException;
 
 public class ZipCityDB implements ZipCityDBIF {
 	private static final String FIND_BY_ZIPCODE_Q = "select city from ZipCity where zipcode = ?";
+	
 	private PreparedStatement findCityByZipcodeps;
+	
 	private Connection con;
 	
 	public ZipCityDB() {

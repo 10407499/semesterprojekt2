@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Font;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -11,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.metal.MetalBorders.TextFieldBorder;
+
 import java.awt.Color;
 
 import controller.OrderController;
@@ -99,6 +102,8 @@ public class OrderUI extends JFrame {
 	private ProductListModel productModel;
 	private DefaultListModel eList;
 	private JList serviceList;
+	private JComboBox comboBoxZipcode;
+	private DefaultComboBoxModel modelZipcode;
 
 	/**
 	 * Create the frame.
@@ -163,7 +168,7 @@ public class OrderUI extends JFrame {
 		orderInfoPanel.add(lblEfternavn_12);
 		lblEfternavn_12.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEfternavn_12.setFont(new Font("Tahoma", Font.BOLD, 14));
-		
+
 		lblTotalCoverAmount = new JLabel("");
 		lblTotalCoverAmount.setBounds(73, 33, 289, 14);
 		orderInfoPanel.add(lblTotalCoverAmount);
@@ -239,6 +244,18 @@ public class OrderUI extends JFrame {
 		customerorderInfoPanel.add(textHouseNo);
 
 		textFieldZipCode = new JTextField();
+		textFieldZipCode.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textFieldZipCode.getText().length() >= 4) {
+					
+					String city = orderController.getCitiesWithZipcode(textFieldZipCode.getText());
+					textFieldCity.setText(city);
+				}
+			}
+		});
+		
+	
 		textFieldZipCode.setColumns(10);
 		textFieldZipCode.setBounds(21, 180, 82, 20);
 		customerorderInfoPanel.add(textFieldZipCode);
@@ -273,7 +290,8 @@ public class OrderUI extends JFrame {
 		model = new DefaultComboBoxModel();
 		comboBoxFName = new JComboBox(model);
 		comboBoxFName.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
+
+	public void itemStateChanged(ItemEvent e) {
 				if (e.getSource() == comboBoxFName) {
 					comboBoxFName.addActionListener(new ActionListener() {
 						@Override
@@ -297,6 +315,31 @@ public class OrderUI extends JFrame {
 		lblCustomerError.setBounds(118, 11, 244, 14);
 		customerorderInfoPanel.add(lblCustomerError);
 		lblCustomerError.setForeground(Color.RED);
+		
+		modelZipcode = new DefaultComboBoxModel();
+		comboBoxZipcode = new JComboBox(modelZipcode);
+		comboBoxZipcode.addItemListener(new ItemListener() {
+
+	public void itemStateChanged(ItemEvent e) {
+				if (e.getSource() == comboBoxZipcode) {
+					comboBoxZipcode.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if (e.getModifiers() != 0) { // This if checks if its anything other than keyboard picking
+															// the combobox
+								if (!textFieldZipCode.getText().equals(null)) {
+									setCustomerToTextFields(comboBoxZipcode.getSelectedIndex());
+								}
+							}
+						}
+					});
+				}
+			}
+		});
+		
+		
+		comboBoxZipcode.setBounds(21, 180, 82, 20);
+		customerorderInfoPanel.add(comboBoxZipcode);
 
 		btnNewButton = new JButton("Tilbage");
 		btnNewButton.addActionListener(e -> {
@@ -317,7 +360,8 @@ public class OrderUI extends JFrame {
 
 		textFieldProduct = new JTextField();
 		textFieldProduct.addKeyListener(new KeyAdapter() {
-			@Override
+
+	@Override
 			public void keyTyped(KeyEvent e) {
 				addElementsToComboBoxProduct();
 			}
@@ -341,7 +385,7 @@ public class OrderUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if(comboBoxProduct.getSelectedIndex() != -1) {
+				if (comboBoxProduct.getSelectedIndex() != -1) {
 					addProductToOrder(comboBoxProduct.getSelectedIndex());
 					updateProductTable();
 				}
@@ -363,10 +407,20 @@ public class OrderUI extends JFrame {
 		productPanel.add(lblQuantity);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 98, 723, 242);
+		scrollPane.setBounds(26, 89, 723, 242);
 		productPanel.add(scrollPane);
 
 		table = new JTable();
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					deleteProductFromTable(table.getSelectedRow());
+				}
+
+			}
+		});
 		scrollPane.setViewportView(table);
 
 		modelProduct = new DefaultComboBoxModel();
@@ -494,10 +548,10 @@ public class OrderUI extends JFrame {
 
 		JButton btnAddServiceRole = new JButton("Tilf\u00F8j");
 		btnAddServiceRole.addActionListener(e -> {
-			if(!chckbxPickup.isSelected()) {
+			if (!chckbxPickup.isSelected()) {
 				addService();
 			}
-			
+
 		});
 
 		btnAddServiceRole.setBounds(152, 28, 89, 23);
@@ -533,6 +587,7 @@ public class OrderUI extends JFrame {
 	}
 
 	private void completeOrder() {
+
 		// 1st method call
 		setOrderInfo();
 		// 2nd method call
@@ -540,7 +595,9 @@ public class OrderUI extends JFrame {
 		// 3rd method call
 		setService();
 		// 4th method call
-		orderController.completeOrder();
+		if (!textBoxError) {
+			orderController.completeOrder();
+		}
 	}
 
 	private void resetCustomer() {
@@ -587,6 +644,9 @@ public class OrderUI extends JFrame {
 
 		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
 		comboBoxFName.setEnabled(false);
+		comboBoxZipcode.setEnabled(false);
+		comboBoxProduct.setEnabled(false);
+
 		addElementsToComboBoxRole();
 		addElementsToComboBoxTime();
 
@@ -596,23 +656,32 @@ public class OrderUI extends JFrame {
 		chckbxPickup.setSelected(true);
 		threadCheckCoverDate();
 	}
-	
+
 	private void threadCheckCoverDate() {
 		Thread t1 = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while(true) {
+				while (true) {
 					int coverAmount = orderController.checkCoverAmountOnDate(DatePicker.getDateValue());
 					lblTotalCoverAmount.setText("Der er: " + coverAmount + " kuverter p� datoen");
 				}
-			}});
+			}
+		});
 		t1.start();
 	}
 
 	private void setOrderInfo() {
 		String value = coverField.getText();
-		int coverAmount = Integer.parseInt(value); // Special requirement, cover amount must be minimum 4 | Maybe get it from
-								// database
+		int coverAmount = 0;
+		if (value.equals("")) {
+			textBoxError = true;
+			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
+		} else {
+
+			coverAmount = Integer.parseInt(value); // Special requirement, cover amount must be minimum 4 | Maybe get it
+													// from
+			// database
+		}
 		if (orderController.setOrderInfo(coverAmount, DatePicker.getDateValue())) {
 			lblFailureCovers.setText(null);
 		} else {
@@ -638,6 +707,7 @@ public class OrderUI extends JFrame {
 		}
 	}
 
+	
 	private void addElementsToComboBoxRole() {
 		EmployeeRole role[] = EmployeeRole.values();
 		for (EmployeeRole r : role) {
@@ -682,6 +752,11 @@ public class OrderUI extends JFrame {
 		this.productModel.setModelData(orderLines);
 	}
 
+	private void deleteProductFromTable(int index) {
+		orderController.removeProductFromOrder(index);
+		updateProductTable();
+	}
+
 	private boolean checkCustomerTextFields() {
 		boolean res = false;
 		if (!textFieldFName.getText().isEmpty() && !textFieldLName.getText().isEmpty()
@@ -697,11 +772,11 @@ public class OrderUI extends JFrame {
 		return res;
 	}
 
-	private void setService() { //FIXME Vi er kommet hertil, check database
+	private void setService() { // FIXME Vi er kommet hertil, check database
 		setDelivery();
 		List<EmployeeRole> er = new ArrayList<>();
 		for (int i = 0; i < serviceList.getModel().getSize(); i++) {
-			String s =  serviceList.getModel().getElementAt(i).toString();
+			String s = serviceList.getModel().getElementAt(i).toString();
 			EmployeeRole e = EmployeeRole.valueOf(s);
 			er.add(e);
 		}
@@ -725,9 +800,9 @@ public class OrderUI extends JFrame {
 		EmployeeRole er = (EmployeeRole) comboBoxRole.getSelectedItem();
 		eList.addElement(er);
 	}
-	
+
 	private void clearService() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

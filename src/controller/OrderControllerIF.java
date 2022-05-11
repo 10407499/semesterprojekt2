@@ -43,4 +43,8 @@ public interface OrderControllerIF {
 	public List<Product> getProducts();
 
 	public void addService(List<EmployeeRole> employeeRoles);
+	
+	public void removeProductFromOrder(int index);
+
+	public String getCitiesWithZipcode(String text);
 }
