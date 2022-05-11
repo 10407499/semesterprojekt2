@@ -28,6 +28,7 @@ public class OrderController implements OrderControllerIF {
 
 	private OrderDBIF orderDB;
 	private OrderLineDBIF orderLineDB;
+	private ZipCityDBIF zipCityDb;
 
 	public OrderController() {
 		customerController = new CustomerController();
@@ -35,6 +36,7 @@ public class OrderController implements OrderControllerIF {
 		productController = new ProductController();
 		orderDB = new OrderDB();
 		orderLineDB = new OrderLineDB();
+		zipCityDb = new ZipCityDB();
 	}
 
 	public Order createOrder() {
@@ -194,5 +196,16 @@ public class OrderController implements OrderControllerIF {
 		if (customer != null) {
 			order.setCustomer(customer);
 		}
+	}
+
+	@Override
+	public void removeProductFromOrder(int index) {
+		order.getOrderLines().remove(index);
+	}
+
+	@Override
+	public String getCitiesWithZipcode(String zipcode) {
+		String city = zipCityDb.getCityByZipCode(zipcode);
+		return city;
 	}
 }
