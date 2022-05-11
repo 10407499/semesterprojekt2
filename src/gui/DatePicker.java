@@ -17,6 +17,7 @@ public abstract class DatePicker {
 		Date date = null;
 		if (datePicker.getJFormattedTextField().getText().equals("")) {
 			date  = Date.valueOf(LocalDate.now());
+			//TODO Update UI date when this is called
 		} else {
 			date = Date.valueOf(datePicker.getJFormattedTextField().getText());
 		}

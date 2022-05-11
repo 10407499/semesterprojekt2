@@ -603,7 +603,7 @@ public class OrderUI extends JFrame {
 			public void run() {
 				while(true) {
 					int coverAmount = orderController.checkCoverAmountOnDate(DatePicker.getDateValue());
-					lblTotalCoverAmount.setText("Der er: " + coverAmount + " kuverter på datoen");
+					lblTotalCoverAmount.setText("Der er: " + coverAmount + " kuverter pï¿½ datoen");
 				}
 			}});
 		t1.start();
