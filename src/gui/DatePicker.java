@@ -1,6 +1,7 @@
 package gui;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Properties;
 
 import javax.swing.JPanel;
@@ -13,7 +14,12 @@ public abstract class DatePicker {
 	private static JDatePickerImpl datePicker;
 	
 	public static Date getDateValue() {
-		Date date = Date.valueOf(datePicker.getJFormattedTextField().getText());
+		Date date = null;
+		if (datePicker.getJFormattedTextField().getText().equals("")) {
+			date  = Date.valueOf(LocalDate.now());
+		} else {
+			date = Date.valueOf(datePicker.getJFormattedTextField().getText());
+		}
 		return date;
 	}
 	
