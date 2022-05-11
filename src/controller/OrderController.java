@@ -25,10 +25,10 @@ public class OrderController implements OrderControllerIF {
 	private CustomerControllerIF customerController;
 	private ServiceControllerIF serviceController;
 	private ProductControllerIF productController;
-	
+
 	private OrderDBIF orderDB;
 	private OrderLineDBIF orderLineDB;
-	
+
 	public OrderController() {
 		customerController = new CustomerController();
 		serviceController = new ServiceController();
@@ -44,27 +44,13 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate) {
-		boolean succes = false; 
+		boolean succes = false;
 		if (coverAmount >= 4) {
 			order.setCoverAmount(coverAmount);
-			succes = checkCoverAmountOnDate(coverAmount, fulfillmentdate);
+			succes = true;
+			order.setFulfillmentDate(fulfillmentdate);
+			// succes = checkCoverAmountOnDate(coverAmount, fulfillmentdate);
 		}
-		order.setFulfillmentDate(fulfillmentdate);
-		return succes;
-	}
-	
-	
-	
-	public boolean setOrderInfo1(int coverAmount, Date fulfillmentdate) {
-		boolean succes = false; 
-		if (checkCoverAmountOnDate(coverAmount, fulfillmentdate)) {
-			order.setCoverAmount(coverAmount);
-			succes = true; 
-		}else {
-			//call dialog
-			order.setCoverAmount(coverAmount);
-		}
-		order.setFulfillmentDate(fulfillmentdate);
 		return succes;
 	}
 
@@ -94,7 +80,7 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	public void setDelivery(String houseNo, String street, String city, String zipcode) {
-		if(order.getDelivery() == null) { 
+		if (order.getDelivery() == null) {
 			Delivery delivery = serviceController.setDelivery(houseNo, street, city, zipcode);
 			order.setDelivery(delivery);
 		}
@@ -102,7 +88,7 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public void addService(List<EmployeeRole> employeeRoles) {
-		for(EmployeeRole er : employeeRoles) {
+		for (EmployeeRole er : employeeRoles) {
 			serviceController.addService(er);
 		}
 	}
@@ -139,12 +125,10 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public Order completeOrder() {
-		if (order.getCoverAmount() >= 4) {
-			int orderNo = orderDB.insertOrder(order);
-			orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
-			if (order.getDelivery() != null) {
-				serviceController.insertService(orderNo);
-			}
+		int orderNo = orderDB.insertOrder(order);
+		orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
+		if (order.getDelivery() != null) {
+			serviceController.insertService(orderNo);
 		}
 		return order;
 	}
@@ -168,18 +152,15 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate) {
-		List<Order> orders = orderDB.checkCoverAmountOnDate(fulfillmentdate);
+	public int checkCoverAmountOnDate(Date fulfillmentdate) {
 		int sumCover = 0;
-		int maxCover = 50; //FIXME lav det til en slags "global variable" som kan tilg�es fra GUI og �ndres
-		boolean success = true;
-		for (Order o : orders) {
-			sumCover += o.getCoverAmount();
+		if (!fulfillmentdate.equals(null)) {
+			List<Order> orders = orderDB.checkCoverAmountOnDate(fulfillmentdate);
+			for (Order o : orders) {
+				sumCover += o.getCoverAmount();
+			}
 		}
-		if (sumCover + coverAmount > maxCover) {
-			success = false;
-		}
-		return success;
+		return sumCover;
 	}
 
 	@Override
@@ -208,8 +189,9 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public void insertNewCustomer(String fName, String lName, String street, String houseNo, String phoneNo,
 			String email, String zipCode, String city) {
-		Customer customer = customerController.insertCustomer(fName, lName, street, houseNo, phoneNo, email, zipCode, city);
-		if(customer != null) {
+		Customer customer = customerController.insertCustomer(fName, lName, street, houseNo, phoneNo, email, zipCode,
+				city);
+		if (customer != null) {
 			order.setCustomer(customer);
 		}
 	}

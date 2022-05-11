@@ -75,6 +75,7 @@ public class OrderUI extends JFrame {
 	private JLabel lblEfternavn_12;
 	private JPanel deliveryPanel2;
 	private JLabel lblCustomerError;
+	private JLabel lblTotalCoverAmount;
 
 	private JCheckBox chckbxDelivery;
 	private JComboBox comboBoxRole;
@@ -126,7 +127,7 @@ public class OrderUI extends JFrame {
 		JLabel lblDate = new JLabel("Dato");
 		lblDate.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDate.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDate.setBounds(21, 28, 141, 20);
+		lblDate.setBounds(21, 28, 98, 20);
 		orderInfoPanel.add(lblDate);
 
 		JLabel lblCovers = new JLabel("Antal kuverter");
@@ -136,6 +137,12 @@ public class OrderUI extends JFrame {
 		orderInfoPanel.add(lblCovers);
 
 		coverField = new JTextField();
+		coverField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				ActionHandler.keyHandler(e, coverField);
+			}
+		});
 		coverField.setBounds(21, 121, 98, 20);
 		orderInfoPanel.add(coverField);
 		coverField.setColumns(10);
@@ -156,6 +163,10 @@ public class OrderUI extends JFrame {
 		orderInfoPanel.add(lblEfternavn_12);
 		lblEfternavn_12.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEfternavn_12.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		lblTotalCoverAmount = new JLabel("");
+		lblTotalCoverAmount.setBounds(73, 33, 289, 14);
+		orderInfoPanel.add(lblTotalCoverAmount);
 
 		customerorderInfoPanel = new JPanel();
 		String titleCustomer = "Kunde";
@@ -316,6 +327,12 @@ public class OrderUI extends JFrame {
 		textFieldProduct.setColumns(10);
 
 		textFieldProductQuantity = new JTextField();
+		textFieldProductQuantity.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				ActionHandler.keyHandler(e, textFieldProductQuantity);
+			}
+		});
 		textFieldProductQuantity.setColumns(10);
 		textFieldProductQuantity.setBounds(536, 59, 86, 20);
 		productPanel.add(textFieldProductQuantity);
@@ -412,6 +429,7 @@ public class OrderUI extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				chckbxDelivery.setSelected(false);
 				chckbxAlternativeAdd.setSelected(false);
+				eList.clear();
 			}
 		});
 		chckbxPickup.setBounds(28, 29, 97, 23);
@@ -476,7 +494,10 @@ public class OrderUI extends JFrame {
 
 		JButton btnAddServiceRole = new JButton("Tilf\u00F8j");
 		btnAddServiceRole.addActionListener(e -> {
-			addService();
+			if(!chckbxPickup.isSelected()) {
+				addService();
+			}
+			
 		});
 
 		btnAddServiceRole.setBounds(152, 28, 89, 23);
@@ -573,25 +594,30 @@ public class OrderUI extends JFrame {
 		table.setModel(productModel);
 		updateProductTable();
 		chckbxPickup.setSelected(true);
-
+		threadCheckCoverDate();
+	}
+	
+	private void threadCheckCoverDate() {
+		Thread t1 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+					int coverAmount = orderController.checkCoverAmountOnDate(DatePicker.getDateValue());
+					lblTotalCoverAmount.setText("Der er: " + coverAmount + " kuverter på datoen");
+				}
+			}});
+		t1.start();
 	}
 
 	private void setOrderInfo() {
-		int coverAmount = 4; // Special requirement, cover amount must be minimum 4 | Maybe get it from
+		String value = coverField.getText();
+		int coverAmount = Integer.parseInt(value); // Special requirement, cover amount must be minimum 4 | Maybe get it from
 								// database
-		if (!coverField.getText().equals("")) {
-			if (Integer.parseInt(coverField.getText()) >= coverAmount) {
-				coverAmount = Integer.parseInt(coverField.getText());
-				orderController.setOrderInfo(coverAmount, DatePicker.getDateValue());
-				lblFailureCovers.setText(null);
-			} else {
-				textBoxError = true;
-				lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
-			}
+		if (orderController.setOrderInfo(coverAmount, DatePicker.getDateValue())) {
+			lblFailureCovers.setText(null);
 		} else {
 			textBoxError = true;
 			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
-
 		}
 	}
 
@@ -698,5 +724,10 @@ public class OrderUI extends JFrame {
 	private void addService() {
 		EmployeeRole er = (EmployeeRole) comboBoxRole.getSelectedItem();
 		eList.addElement(er);
+	}
+	
+	private void clearService() {
+		// TODO Auto-generated method stub
+		
 	}
 }

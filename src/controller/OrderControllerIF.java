@@ -34,7 +34,7 @@ public interface OrderControllerIF {
 	
 	public List<String> customerDetailsToString(String fname);
 	
-	public boolean checkCoverAmountOnDate(int coverAmount, Date fulfillmentdate);
+	public int checkCoverAmountOnDate(Date fulfillmentdate);
 	
 	public List<Customer> getCustomers();
 

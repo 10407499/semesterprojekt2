@@ -1,8 +1,7 @@
 package model;
 
 public enum EmployeeRole {
-	Chauffør,
+	Chauffoer,
 	Tjener,
 	Kok
-	
 }
