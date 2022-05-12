@@ -2,8 +2,11 @@ package model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import gui.OptionState;
 
 public class Order {
 
@@ -16,7 +19,9 @@ public class Order {
 	private Delivery delivery; 
 	private List<OrderLine> orderLines; 
 	private Customer customer;
+	
 	private String eatingTime;
+	private OptionState optionState;
 	
 	public Order() {
 		orderLines = new ArrayList<>();
@@ -42,6 +47,13 @@ public class Order {
 
 	public Date getFulfillmentDate() {
 		return fulfillmentDate;
+	}
+	
+	public String getFulfillmentDateToString() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-YY");
+		LocalDate dd = getFulfillmentDate().toLocalDate();
+		String dato = dd.format(dtf);
+		return dato;
 	}
 	
 	public void setFulfillmentDate(Date fulfillmentDate) {
@@ -110,5 +122,13 @@ public class Order {
 	
 	public String getEatingTime() {
 		return eatingTime;
+	}
+	
+	public OptionState getOptionState() {
+		return optionState;
+	}
+	
+	public void setOptionState(OptionState optionState) {
+		this.optionState = optionState;
 	}
 }
