@@ -71,36 +71,36 @@ public class DocumentCreator {
 		generalInfo.getFormat().setAfterSpacing(1);
 		//Body for general information
         generalInfo.appendText("Hej\n"
-        		+ "Tak for snakken og for din bestilling. forespørgsel. Det vil vi rigtig gerne lave til dig.\n"
-        		+ "Du får en kopi af mit arbejdspapir, som også er din bekr�ftelse.\n"
+        		+ "Tak for snakken og for din bestilling. Det vil vi rigtig gerne lave til dig.\n"
+        		+ "Du får en kopi af mit arbejdspapir, som også er din bekræftelse.\n"
         		+ "Her menuen til jeres middag.\n"
         		+ "Her er et menuforslag til jeres fest.\n"
         		+ "Du kan her linke direkte til vores hjemmeside ");
         generalInfo.appendHyperlink("www.spaendendemad.dk","www.spaendendemad.dk", HyperlinkType.Web_Link);
         generalInfo.appendText(		
         		" og se vores menuer.\n"
-        		+ "Ved foresp�rgsel er det vigtig vi f�r besked om I �nsker at benytte vores tilbud.\n"
+        		+ "Ved forespørgsel er det vigtig vi får besked om I ønsker at benytte vores tilbud.\n"
         		+ "\n"
         		+ "Lidt generelt: \n"
-        		+ "Her er ogs� lidt med vigtige oplysninger og vejledning om at modtage menuen fra os. \n"
+        		+ "Her er også lidt med vigtige oplysninger og vejledning om at modtage menuen fra os. \n"
         		+ "Her vil du kunne finde de retter I har bestilt. En vejledning kan ses her: \n");
-        generalInfo.appendHyperlink("www.sp�ndendemad.dk/vejledning ","www.sp�ndendemad.dk/vejledning", HyperlinkType.Web_Link);
+        generalInfo.appendHyperlink("www.spændendemad.dk/vejledning ","www.spændendemad.dk/vejledning", HyperlinkType.Web_Link);
         generalInfo.appendText("\n"
         		+ "\n"
-        		+ "Hvis I har �ndringer til antal couv., vil jeg gerne I mailer det aktuelle antal 10 dage f�r jeres \n"
-        		+ "fest, da vi �nsker at have dokumenter klar til at k�be ind mandag morgen. \n"
-        		+ "Spisetid m� ogs� v�re oplyst her \n"
-        		+ "�nsker du maden leveret? Ved levering m� du oplyse leverings adresse. \n"
+        		+ "Hvis I har ændringer til antal couv., vil jeg gerne I mailer det aktuelle antal 10 dage før jeres \n"
+        		+ "fest, da vi �nsker at have dokumenter klar til at købe ind mandag morgen. \n"
+        		+ "Spisetid må også være oplyst her \n"
+        		+ "ønsker du maden leveret? Ved levering må du oplyse leverings adresse. \n"
         		+ "\n"
         		);
         
-       generalInfo.appendText("Vedr. betaling: Hvis ikke andet er aftalt, betales der ved levering/afhentning, dette kan g�res med Swipp, Mobilpay eller kontant, i vil modtage en mail med fakturaen senest 2 dage f�r festen \n"
+       generalInfo.appendText("Vedr. betaling: Hvis ikke andet er aftalt, betales der ved levering/afhentning, dette kan gøres med Swipp, Mobilpay eller kontant, i vil modtage en mail med fakturaen senest 2 dage før festen \n"
     		   + "\n"
-    		   + "Vi vil gerne I aflevere fade mandag efter jeres middag. Her holder vi �bent i k�kkenet for at modtage udstyr fra kl. 16.00 til 18.00. \n"
+    		   + "Vi vil gerne I aflevere fade mandag efter jeres middag. Her holder vi åbent i k�kkenet for at modtage udstyr fra kl. 16.00 til 18.00. \n"
     		   + "\n"
-    		   + "Hvis I �nsker det, s� kan jeg sende en� eller to med i k�kkenet. Serveringshj�lp kan vi ogs� henvise til jer \n"
+    		   + "Hvis I ønsker det, så kan jeg sende en eller to med i køkkenet. Serveringshjælp kan vi også henvise til jer \n"
     		   + "\n"
-    		   + "Du m� endelig henvende, hvis du har sp�rgsm�l. dig \n"
+    		   + "Du må endelig henvende, hvis du har spørgsm�l. dig \n"
     		   + "                                           De bedste hilsner fra Sanne."
     		   + "\n \n \n"
     		   );
