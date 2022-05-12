@@ -17,11 +17,14 @@ public class tryme {
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
-		Date d = Date.valueOf(LocalDate.now());
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-YY");
+		Date d = Date.valueOf("2022-05-12");
+		String eatingTime = "17:45";
+		
+		int antalProdukterAdd = 10;
+		
 		// Act
 		Order order = orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -30,7 +33,10 @@ public class tryme {
 		orderController.addProduct(productNo, 20);
 		s = orderController.findProducts("ret");
 		productNo = s.get(0).getProductNo();
-		orderController.addProduct(productNo, 13);
+		for(int i = 0; i<antalProdukterAdd;i++) {
+			orderController.addProduct(productNo, 13);
+		}
+		
 		
 		DocumentCreator dc = new DocumentCreator(order);
 		

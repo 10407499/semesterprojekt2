@@ -48,10 +48,11 @@ public class TestCreateOrder {
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
-
+		String eatingTime = "17:45";
+		
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -73,10 +74,10 @@ public class TestCreateOrder {
 		// Arrange
 		int cover = 51;
 		Date d = Date.valueOf("2023-03-02");
-
+		String eatingTime = "17:45";
 		// Act
 		orderController.createOrder();
-		boolean expected = orderController.setOrderInfo(cover, d);
+		boolean expected = orderController.setOrderInfo(cover, d, eatingTime);
 
 		// Assert
 		assertEquals(expected, false);
@@ -89,10 +90,10 @@ public class TestCreateOrder {
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 20;
 		Date d = Date.valueOf("2023-01-01");
-		
+		String eatingTime = "17:45";
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -127,10 +128,10 @@ public class TestCreateOrder {
 		int cover = 20;
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
-		
+		String eatingTime = "17:45";
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -157,10 +158,10 @@ public class TestCreateOrder {
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
 		List<EmployeeRole> er = new ArrayList<>();
 		er.add(EmployeeRole.Kok);
-		
+		String eatingTime = "17:45";
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -186,10 +187,10 @@ public class TestCreateOrder {
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
-		
+		String eatingTime = "17:45";
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -216,10 +217,10 @@ public class TestCreateOrder {
 		int cover = 2;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
-
+		String eatingTime = "17:45";
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		
 		
 		// Assert
@@ -235,9 +236,10 @@ public class TestCreateOrder {
 		int cover = 0;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
+		String eatingTime = "17:45";
 		// Act
 		orderController.createOrder();
-		orderController.setOrderInfo(cover, d);
+		orderController.setOrderInfo(cover, d, eatingTime);
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);

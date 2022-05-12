@@ -13,7 +13,7 @@ public interface OrderControllerIF {
 
 	public Order createOrder();
 	
-	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate);
+	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate, String eatingTime);
 	
 	public List<Customer> findCustomers(String name);
 	
@@ -47,4 +47,6 @@ public interface OrderControllerIF {
 	public void removeProductFromOrder(int index);
 
 	public String getCitiesWithZipcode(String text);
+	
+	public void setEatingTime(String eatingTime);
 }

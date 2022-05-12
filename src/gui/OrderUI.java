@@ -671,18 +671,17 @@ public class OrderUI extends JFrame {
 	}
 
 	private void setOrderInfo() {
-		String value = coverField.getText();
+		String eatingTime = comboBoxEatClock.getSelectedItem().toString();
 		int coverAmount = 0;
-		if (value.equals("")) {
+		if (coverField.getText().isEmpty()) {
 			textBoxError = true;
 			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 		} else {
-
-			coverAmount = Integer.parseInt(value); // Special requirement, cover amount must be minimum 4 | Maybe get it
+			coverAmount = Integer.parseInt(coverField.getText()); // Special requirement, cover amount must be minimum 4 | Maybe get it
 													// from
 			// database
 		}
-		if (orderController.setOrderInfo(coverAmount, DatePicker.getDateValue())) {
+		if (orderController.setOrderInfo(coverAmount, DatePicker.getDateValue(), eatingTime)) {
 			lblFailureCovers.setText(null);
 		} else {
 			textBoxError = true;

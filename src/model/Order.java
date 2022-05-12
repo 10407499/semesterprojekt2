@@ -16,6 +16,7 @@ public class Order {
 	private Delivery delivery; 
 	private List<OrderLine> orderLines; 
 	private Customer customer;
+	private String eatingTime;
 	
 	public Order() {
 		orderLines = new ArrayList<>();
@@ -42,42 +43,55 @@ public class Order {
 	public Date getFulfillmentDate() {
 		return fulfillmentDate;
 	}
+	
 	public void setFulfillmentDate(Date fulfillmentDate) {
 		this.fulfillmentDate = fulfillmentDate;
 	}
+	
 	public int getCoverAmount() {
 		return coverAmount;
 	}
+	
 	public void setCoverAmount(int coverAmount) {
 		this.coverAmount = coverAmount;
 	}
+	
 	public boolean isPaid() {
 		return paid;
 	}
+	
 	public void setPaid(boolean paid) {
 		this.paid = paid;
 	}
+	
 	public boolean isConfimation() {
 		return confimation;
 	}
+	
 	public void setConfimation(boolean confimation) {
 		this.confimation = confimation;
 	}
+	
 	public int getOrderNo() {
 		return orderNo;
 	}
+	
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
+	
 	public Delivery getDelivery() {
 		return delivery;
 	}
+	
 	public void setDelivery(Delivery delivery) {
 		this.delivery = delivery;
 	}
+	
 	public List<OrderLine> getOrderLines() {
 		return orderLines;
 	}
+	
 	public void addOrderLine(OrderLine orderLine) {
 		orderLines.add(orderLine);
 	}
@@ -85,9 +99,16 @@ public class Order {
 	public Customer getCustomer() {
 		return customer;
 	}
+	
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	} 
 	
+	public void setEatingTime(String eatingTime) {
+		this.eatingTime = eatingTime;
+	}
 	
+	public String getEatingTime() {
+		return eatingTime;
+	}
 }

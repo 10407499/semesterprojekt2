@@ -45,17 +45,19 @@ public class OrderController implements OrderControllerIF {
 
 	}
 
-	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate) {
+	@Override
+	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate, String eatingTime) {
 		boolean succes = false;
 		if (coverAmount >= 4) {
 			order.setCoverAmount(coverAmount);
 			succes = true;
 			order.setFulfillmentDate(fulfillmentdate);
-			// succes = checkCoverAmountOnDate(coverAmount, fulfillmentdate);
+			order.setEatingTime(eatingTime);
 		}
 		return succes;
 	}
 
+	@Override
 	public List<Customer> findCustomers(String name) {
 		customers = customerController.findCustomers(name);
 		return customers;
@@ -207,5 +209,10 @@ public class OrderController implements OrderControllerIF {
 	public String getCitiesWithZipcode(String zipcode) {
 		String city = zipCityDb.getCityByZipCode(zipcode);
 		return city;
+	}
+	
+	@Override
+	public void setEatingTime(String eatingTime) {
+		order.setEatingTime(eatingTime);
 	}
 }
