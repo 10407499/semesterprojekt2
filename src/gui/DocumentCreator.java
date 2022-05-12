@@ -2,6 +2,8 @@ package gui;
 
 import java.io.InputStream;
 import com.spire.doc.Document;
+import com.spire.doc.DocumentViewType;
+import com.spire.doc.FileFormat;
 import com.spire.doc.Section;
 import com.spire.doc.documents.BuiltinStyle;
 import com.spire.doc.documents.HorizontalAlignment;
@@ -19,19 +21,25 @@ import model.Order;
 public class DocumentCreator {
 	
 	public DocumentCreator() {
-		//Creates the document
-		Document doc = new Document();
-
-		//Section for the header
-		Section header = doc.addSection();
-
-
 		
-		//Paragraph for icon
+		String templateA4 = "templateA4.docx";
+		
+		//	Loads a word document with A4 template
+		Document doc = new Document(templateA4);
+
+		//	Section for the header
+		Section header = doc.getSections().get(0);
+		
+		//	Page margins
+		header.getPageSetup().getMargins().setTop(30);
+		header.getPageSetup().getMargins().setBottom(30);
+		header.getPageSetup().getMargins().setLeft(60);
+		header.getPageSetup().getMargins().setRight(80);
+		
+		//	Paragraph for icon
 		Paragraph paraIcon = header.addParagraph();
-//		ParagraphFormat format = paraIcon.getFormat();
-//		format.setLeftIndent(0);
-//		format.setRightIndent(0);
+
+		//	Flectning the icon from image package
 		InputStream iconstream = getClass().getResourceAsStream("/images/fullicon.png");
 		DocPicture iconPicture = paraIcon.appendPicture(iconstream);
 		
@@ -40,9 +48,7 @@ public class DocumentCreator {
 		
 		//Paragraph for header
 		Paragraph orderInfo = header.addParagraph();
-//		ParagraphFormat format2 = orderInfo.getFormat();
-//		format2.setLeftIndent(0);
-//		format2.setRightIndent(0);
+
 		//Body for header
         orderInfo.appendText("Bestilling: \n"
         		+ "Dato: \n"
@@ -53,12 +59,10 @@ public class DocumentCreator {
         		+ "Spisetid: Afgang fra Jebjr.: \n"
         		+ "Ankomst: I vil få besked i dagene før jeres fest. \n"
         		+ "");
-		
+        
 		//Paragraph for general information
 		Paragraph generalInfo = header.addParagraph();
-//		ParagraphFormat format3 = generalInfo.getFormat();
-//		format3.setLeftIndent(0);
-//		format3.setRightIndent(0);
+
 		//Body for general information
         generalInfo.appendText("Hej\n"
         		+ "Tak for snakken og for din bestilling. forespørgsel. Det vil vi rigtig gerne lave til dig.\n"
@@ -84,7 +88,7 @@ public class DocumentCreator {
         		+ "\n"
         		);
         
-        //Style FIXME navn
+        //	Style header text
         ParagraphStyle styleHeader = new ParagraphStyle(doc);
         styleHeader.setName("Header");
         styleHeader.getCharacterFormat().setFontName("Times New Roman");
@@ -92,27 +96,17 @@ public class DocumentCreator {
         doc.getStyles().add(styleHeader);
         orderInfo.applyStyle("Header");
         
-        //Style FIXME navn
-        ParagraphStyle styleHeader2 = new ParagraphStyle(doc);
-        styleHeader2.setName("Header2");
-        styleHeader2.getCharacterFormat().setFontName("Times New Roman");
-        styleHeader2.getCharacterFormat().setFontSize(12);
-        styleHeader2.getCharacterFormat().setItalic(true);
-        doc.getStyles().add(styleHeader2);
-        generalInfo.applyStyle("Header2");
+        //	Style information text
+        ParagraphStyle styleInformation = new ParagraphStyle(doc);
+        styleInformation.setName("Information");
+        styleInformation.getCharacterFormat().setFontName("Times New Roman");
+        styleInformation.getCharacterFormat().setFontSize(12);
+        styleInformation.getCharacterFormat().setItalic(true);
+        doc.getStyles().add(styleInformation);
+        generalInfo.applyStyle("Information");
         
-        Section section = doc.getSections().get(0);
-		section.getPageSetup().setPageSize(PageSize.A4);
-		section.getPageSetup().setOrientation(PageOrientation.Portrait);
-
-        
-		doc.saveToFile("outputWordOrder.docx");
+		doc.saveToFile("outputWordOrder.docx", FileFormat.Docx);
 		System.out.println("called");
-		
-
-	
-		
-		
 		
 	}
 	
