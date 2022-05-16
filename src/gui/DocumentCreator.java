@@ -226,8 +226,10 @@ public class DocumentCreator {
 		}
 	}
 	
-	public static void openD() {
-		String cmd = "rundll32 url.dll,FileProtocolHandler C:\\Users\\jonas\\OneDrive\\Datamatiker\\github\\GUI\\semesterprojekt2\\16-05-22.docx";
+	public static void openD(Order order) {
+		String cmd = "rundll32 url.dll,FileProtocolHandler C:\\Users\\jonas\\OneDrive\\Datamatiker\\github\\GUI\\semesterprojekt2\\" 
+				+ order.getFulfillmentDateToString() + " " + order.getCustomer().getfName()+ " " + order.getCustomer().getlName() + ".docx";
+				
 		try {
 			Process p = Runtime.getRuntime().exec(cmd);
 		} catch (IOException e) {
