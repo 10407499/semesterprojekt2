@@ -8,12 +8,15 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.DocumentCreator;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.UnsupportedEncodingException;
 
 public class CompleteOrderDialog extends JDialog {
 
@@ -22,7 +25,7 @@ public class CompleteOrderDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CompleteOrderDialog(OrderUI orderUi) {
+	public CompleteOrderDialog(OrderUI orderUi, DocumentCreator dc) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CompleteOrderDialog.class.getResource("/images/KOMNU.png")));
 		setTitle("Spændende Mad - Ordre færdiggjort");
 		setResizable(false);
@@ -52,8 +55,17 @@ public class CompleteOrderDialog extends JDialog {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				closeDialog(orderUi);
+<<<<<<< Updated upstream
 //				DocumentCreator.openD();
 					
+=======
+				try {
+					dc.openDocument();
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+>>>>>>> Stashed changes
 			}
 		});
 		btnJa.setBounds(104, 144, 89, 23);

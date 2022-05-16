@@ -616,7 +616,7 @@ public class OrderUI extends JFrame {
 		// 4th method call
 		if (!textBoxError) {
 			orderController.completeOrder();
-			JFrameManager.openCompleteOrderDialog(this);
+			JFrameManager.openCompleteOrderDialog(this, orderController.getDocumentCreator());
 		}
 	}
 

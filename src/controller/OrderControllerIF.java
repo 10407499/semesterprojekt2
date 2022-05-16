@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-import gui.DocumentCreator;
 import model.Customer;
+import model.DocumentCreator;
 import model.Order;
 import model.OrderLine;
 import model.Product;
@@ -52,5 +52,5 @@ public interface OrderControllerIF {
 	
 	public void setEatingTime(String eatingTime);
 	
-	public DocumentCreator getDocument();
+	public DocumentCreator getDocumentCreator();
 }

@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JFrame;
 
+import model.DocumentCreator;
+
 public class JFrameManager {
 
 	public static void goToOrderUI(MainUI mainUI) {
@@ -21,8 +23,8 @@ public class JFrameManager {
 
 	
 	
-	public static void openCompleteOrderDialog(OrderUI orderUi) {
-		CompleteOrderDialog cod = new CompleteOrderDialog(orderUi);
+	public static void openCompleteOrderDialog(OrderUI orderUi, DocumentCreator dc) {
+		CompleteOrderDialog cod = new CompleteOrderDialog(orderUi, dc);
 		cod.setLocationRelativeTo(null);
 		cod.setVisible(true);
 	}

@@ -1,7 +1,11 @@
-package gui;
+package model;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -23,12 +27,10 @@ import com.spire.doc.documents.VerticalOrigin;
 import com.spire.doc.fields.DocPicture;
 import com.spire.doc.formatting.ParagraphFormat;
 
-import model.Order;
-import model.OrderLine;
-
 public class DocumentCreator {
 
-	private static String docname;
+	private String docname;
+	
 	public DocumentCreator(Order order) {
 
 		String templateA4 = "templateA4.docx";
@@ -196,7 +198,7 @@ public class DocumentCreator {
 		doc.getStyles().add(menuInformation);
 		menu.applyStyle("menuInfo");
 
-		docname = order.getFulfillmentDateToString() + " " + order.getCustomer().getfName() + " "
+		docname = order.getFulfillmentDateToString() + "-" + order.getCustomer().getfName() + "-"
 				+ order.getCustomer().getlName() + ".docx";
 
 		Document mergeDoc = new Document(usefulInformationTemplate);
@@ -215,9 +217,11 @@ public class DocumentCreator {
 	}
 
 	
-	public static void openDocument() {
-		ProcessBuilder pb = new ProcessBuilder();
-		pb.command("open", docname);
+	public void openDocument() throws UnsupportedEncodingException {
+		ProcessBuilder pb = new ProcessBuilder(); 
+		String path = System.getProperty("user.dir") + System.getProperty("file.separator");
+		System.out.println(path);
+		pb.command("cmd.exe", "/C","start", path+docname);
 		try {
 			pb.start();
 		} catch (IOException e) {
@@ -226,6 +230,7 @@ public class DocumentCreator {
 		}
 	}
 	
+<<<<<<< Updated upstream:src/gui/DocumentCreator.java
 	public static void openD(Order order) {
 		String cmd = "rundll32 url.dll,FileProtocolHandler C:\\Users\\jonas\\OneDrive\\Datamatiker\\github\\GUI\\semesterprojekt2\\" 
 				+ order.getFulfillmentDateToString() + " " + order.getCustomer().getfName()+ " " + order.getCustomer().getlName() + ".docx";
@@ -241,4 +246,6 @@ public class DocumentCreator {
 	}
 	
 	
+=======
+>>>>>>> Stashed changes:src/model/DocumentCreator.java
 }

@@ -11,9 +11,9 @@ import db.OrderLineDB;
 import db.OrderLineDBIF;
 import db.ZipCityDB;
 import db.ZipCityDBIF;
-import gui.DocumentCreator;
 import model.Customer;
 import model.Delivery;
+import model.DocumentCreator;
 import model.Order;
 import model.OrderLine;
 import model.Product;
@@ -137,7 +137,7 @@ public class OrderController implements OrderControllerIF {
 		if (order.getDelivery() != null) {
 			serviceController.insertService(orderNo);
 		}
-		
+		dc = new DocumentCreator(order);
 		return order;
 	}
 
@@ -221,8 +221,7 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public DocumentCreator getDocument() {
-		
+	public DocumentCreator getDocumentCreator() {
 		return dc;
 	}
 }
