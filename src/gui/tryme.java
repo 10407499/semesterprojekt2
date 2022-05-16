@@ -26,7 +26,7 @@ public class tryme {
 		Order order = orderController.createOrder();
 		orderController.setOrderInfo(cover, d, eatingTime);
 		
-		order.setOptionState(OptionState.DELIVERY_WITH_SERVICE);
+
 		order.setConfimation(true);
 		
 		List<Customer> customers = orderController.findCustomers("IB");

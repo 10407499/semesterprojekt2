@@ -5,9 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import gui.OptionState;
-
 public class Order {
 
 	private Date creationDate; 
@@ -21,7 +18,7 @@ public class Order {
 	private Customer customer;
 	
 	private String eatingTime;
-	private OptionState optionState;
+	
 	
 	public Order() {
 		orderLines = new ArrayList<>();
@@ -124,11 +121,4 @@ public class Order {
 		return eatingTime;
 	}
 	
-	public OptionState getOptionState() {
-		return optionState;
-	}
-	
-	public void setOptionState(OptionState optionState) {
-		this.optionState = optionState;
-	}
 }

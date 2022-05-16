@@ -18,5 +18,14 @@ public class JFrameManager {
 		mainUI.setLocationRelativeTo(jFrame);
 		mainUI.setVisible(true);
 	}
+
 	
+	
+	public static void openCompleteOrderDialog(OrderUI orderUi) {
+		CompleteOrderDialog cod = new CompleteOrderDialog(orderUi);
+		cod.setLocationRelativeTo(null);
+		cod.setVisible(true);
+	}
 }
+
+

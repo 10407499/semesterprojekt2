@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import db.OrderLineDB;
 import db.OrderLineDBIF;
 import db.ZipCityDB;
 import db.ZipCityDBIF;
+import gui.DocumentCreator;
 import model.Customer;
 import model.Delivery;
 import model.Order;
@@ -48,7 +50,7 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate, String eatingTime) {
 		boolean succes = false;
-		if (coverAmount >= 4) {
+		if (coverAmount >= 4 && coverAmount < 10000) {
 			order.setCoverAmount(coverAmount);
 			succes = true;
 			order.setFulfillmentDate(fulfillmentdate);
@@ -134,6 +136,7 @@ public class OrderController implements OrderControllerIF {
 		if (order.getDelivery() != null) {
 			serviceController.insertService(orderNo);
 		}
+		DocumentCreator dc = new DocumentCreator(order);
 		return order;
 	}
 
@@ -192,7 +195,7 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public void insertNewCustomer(String fName, String lName, String street, String houseNo, String phoneNo,
-			String email, String zipCode, String city) {
+			String email, String zipCode, String city) throws SQLException {
 		Customer customer = customerController.insertCustomer(fName, lName, street, houseNo, phoneNo, email, zipCode,
 				city);
 		if (customer != null) {

@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.*;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,7 +188,7 @@ public class TestCreateOrder {
 	
 	// test case 9
 	@Test
-	public void CustomerDoNotExsist() {
+	public void CustomerDoNotExsist() throws SQLException {
 		// Arrange
 		Customer cc = new Customer("IBBI", "IBBISEN", "Ibbisevej", "69IBBI", "19191919", "ibbi@ibbi.ibbi", "1818", "Ibby");
 		int cover = 5;

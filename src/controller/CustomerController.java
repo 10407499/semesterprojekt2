@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import db.CustomerDB;
@@ -41,8 +42,8 @@ public class CustomerController implements CustomerControllerIF {
 
 	@Override
 	public Customer insertCustomer(String fName, String lName, String street, String houseNo, String phoneNo, String email,
-			String zipCode, String city) {
-		//FIXME spørgsmål til vejleder. Skal vi gøre det her, eller i customerDB?
+			String zipCode, String city) throws SQLException {
+		//FIXME spï¿½rgsmï¿½l til vejleder. Skal vi gï¿½re det her, eller i customerDB?
 		Customer customer = new Customer(fName, lName, street, houseNo, phoneNo, email, zipCode, city);
 		int customerNo = customerDB.insertCustomer(customer);
 		customer.setCustomerNo(customerNo);

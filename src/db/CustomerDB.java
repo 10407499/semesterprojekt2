@@ -122,9 +122,9 @@ public class CustomerDB implements CustomerDBIF {
 
 
 	@Override
-	public int insertCustomer(Customer customer) {
+	public int insertCustomer(Customer customer) throws SQLException  {
 		int res = -1;
-		try {
+		
 			insertCustomerPS.setString(1, customer.getfName());
 			insertCustomerPS.setString(2, customer.getlName());
 			insertCustomerPS.setString(3, customer.getStreet());
@@ -134,9 +134,11 @@ public class CustomerDB implements CustomerDBIF {
 			insertCustomerPS.setString(7, customer.getZipCode());
 			System.out.println(customer.getZipCode());
 			res = DBConnection.getInstance().executeInsertWithIdentity(insertCustomerPS);
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}	
+		
+		
+		
+		
+		
 		return res;
 	}
 

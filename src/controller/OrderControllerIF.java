@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 import model.Customer;
@@ -20,7 +21,7 @@ public interface OrderControllerIF {
 	public void setCustomer(int customerNo);
 	
 	public void insertNewCustomer(String fName, String lName, String street, String houseNo, 
-			String phoneNo, String email, String zipCode, String city);
+			String phoneNo, String email, String zipCode, String city)throws SQLException;
 	
 	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	

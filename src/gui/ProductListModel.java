@@ -60,7 +60,10 @@ public class ProductListModel extends DefaultTableModel{
 		return res;
 	}
 	
-	
+	@Override
+	public boolean isCellEditable(int row, int column) {
+		return false; 
+	}
 	
 	
 	

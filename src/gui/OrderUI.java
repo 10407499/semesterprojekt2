@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -351,7 +352,7 @@ public class OrderUI extends JFrame {
 		contentPane.add(btnNewButton);
 
 		JPanel productPanel = new JPanel();
-		String titleProduct = "Produkt tilf�jelse";
+		String titleProduct = "Produkt tilføjelse";
 		Border borderProduct = BorderFactory.createTitledBorder(titleProduct);
 		productPanel.setBorder(borderProduct);
 		productPanel.setBounds(450, 58, 777, 364);
@@ -421,6 +422,7 @@ public class OrderUI extends JFrame {
 
 			}
 		});
+		
 		scrollPane.setViewportView(table);
 
 		modelProduct = new DefaultComboBoxModel();
@@ -472,6 +474,11 @@ public class OrderUI extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				chckbxPickup.setSelected(false);
 				chckbxAlternativeAdd.setSelected(false);
+				setAlternativDeliveryTextEditable(false);
+				chckbxDelivery.setEnabled(false);
+				chckbxAlternativeAdd.setEnabled(true);
+				chckbxPickup.setEnabled(true);
+				
 			}
 		});
 		chckbxDelivery.setBounds(28, 68, 97, 23);
@@ -484,6 +491,11 @@ public class OrderUI extends JFrame {
 				chckbxDelivery.setSelected(false);
 				chckbxAlternativeAdd.setSelected(false);
 				eList.clear();
+				
+				setAlternativDeliveryTextEditable(false);
+				chckbxDelivery.setEnabled(true);
+				chckbxAlternativeAdd.setEnabled(true);
+				chckbxPickup.setEnabled(false);
 			}
 		});
 		chckbxPickup.setBounds(28, 29, 97, 23);
@@ -495,6 +507,11 @@ public class OrderUI extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				chckbxDelivery.setSelected(false);
 				chckbxPickup.setSelected(false);
+			
+				setAlternativDeliveryTextEditable(true);
+				chckbxDelivery.setEnabled(true);
+				chckbxAlternativeAdd.setEnabled(false);
+				chckbxPickup.setEnabled(true);
 			}
 		});
 		chckbxAlternativeAdd.setBounds(28, 107, 191, 23);
@@ -546,7 +563,7 @@ public class OrderUI extends JFrame {
 		comboBoxRole.setBounds(22, 28, 120, 22);
 		deliveryPanel2.add(comboBoxRole);
 
-		JButton btnAddServiceRole = new JButton("Tilf\u00F8j");
+		JButton btnAddServiceRole = new JButton("Tilføj");
 		btnAddServiceRole.addActionListener(e -> {
 			if (!chckbxPickup.isSelected()) {
 				addService();
@@ -566,14 +583,16 @@ public class OrderUI extends JFrame {
 		serviceList.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE && serviceList.getSelectedIndex() != -1) {
+					
 					eList.remove(serviceList.getSelectedIndex());
+					
 				}
 			}
 		});
 		scrollPane_1.setViewportView(serviceList);
 
-		JButton btnFrdiggrOrdre = new JButton("F\u00EF\u00BF\u00BDrdigg\u00EF\u00BF\u00BDre ordre");
+		JButton btnFrdiggrOrdre = new JButton("Færdiggør ordre");
 		btnFrdiggrOrdre.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -597,6 +616,7 @@ public class OrderUI extends JFrame {
 		// 4th method call
 		if (!textBoxError) {
 			orderController.completeOrder();
+			JFrameManager.openCompleteOrderDialog(this);
 		}
 	}
 
@@ -631,9 +651,14 @@ public class OrderUI extends JFrame {
 		if (checkCustomerTextFields() && customerNo != 0) {
 			orderController.setCustomer(customerNo);
 		} else if (checkCustomerTextFields() && customerNo == 0) {
-			orderController.insertNewCustomer(textFieldFName.getText(), textFieldLName.getText(),
-					textFieldAdresse.getText(), textHouseNo.getText(), textFieldPhoneNo.getText(),
-					textFieldEmail.getText(), textFieldZipCode.getText(), textFieldCity.getText());
+			try {
+				orderController.insertNewCustomer(textFieldFName.getText(), textFieldLName.getText(),
+						textFieldAdresse.getText(), textHouseNo.getText(), textFieldPhoneNo.getText(),
+						textFieldEmail.getText(), textFieldZipCode.getText(), textFieldCity.getText());
+			} catch (SQLException e) {
+				lblCustomerError.setText("Mail eller telefonnummer findes allerede*");
+				
+			}
 		}
 
 	}
@@ -655,6 +680,8 @@ public class OrderUI extends JFrame {
 		updateProductTable();
 		chckbxPickup.setSelected(true);
 		threadCheckCoverDate();
+		setAlternativDeliveryTextEditable(false);
+		chckbxPickup.setEnabled(false);
 	}
 
 	private void threadCheckCoverDate() {
@@ -663,7 +690,7 @@ public class OrderUI extends JFrame {
 			public void run() {
 				while (true) {
 					int coverAmount = orderController.checkCoverAmountOnDate(DatePicker.getDateValue());
-					lblTotalCoverAmount.setText("Der er: " + coverAmount + " kuverter p� datoen");
+					lblTotalCoverAmount.setText("Der er " + coverAmount + " kuverter på datoen");
 				}
 			}
 		});
@@ -673,7 +700,7 @@ public class OrderUI extends JFrame {
 	private void setOrderInfo() {
 		String eatingTime = comboBoxEatClock.getSelectedItem().toString();
 		int coverAmount = 0;
-		if (coverField.getText().isEmpty()) {
+		if (coverField.getText().isEmpty() || coverField.getText().length() > 9) {
 			textBoxError = true;
 			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 		} else {
@@ -800,8 +827,18 @@ public class OrderUI extends JFrame {
 		eList.addElement(er);
 	}
 
-	private void clearService() {
-		// TODO Auto-generated method stub
-
+	private void setAlternativDeliveryTextEditable(boolean isEditable) {
+			textFieldDeliveryAdd.setEditable(isEditable);
+			textFieldDeliveryCity.setEditable(isEditable);
+			textFieldDeliveryHouseNo.setEditable(isEditable);
+			textFieldDeliveryZipCode.setEditable(isEditable);
+			textFieldDeliveryAdd.setText("");
+			textFieldDeliveryCity.setText("");
+			textFieldDeliveryHouseNo.setText("");
+			textFieldDeliveryZipCode.setText("");
 	}
+	
+	
+	
+	
 }
