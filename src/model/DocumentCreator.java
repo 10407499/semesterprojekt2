@@ -229,23 +229,4 @@ public class DocumentCreator {
 			e.printStackTrace();
 		}
 	}
-	
-<<<<<<< Updated upstream:src/gui/DocumentCreator.java
-	public static void openD(Order order) {
-		String cmd = "rundll32 url.dll,FileProtocolHandler C:\\Users\\jonas\\OneDrive\\Datamatiker\\github\\GUI\\semesterprojekt2\\" 
-				+ order.getFulfillmentDateToString() + " " + order.getCustomer().getfName()+ " " + order.getCustomer().getlName() + ".docx";
-				
-		try {
-			Process p = Runtime.getRuntime().exec(cmd);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
-	
-=======
->>>>>>> Stashed changes:src/model/DocumentCreator.java
 }

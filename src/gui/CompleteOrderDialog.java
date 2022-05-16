@@ -55,17 +55,12 @@ public class CompleteOrderDialog extends JDialog {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				closeDialog(orderUi);
-<<<<<<< Updated upstream
-//				DocumentCreator.openD();
-					
-=======
 				try {
 					dc.openDocument();
 				} catch (UnsupportedEncodingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
->>>>>>> Stashed changes
 			}
 		});
 		btnJa.setBounds(104, 144, 89, 23);
