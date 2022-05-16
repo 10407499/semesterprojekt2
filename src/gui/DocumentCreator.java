@@ -227,7 +227,7 @@ public class DocumentCreator {
 	}
 	
 	public static void openD() {
-		String cmd = "C:\\Users\\jonas\\OneDrive\\Datamatiker\\github\\GUI\\semesterprojekt2\\16-05-22.docx";
+		String cmd = "rundll32 url.dll,FileProtocolHandler C:\\Users\\jonas\\OneDrive\\Datamatiker\\github\\GUI\\semesterprojekt2\\16-05-22.docx";
 		try {
 			Process p = Runtime.getRuntime().exec(cmd);
 		} catch (IOException e) {

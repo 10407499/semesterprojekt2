@@ -31,6 +31,7 @@ public class OrderController implements OrderControllerIF {
 	private OrderDBIF orderDB;
 	private OrderLineDBIF orderLineDB;
 	private ZipCityDBIF zipCityDb;
+	private DocumentCreator dc;
 
 	public OrderController() {
 		customerController = new CustomerController();
@@ -136,7 +137,7 @@ public class OrderController implements OrderControllerIF {
 		if (order.getDelivery() != null) {
 			serviceController.insertService(orderNo);
 		}
-		DocumentCreator dc = new DocumentCreator(order);
+		
 		return order;
 	}
 
@@ -217,5 +218,11 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public void setEatingTime(String eatingTime) {
 		order.setEatingTime(eatingTime);
+	}
+
+	@Override
+	public DocumentCreator getDocument() {
+		
+		return dc;
 	}
 }

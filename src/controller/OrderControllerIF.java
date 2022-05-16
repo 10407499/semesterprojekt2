@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import gui.DocumentCreator;
 import model.Customer;
 import model.Order;
 import model.OrderLine;
@@ -50,4 +51,6 @@ public interface OrderControllerIF {
 	public String getCitiesWithZipcode(String text);
 	
 	public void setEatingTime(String eatingTime);
+	
+	public DocumentCreator getDocument();
 }
