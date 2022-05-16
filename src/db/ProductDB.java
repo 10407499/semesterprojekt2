@@ -65,7 +65,7 @@ public class ProductDB implements ProductDBIF {
 
 
 	private Product buildProduct(ResultSet rs) {
-		Product product = null; 
+		Product product = null;
 		try {
 			String description = rs.getString("description");
 			double price = rs.getDouble("price");
@@ -75,7 +75,6 @@ public class ProductDB implements ProductDBIF {
 			if(type.equals("dish")) {
 				//	Gets the courseType from database and converts to enum & toUpperCase.
 				CourseType courseType = CourseType.valueOf(rs.getString("dish_coursetype").toUpperCase());
-				
 				double quantity = rs.getDouble("dish_quantity");
 				//	Gets the MeasurementUnit from database and converts to enum & toUpperCase.
 				MeasurementUnit munit = MeasurementUnit.valueOf(rs.getString("dish_measurementUnit").toUpperCase());
@@ -84,7 +83,7 @@ public class ProductDB implements ProductDBIF {
 				//	Creates new Dish object from databases data
 				product = new Dish(description, price, productNo, type, measurement, courseType, quantity);
 			}else {
-				//	Creates new Menu object frmo databases data
+				//	Creates new Menu object from databases data
 				product = new Menu(description, price, productNo, type);
 			}
 		} catch (SQLException e) {

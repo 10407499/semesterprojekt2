@@ -17,7 +17,6 @@ public class tryme {
 		OrderController orderController = new OrderController();
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 20;
-		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2022-05-12");
 		String eatingTime = "17:45";
 

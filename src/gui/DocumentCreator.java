@@ -151,13 +151,36 @@ public class DocumentCreator {
        
        //	Body for menu
        Paragraph menu = header.addParagraph();
-       menu.appendText("*Menu\n");  
+       menu.appendText("*Menu\n"); 
+       
+       Paragraph forret = header.addParagraph();
+       Paragraph buffet = header.addParagraph();
+       Paragraph dessert = header.addParagraph();
+       
        
        String menues = "";
+       
        for(OrderLine ol : order.getOrderLines()) {
-    	   menues += "\t" + ol.getProduct().getDescription() + "\t Antal: " + ol.getQuantity() + "\n";
+    	   //String type = "";
+    	   //type = ol.getProduct().getType();
+    	   menues = "\t" + ol.getProduct().getDescription() + "\n" + ol.getProduct().getPrice() + " kr,- pr. couv" + "\n\n";
+    	   menu.appendText(menues);
+    	   /*switch(type) {
+    	   case "forret":
+    		   menues = "\t" + ol.getProduct().getDescription() + "\n" + ol.getProduct().getPrice() + " kr,- pr. couv" + "\n\n";
+    		   forret.appendText(menues);
+    		   break;
+    	   case "buffet":
+    		   menues = "\t" + ol.getProduct().getDescription() + "\n" + ol.getProduct().getPrice() + " kr,- pr. couv" + "\n\n";
+    		   buffet.appendText(menues);
+    		   break;
+    	   case "dessert":
+    		   menues = "\t" + ol.getProduct().getDescription() + "\n" + ol.getProduct().getPrice() + " kr,- pr. couv" + "\n\n";
+    		   dessert.appendText(menues);
+    		   break;
+    	   }*/
+    	   menues = "";
        }
-       menu.appendText(menues);
        
        //	Body for useful information
        Paragraph usefulInfo = header.addParagraph();
@@ -165,17 +188,6 @@ public class DocumentCreator {
        
        usefulInfo.appendText("\nAlt vil komme flot opsat på vore opsatser, træfade, store Italienske porcelæns fade og smukke metalfade "
        		+ "\n\n");
-       
-        /*usefulInfo.appendText("NYTTEIGE OPLYSNINGER: \n\n"
-    	+ "Små ændringer i antal couv. kan til rettes indtil 3 hverdage før festen. \n"
-        + "Levering: Ved under 30 km 195,- kr. ved over 30 km efter aftale \n"
-    	+ "Afhentning af fade pris fra kr. 100-150. \n"
-        + "I ugen op til festen laver vi en køreplan og I vil få besked på, hvornår vi ca. vil være hos jer. \n"
-    	+ "Vær opmærksom på at tiden kan svinge lidt. \n"
-        + "Personale booking tillæg: Et engangsbeløb a' 100,- kr. pr. personale. \n"
-    	+ "Husk at bestille til personale og musiker, hvis de skal have buffet og tallerken servering \n\n"
-    	+ "Manglende eller ituslået service/udstyr erstattes jævnfør vores prisliste \n"
-    	+ "Ret til ændringer forbeholdes.");*/
        
         //	Style header text
         ParagraphStyle styleHeader = new ParagraphStyle(doc);
