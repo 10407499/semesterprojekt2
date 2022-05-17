@@ -92,20 +92,17 @@ public class ProductDB implements ProductDBIF {
 				//	Creates new Menu object from databases data
 				Menu menu = new Menu(description, price, productNo, type, courseType);
 				
-				System.out.println(productNo + " " + description);
 				List<Product> products = buildDishFromMenu(productNo);
-				System.out.println(productNo + " " + description);
 				for(Product p : products) {
 					if(p instanceof Dish d) {
 						d = (Dish) p;
 						menu.addDish(d);
-						System.out.println(d.getDescription());
 					}
 				}
 				product = menu;
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage() + " buildProduct");
+			System.out.println(e.getMessage());
 		}
 		return product;
 	}
@@ -120,7 +117,7 @@ public class ProductDB implements ProductDBIF {
 				products.add(product);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage() + "buildDishFromMenu");
+			System.out.println(e.getMessage());
 		}
 		return products;
 	}
@@ -130,10 +127,35 @@ public class ProductDB implements ProductDBIF {
 		try {
 			findDishByNoPS.setInt(1, productno);
 			ResultSet rs = findDishByNoPS.executeQuery();
-			product = buildProduct(rs);
+			product = buildDish(rs);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage() + "FindDishByNo");
+			System.out.println(e.getMessage() + " FindDishByNo");
 		}
+		return product;
+	}
+	
+	private Product buildDish(ResultSet rs) {
+		Product product = null;
+		try {
+			if(rs.next()) {
+				String description = rs.getString("description");
+				double price = rs.getDouble("price");
+				int productNo = rs.getInt("productno");
+				String type = rs.getString("type").toLowerCase();
+				//Gets the courseType from database and converts to enum & toUpperCase.
+				CourseType courseType = CourseType.valueOf(rs.getString("courseType").toUpperCase());
+				
+				double quantity = rs.getDouble("dish_unitQuantity");
+				//	Gets the MeasurementUnit from database and converts to enum & toUpperCase.
+				MeasurementUnit munit = MeasurementUnit.valueOf(rs.getString("dish_measurementUnit").toUpperCase());
+				//	Creates new measurement object
+				Measurement measurement = new Measurement(munit);
+				//	Creates new Dish object from databases data
+				product = new Dish(description, price, productNo, type, courseType, measurement, quantity);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}		
 		return product;
 	}
 	

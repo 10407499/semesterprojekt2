@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,10 @@ import com.spire.doc.formatting.ParagraphFormat;
 public class DocumentCreator {
 
 	private String docname;
+	private Paragraph forret;
+	private Paragraph hovedret;
+	private Paragraph buffet;
+	private Paragraph dessert;
 	
 	public DocumentCreator(Order order) {
 
@@ -140,29 +145,43 @@ public class DocumentCreator {
 		menu.appendText("*Menu\n");
 
 		//FIXME Not used atm
-		Paragraph forret = header.addParagraph();
-		Paragraph buffet = header.addParagraph();
-		Paragraph dessert = header.addParagraph();
+		forret = header.addParagraph();
+		hovedret = header.addParagraph();
+		buffet = header.addParagraph();
+		dessert = header.addParagraph();
 
+		forret.appendText("Forret\n");
+		hovedret.appendText("Hovedret\n");
+		buffet.appendText("Buffet\n");
+		dessert.appendText("Dessert\n");
 		String menues = "";
 
 		for (OrderLine ol : order.getOrderLines()) {
-			String type = "";
-			type = ol.getProduct().getType().toLowerCase();
-			
 			Product p = ol.getProduct();
 			
+			Dish dish = null;
+			Menu m = null;
+			
 			if(p instanceof Dish) {
-				Dish d = (Dish) p;
-				menues += "\t" + d.getCourseType().toString();
+				dish = (Dish) p;
+			}else if(p instanceof Menu){
+				m = (Menu) p;
 			}
 			
-			menues += "\t" + ol.getProduct().getDescription() + "\t" + ol.getProduct().getPrice() + " kr,- pr. couv"
-					+ "\n";
-
+			if(dish != null) {
+				menues = dish.getDescription() + "\t\n" + dish.getPrice() + " kr,- pr. couv \n";
+				checkTypeOnProduct(dish.getCourseType(), menues);
+				menues = null;
+			}else {
+				for(Dish d : m.getDishes()) {
+					menues = d.getDescription() + "\t\n" + d.getPrice() + " kr,- pr. couv \n";
+					checkTypeOnProduct(d.getCourseType(), menues);
+					menues = null;
+				}
+			}
+			
 		}
 		
-		menu.appendText(menues);
 		// Body for useful information
 		Paragraph usefulInfo = header.addParagraph();
 		usefulInfo.getFormat().setAfterSpacing(1);
@@ -201,7 +220,6 @@ public class DocumentCreator {
 				+ order.getCustomer().getlName() + ".docx";
 
 		Document mergeDoc = new Document(usefulInformationTemplate);
-
 		Section lastSection = doc.getLastSection();
 
 		for (Section section : (Iterable<Section>) mergeDoc.getSections()) {
@@ -212,16 +230,37 @@ public class DocumentCreator {
 
 		doc.saveToFile(docname, FileFormat.Docx);
 	}
-
 	
-	public void openDocument() {
-		ProcessBuilder pb = new ProcessBuilder(); 
-		String path = System.getProperty("user.dir") + System.getProperty("file.separator");
-		pb.command("cmd.exe", "/C","start", path+docname);
+	public void openGenerateDocument() {
 		try {
-			pb.start();
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			String path = System.getProperty("user.dir") + System.getProperty("file.separator");
+			File wordDoc = new File(path+docname);
+			if(Desktop.isDesktopSupported()) {
+				Desktop desktop = Desktop.getDesktop();
+				if(wordDoc.exists())
+					desktop.open(wordDoc);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void checkTypeOnProduct(CourseType courseType, String textOutPut) {
+		switch(courseType) {
+		case FORRET:
+			forret.appendText(textOutPut);
+			break;
+		case HOVEDRET:
+			hovedret.appendText(textOutPut);
+			break;
+		case BUFFET:
+			buffet.appendText(textOutPut);
+			break;
+		case DESSERT:
+			dessert.appendText(textOutPut);
+			break;
+		default:
+			break;
 		}
 	}
 }

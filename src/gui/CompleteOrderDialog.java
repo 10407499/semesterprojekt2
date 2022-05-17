@@ -55,7 +55,7 @@ public class CompleteOrderDialog extends JDialog {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				closeDialog(orderUi);
-				dc.openDocument();
+				dc.openGenerateDocument();
 			}
 		});
 		btnJa.setBounds(104, 144, 89, 23);

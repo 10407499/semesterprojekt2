@@ -436,7 +436,7 @@ public class OrderUI extends JFrame {
 					comboBoxProduct.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if (e.getModifiers() != 0) { // This if checks if its anything other than keyboard picking
+							if (e.getModifiers() != 0 && comboBoxProduct.getSelectedIndex() != -1) { // This if checks if its anything other than keyboard picking
 															// the combobox
 								textFieldProduct.setText(orderController.getProducts()
 										.get(comboBoxProduct.getSelectedIndex()).getDescription());
@@ -767,7 +767,7 @@ public class OrderUI extends JFrame {
 
 	private void addProductToOrder(int index) {
 		Product p = null;
-		if (orderController.getProducts().get(index) != null && textFieldProductQuantity.getText() != null) {
+		if (!orderController.getProducts().get(index).equals(null) && !textFieldProductQuantity.getText().isEmpty()) {
 			p = orderController.getProducts().get(index);
 			orderController.addProduct(p.getProductNo(), Integer.parseInt(textFieldProductQuantity.getText()));
 		} else {
