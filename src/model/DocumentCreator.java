@@ -197,7 +197,7 @@ public class DocumentCreator {
 		styleHeader.getCharacterFormat().setFontSize(14);
 		doc.getStyles().add(styleHeader);
 		orderInfo.applyStyle("Header");
-
+		
 		// Style information text
 		ParagraphStyle styleInformation = new ParagraphStyle(doc);
 		styleInformation.setName("Information");

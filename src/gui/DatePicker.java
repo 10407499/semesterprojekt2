@@ -12,12 +12,13 @@ import org.jdatepicker.impl.UtilDateModel;
 
 public abstract class DatePicker {
 	private static JDatePickerImpl datePicker;
+	private static UtilDateModel model;
 
 	public static Date getDateValue() {
 		Date date = null;
 		if (datePicker.getJFormattedTextField().getText().equals("")) {
 			date = Date.valueOf(LocalDate.now());
-			// TODO Update UI date when this is called
+			model.setValue(date);
 		} else {
 			date = Date.valueOf(datePicker.getJFormattedTextField().getText());
 		}
@@ -26,7 +27,7 @@ public abstract class DatePicker {
 
 	public static void createDatePicker(JPanel panel, int x, int y, int width, int height) {
 		// https://stackoverflow.com/questions/64668114/implementing-jdatepicker-in-swing-java
-		UtilDateModel model = new UtilDateModel();
+		model = new UtilDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");

@@ -1,7 +1,6 @@
 package controller;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +45,6 @@ public class OrderController implements OrderControllerIF {
 	public Order createOrder() {
 		order = new Order();
 		return order;
-
 	}
 
 	@Override
@@ -169,11 +167,6 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	@Override
 	public List<String> productDetailsToString(String description) {
 		List<String> res = new ArrayList<>();
 		products = findProducts(description);
@@ -184,6 +177,11 @@ public class OrderController implements OrderControllerIF {
 			}
 		}
 		return res;
+	}
+	
+	@Override
+	public List<Customer> getCustomers() {
+		return customers;
 	}
 
 	@Override
