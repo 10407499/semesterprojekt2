@@ -45,56 +45,63 @@ import javax.swing.JTable;
 import javax.swing.JList;
 
 public class OrderUI extends JFrame {
-
-	// Imports
+	
 	private OrderControllerIF orderController;
-
+	
 	private JPanel contentPane;
-	private JTextField coverField;
+	private JPanel deliveryPanel2;
+	private JPanel deliveryPanel;
+	private JPanel customerorderInfoPanel;
 	private JPanel orderInfoPanel;
+	
+	private JScrollPane scrollPane;
+	
+	private JTextField coverField;
 	private JTextField textFieldFName;
 	private JTextField textFieldLName;
 	private JTextField textFieldAdresse;
 	private JTextField textHouseNo;
 	private JTextField textFieldZipCode;
 	private JTextField textFieldCity;
-	private JLabel lblPhoneNo;
-	private JTextField textFieldPhoneNo;
-	private JLabel lblEmail;
-	private JTextField textFieldEmail;
-	private JButton btnNewButton;
-	private JPanel customerorderInfoPanel;
-	private JTextField textFieldProduct;
-	private JTextField textFieldProductQuantity;
-	private JPanel deliveryPanel;
+	private JTextField textFieldDeliveryHouseNo;
 	private JTextField textFieldDeliveryCity;
 	private JTextField textFieldDeliveryAdd;
 	private JTextField textFieldDeliveryZipCode;
+	private JTextField textFieldPhoneNo;
+	private JTextField textFieldEmail;
+	private JTextField textFieldProduct;
+	private JTextField textFieldProductQuantity;
+	
+	private JLabel lblEmail;
 	private JLabel lblEfternavn_7;
 	private JLabel lblEfternavn_8;
 	private JLabel lblEfternavn_9;
 	private JLabel lblEfternavn_10;
-	private JTextField textFieldDeliveryHouseNo;
-	private JComboBox comboBoxEatClock;
 	private JLabel lblEfternavn_12;
-	private JPanel deliveryPanel2;
 	private JLabel lblCustomerError;
 	private JLabel lblTotalCoverAmount;
-
-	private JCheckBox chckbxDelivery;
-	private JComboBox comboBoxRole;
-	private JCheckBox chckbxPickup;
-	private JCheckBox chckbxAlternativeAdd;
-	private JComboBox comboBoxProduct;
-
-	private String btnCompleteText = "F�rdigg�re order";
+	private JLabel lblPhoneNo;
 	private JLabel lblFailureCovers;
-	private boolean textBoxError = false;
+	private JLabel lblProductQuantityError;
+	
+	private JComboBox comboBoxEatClock;
+	private JComboBox comboBoxRole;
+	private JComboBox comboBoxProduct;
 	private JComboBox comboBoxFName;
+	private JComboBox comboBoxZipcode;
+	
 	private DefaultComboBoxModel model;
 	private DefaultComboBoxModel modelProduct;
-	private JLabel lblProductQuantityError;
-	private JScrollPane scrollPane;
+	private DefaultComboBoxModel modelZipcode;
+	
+	private JCheckBox chckbxDelivery;
+	private JCheckBox chckbxPickup;
+	private JCheckBox chckbxAlternativeAdd;
+	
+	private JButton btnNewButton;
+	
+	private String btnCompleteText = "Færdiggøre order";
+	private boolean textBoxError = false;
 
 	// FIXME THIS IS TESTING CUSTOMER
 	private int customerNo = 0;
@@ -103,8 +110,6 @@ public class OrderUI extends JFrame {
 	private ProductListModel productModel;
 	private DefaultListModel eList;
 	private JList serviceList;
-	private JComboBox comboBoxZipcode;
-	private DefaultComboBoxModel modelZipcode;
 
 	/**
 	 * Create the frame.
@@ -344,7 +349,7 @@ public class OrderUI extends JFrame {
 
 		btnNewButton = new JButton("Tilbage");
 		btnNewButton.addActionListener(e -> {
-			JFrameManager.goToMainUI(this);
+			SWINGManager.goToMainUI(this);
 			setVisible(false);
 			dispose();
 		});
@@ -616,7 +621,7 @@ public class OrderUI extends JFrame {
 		// 4th method call
 		if (!textBoxError) {
 			orderController.completeOrder();
-			JFrameManager.openCompleteOrderDialog(this, orderController.getDocumentCreator());
+			SWINGManager.openCompleteOrderDialog(this, orderController.getDocumentCreator());
 		}
 	}
 

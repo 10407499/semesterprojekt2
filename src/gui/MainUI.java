@@ -16,7 +16,7 @@ public class MainUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtSgEfterKunde;
-	private JFrameManager jFrameMan;
+	private SWINGManager jFrameMan;
 	private MainUI mainUI;
 
 	/**
@@ -58,7 +58,7 @@ public class MainUI extends JFrame {
 		btnCreateOrder.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				JFrameManager.goToOrderUI(mainUI);
+				SWINGManager.goToOrderUI(mainUI);
 				setVisible(false);
 				dispose();
 			}

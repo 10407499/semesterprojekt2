@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 import model.DocumentCreator;
 
-public class JFrameManager {
+public class SWINGManager {
 
 	public static void goToOrderUI(MainUI mainUI) {
 	

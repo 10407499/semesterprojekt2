@@ -79,7 +79,7 @@ public class CompleteOrderDialog extends JDialog {
 
 	private void closeDialog(OrderUI orderUi) {
 		dispose();
-		JFrameManager.goToMainUI(orderUi);
+		SWINGManager.goToMainUI(orderUi);
 		orderUi.dispose();
 	}
 
