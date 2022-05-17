@@ -12,6 +12,6 @@ public interface CustomerDBIF {
 	 * @return List of Customers
 	 */
 	public List<Customer> findCustomers(String name);
-	public int insertCustomer(Customer customer) throws SQLException;
+	public int insertNewCustomer(Customer customer) throws DataAccessException;
 }
 

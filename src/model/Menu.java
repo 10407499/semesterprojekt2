@@ -8,8 +8,8 @@ public class Menu extends Product {
 	private List<Dish> dishes;
 	private String type;
 
-	public Menu(String description, double price, int productNo, String type) {
-		super(description, price, productNo, type);
+	public Menu(String description, double price, int productNo, String type, CourseType courseType) {
+		super(description, price, productNo, type, courseType);
 		dishes = new ArrayList<>();
 	}
 

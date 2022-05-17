@@ -11,20 +11,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.CustomerController;
-import controller.CustomerControllerIF;
 import controller.OrderController;
 import controller.OrderControllerIF;
-import controller.ProductController;
-import controller.ProductControllerIF;
-import controller.ServiceController;
-import controller.ServiceControllerIF;
+import db.DataAccessException;
+import model.CourseType;
 import model.Customer;
 import model.Delivery;
-import model.Dish;
 import model.Menu;
 import model.Order;
-import model.OrderLine;
 import model.Product;
 import model.EmployeeRole;
 
@@ -46,7 +40,7 @@ public class TestCreateOrder {
 		// Arrange
 		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
 		int cover = 20;
-		Product p = new Menu("Menu1", 20.00, 1, "MENU");
+		Product p = new Menu("Menu1", 20.00, 1, "MENU", CourseType.FORRET);
 		Date d = Date.valueOf("2023-01-01");
 		String eatingTime = "17:45";
 		
@@ -134,7 +128,6 @@ public class TestCreateOrder {
 	@Test
 	public void addDeliveryAndService() {
 		// Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818","Ibby", 1);
 		int cover = 20;
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IB", "Ibsevej", "Ibby", "1818");
@@ -164,9 +157,7 @@ public class TestCreateOrder {
 	@Test
 	public void AlternativeDeliveryAddress() {
 		// Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby",1);
 		int cover = 20;
-		Product p = new Menu("Menu1", 20.00, 1, "MENU");
 		Date d = Date.valueOf("2023-01-01");
 		Delivery delivery = new Delivery("69IBAlternative", "IbsevejAlternative", "Ibby", "1818");
 		String eatingTime = "17:45";
@@ -188,7 +179,7 @@ public class TestCreateOrder {
 	
 	// test case 9
 	@Test
-	public void CustomerDoNotExsist() throws SQLException {
+	public void CustomerDoNotExsist() throws DataAccessException {
 		// Arrange
 		Customer cc = new Customer("IBBI", "IBBISEN", "Ibbisevej", "69IBBI", "19191919", "ibbi@ibbi.ibbi", "1818", "Ibby");
 		int cover = 5;

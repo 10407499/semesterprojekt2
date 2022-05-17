@@ -18,6 +18,7 @@ import java.awt.Color;
 
 import controller.OrderController;
 import controller.OrderControllerIF;
+import db.DataAccessException;
 import model.Customer;
 import model.EmployeeRole;
 import model.OrderLine;
@@ -101,7 +102,7 @@ public class OrderUI extends JFrame {
 	private JButton btnNewButton;
 	
 	private String btnCompleteText = "Færdiggøre order";
-	private boolean textBoxError = false;
+	private boolean error = false;
 
 	// FIXME THIS IS TESTING CUSTOMER
 	private int customerNo = 0;
@@ -387,7 +388,7 @@ public class OrderUI extends JFrame {
 		textFieldProductQuantity.setBounds(536, 59, 86, 20);
 		productPanel.add(textFieldProductQuantity);
 
-		JButton btnAdd = new JButton("Tilf\u00F8j");
+		JButton btnAdd = new JButton("Tilføj");
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -420,16 +421,13 @@ public class OrderUI extends JFrame {
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-
-				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE && table.getSelectedRow() != -1) {
 					deleteProductFromTable(table.getSelectedRow());
 				}
-
 			}
 		});
 		
 		scrollPane.setViewportView(table);
-
 		modelProduct = new DefaultComboBoxModel();
 		comboBoxProduct = new JComboBox(modelProduct);
 		comboBoxProduct.addItemListener(new ItemListener() {
@@ -589,9 +587,7 @@ public class OrderUI extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_DELETE && serviceList.getSelectedIndex() != -1) {
-					
 					eList.remove(serviceList.getSelectedIndex());
-					
 				}
 			}
 		});
@@ -619,10 +615,11 @@ public class OrderUI extends JFrame {
 		// 3rd method call
 		setService();
 		// 4th method call
-		if (!textBoxError) {
+		if (!error) {
 			orderController.completeOrder();
 			SWINGManager.openCompleteOrderDialog(this, orderController.getDocumentCreator());
-		}
+		}else
+			error = false;
 	}
 
 	private void resetCustomer() {
@@ -660,9 +657,9 @@ public class OrderUI extends JFrame {
 				orderController.insertNewCustomer(textFieldFName.getText(), textFieldLName.getText(),
 						textFieldAdresse.getText(), textHouseNo.getText(), textFieldPhoneNo.getText(),
 						textFieldEmail.getText(), textFieldZipCode.getText(), textFieldCity.getText());
-			} catch (SQLException e) {
+			} catch (DataAccessException e) {
 				lblCustomerError.setText("Mail eller telefonnummer findes allerede*");
-				
+				error = true;
 			}
 		}
 
@@ -706,7 +703,7 @@ public class OrderUI extends JFrame {
 		String eatingTime = comboBoxEatClock.getSelectedItem().toString();
 		int coverAmount = 0;
 		if (coverField.getText().isEmpty() || coverField.getText().length() > 9) {
-			textBoxError = true;
+			error = true;
 			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 		} else {
 			coverAmount = Integer.parseInt(coverField.getText()); // Special requirement, cover amount must be minimum 4 | Maybe get it
@@ -716,7 +713,7 @@ public class OrderUI extends JFrame {
 		if (orderController.setOrderInfo(coverAmount, DatePicker.getDateValue(), eatingTime)) {
 			lblFailureCovers.setText(null);
 		} else {
-			textBoxError = true;
+			error = true;
 			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 		}
 	}
@@ -774,7 +771,7 @@ public class OrderUI extends JFrame {
 			p = orderController.getProducts().get(index);
 			orderController.addProduct(p.getProductNo(), Integer.parseInt(textFieldProductQuantity.getText()));
 		} else {
-			textBoxError = true;
+			error = true;
 		}
 	}
 
@@ -797,7 +794,7 @@ public class OrderUI extends JFrame {
 			res = true;
 			lblCustomerError.setText("");
 		} else {
-			textBoxError = true;
+			error = true;
 			lblCustomerError.setText("Alle felter skal udfyldes");
 		}
 		return res;
@@ -832,18 +829,19 @@ public class OrderUI extends JFrame {
 		eList.addElement(er);
 	}
 
+	/**
+	 * This method takes a boolean parameter and calls the alternative checkboxes seteditable with the given boolean & clears the textboxes
+	 * @param isEditable
+	 */
+	
 	private void setAlternativDeliveryTextEditable(boolean isEditable) {
-			textFieldDeliveryAdd.setEditable(isEditable);
-			textFieldDeliveryCity.setEditable(isEditable);
-			textFieldDeliveryHouseNo.setEditable(isEditable);
-			textFieldDeliveryZipCode.setEditable(isEditable);
-			textFieldDeliveryAdd.setText("");
-			textFieldDeliveryCity.setText("");
-			textFieldDeliveryHouseNo.setText("");
-			textFieldDeliveryZipCode.setText("");
+		textFieldDeliveryAdd.setEditable(isEditable);
+		textFieldDeliveryCity.setEditable(isEditable);
+		textFieldDeliveryHouseNo.setEditable(isEditable);
+		textFieldDeliveryZipCode.setEditable(isEditable);
+		textFieldDeliveryAdd.setText("");
+		textFieldDeliveryCity.setText("");
+		textFieldDeliveryHouseNo.setText("");
+		textFieldDeliveryZipCode.setText("");
 	}
-	
-	
-	
-	
 }

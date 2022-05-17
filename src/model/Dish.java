@@ -6,7 +6,6 @@ import java.util.List;
 public class Dish extends Product{
 
 	private Measurement measurement;
-	private CourseType courseType;
 	private double quantity;
 	private List<IngredientLine> ingredients;
 	
@@ -21,14 +20,13 @@ public class Dish extends Product{
 	 * @param quantity
 	 */
 	
-	public Dish(String description, double price, int productNo, String type, Measurement measurement, CourseType courseType, double quantity) {
-		super(description, price, productNo, type);
+	public Dish(String description, double price, int productNo, String type, CourseType courseType, Measurement measurement, double quantity) {
+		super(description, price, productNo, type, courseType);
 		ingredients = new ArrayList<>();
 		this.measurement = measurement;
-		this.courseType = courseType;
 		this.quantity = quantity;
 	}
-	
+
 	/**
 	 * This constructor is used if a new dish is being made
 	 * @param description
@@ -37,8 +35,8 @@ public class Dish extends Product{
 	 * @param type
 	 */
 	
-	public Dish(String description, double price, String type) {
-		super(description, price, type);
+	public Dish(String description, double price, String type, CourseType courseType) {
+		super(description, price, type, courseType);
 		ingredients = new ArrayList<>();
 	}
 
@@ -67,7 +65,4 @@ public class Dish extends Product{
 	public void setMeasurement(Measurement measurement) {
 		this.measurement = measurement;
 	}
-	
-	
-	
 }

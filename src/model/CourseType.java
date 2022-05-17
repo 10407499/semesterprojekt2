@@ -4,5 +4,6 @@ public enum CourseType {
 	FORRET,
 	BUFFET,
 	DESSERT,
+	HOVEDRET,
 	APPETIZER
 }

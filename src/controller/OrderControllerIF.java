@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import db.DataAccessException;
 import model.Customer;
 import model.DocumentCreator;
 import model.Order;
@@ -22,7 +23,7 @@ public interface OrderControllerIF {
 	public void setCustomer(int customerNo);
 	
 	public void insertNewCustomer(String fName, String lName, String street, String houseNo, 
-			String phoneNo, String email, String zipCode, String city)throws SQLException;
+			String phoneNo, String email, String zipCode, String city) throws DataAccessException;
 	
 	public void setDelivery(String houseNo, String street, String city, String zipcode); 
 	

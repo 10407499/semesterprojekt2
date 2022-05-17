@@ -139,6 +139,7 @@ public class DocumentCreator {
 		Paragraph menu = header.addParagraph();
 		menu.appendText("*Menu\n");
 
+		//FIXME Not used atm
 		Paragraph forret = header.addParagraph();
 		Paragraph buffet = header.addParagraph();
 		Paragraph dessert = header.addParagraph();
@@ -146,23 +147,21 @@ public class DocumentCreator {
 		String menues = "";
 
 		for (OrderLine ol : order.getOrderLines()) {
-			// String type = "";
-			// type = ol.getProduct().getType();
+			String type = "";
+			type = ol.getProduct().getType().toLowerCase();
+			
+			Product p = ol.getProduct();
+			
+			if(p instanceof Dish) {
+				Dish d = (Dish) p;
+				menues += "\t" + d.getCourseType().toString();
+			}
+			
 			menues += "\t" + ol.getProduct().getDescription() + "\t" + ol.getProduct().getPrice() + " kr,- pr. couv"
 					+ "\n";
 
-			/*
-			 * switch(type) { case "forret": menues = "\t" +
-			 * ol.getProduct().getDescription() + "\n" + ol.getProduct().getPrice() +
-			 * " kr,- pr. couv" + "\n\n"; forret.appendText(menues); break; case "buffet":
-			 * menues = "\t" + ol.getProduct().getDescription() + "\n" +
-			 * ol.getProduct().getPrice() + " kr,- pr. couv" + "\n\n";
-			 * buffet.appendText(menues); break; case "dessert": menues = "\t" +
-			 * ol.getProduct().getDescription() + "\n" + ol.getProduct().getPrice() +
-			 * " kr,- pr. couv" + "\n\n"; dessert.appendText(menues); break; }
-			 */
-
 		}
+		
 		menu.appendText(menues);
 		// Body for useful information
 		Paragraph usefulInfo = header.addParagraph();
@@ -212,21 +211,17 @@ public class DocumentCreator {
 		}
 
 		doc.saveToFile(docname, FileFormat.Docx);
-		System.out.println("called");
-
 	}
 
 	
-	public void openDocument() throws UnsupportedEncodingException {
+	public void openDocument() {
 		ProcessBuilder pb = new ProcessBuilder(); 
 		String path = System.getProperty("user.dir") + System.getProperty("file.separator");
-		System.out.println(path);
 		pb.command("cmd.exe", "/C","start", path+docname);
 		try {
 			pb.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }

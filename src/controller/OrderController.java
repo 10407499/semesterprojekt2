@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import db.DataAccessException;
 import db.OrderDB;
 import db.OrderDBIF;
 import db.OrderLineDB;
@@ -102,7 +103,6 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public List<Product> findProducts(String description) {
-
 		products = productController.findProducts(description);
 		return products;
 	}
@@ -163,10 +163,7 @@ public class OrderController implements OrderControllerIF {
 	public int checkCoverAmountOnDate(Date fulfillmentdate) {
 		int sumCover = 0;
 		if (!fulfillmentdate.equals(null)) {
-			List<Order> orders = orderDB.checkCoverAmountOnDate(fulfillmentdate);
-			for (Order o : orders) {
-				sumCover += o.getCoverAmount();
-			}
+			sumCover = orderDB.checkCoverAmountOnDate(fulfillmentdate);
 		}
 		return sumCover;
 	}
@@ -196,8 +193,8 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public void insertNewCustomer(String fName, String lName, String street, String houseNo, String phoneNo,
-			String email, String zipCode, String city) throws SQLException {
-		Customer customer = customerController.insertCustomer(fName, lName, street, houseNo, phoneNo, email, zipCode,
+			String email, String zipCode, String city) throws DataAccessException {
+		Customer customer = customerController.insertNewCustomer(fName, lName, street, houseNo, phoneNo, email, zipCode,
 				city);
 		if (customer != null) {
 			order.setCustomer(customer);

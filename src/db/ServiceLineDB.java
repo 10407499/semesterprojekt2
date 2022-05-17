@@ -6,38 +6,35 @@ import java.sql.SQLException;
 import java.util.List;
 
 import model.Delivery;
+import model.Employee;
 import model.ServiceLine;
 
 public class ServiceLineDB implements ServiceLineDBIF {
-	public final static String INSERT_SERVICELINE_Q = "insert into ServiceLine values(?,null,null,?,null)";
-	public PreparedStatement insertServiceLinesPS;
-	public Connection con;
+	
+	private final static String INSERT_SERVICELINE_Q = "insert into ServiceLine values(?,?,?,?,?)";
+	private PreparedStatement insertServiceLinesPS;
+	private Connection con;
 
 	public ServiceLineDB() {
 		try {
 			con = DBConnection.getInstance().getConnection();
 			insertServiceLinesPS = con.prepareStatement(INSERT_SERVICELINE_Q);
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
-
 	}
-	
-	/*FIXME Problemstillingen er at databasen har brug for et employee nr dog når
-	 * der bliver tilføjet en serviceline i forbindelsen med en oprettelse af order
-	 * har vi som udgangspunkt ikke fundet den medarbejder som skal bruges til at løse
-	 * opgaven. Derved er det nødtvendigt at lave en ændring i enten databasen eller 
-	 *systemet. 	
-	*/
+
 	@Override
 	public void insertServiceLines(List<ServiceLine> serviceLines, int orderNo) {
+		EmployeeDBIF employeeDB = new EmployeeDB();
+		List<Employee> employees = employeeDB.getEmployees();
 		try {
-			for(ServiceLine s : serviceLines) {
-				insertServiceLinesPS.setString(1, s.getRole().toString());
-				//insertServiceLinesPS.setString(2, s.getStartTime());
-				//insertServiceLinesPS.setString(3, s.getEndTime());
-				insertServiceLinesPS.setInt(2, orderNo);
-				//insertServiceLinesPS.setInt(5, 0);// 0 erstatter = s.getEmployee().getEmployeeNo()
+			for(int i = 0; i < serviceLines.size(); i++) {
+				insertServiceLinesPS.setString(1, serviceLines.get(i).getRole().toString());
+				insertServiceLinesPS.setString(2, serviceLines.get(i).getStartTime());
+				insertServiceLinesPS.setString(3, serviceLines.get(i).getEndTime());
+				insertServiceLinesPS.setInt(4, orderNo);
+				insertServiceLinesPS.setInt(5, employees.get(i).getEmployeeNo());
 				insertServiceLinesPS.executeUpdate();
 			}
 		} catch (SQLException e) {

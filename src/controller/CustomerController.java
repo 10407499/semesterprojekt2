@@ -5,6 +5,7 @@ import java.util.List;
 
 import db.CustomerDB;
 import db.CustomerDBIF;
+import db.DataAccessException;
 import model.Customer;
 
 /**
@@ -41,11 +42,10 @@ public class CustomerController implements CustomerControllerIF {
 	}
 
 	@Override
-	public Customer insertCustomer(String fName, String lName, String street, String houseNo, String phoneNo, String email,
-			String zipCode, String city) throws SQLException {
-		//FIXME sp�rgsm�l til vejleder. Skal vi g�re det her, eller i customerDB?
+	public Customer insertNewCustomer(String fName, String lName, String street, String houseNo, String phoneNo, String email,
+			String zipCode, String city) throws DataAccessException {
 		Customer customer = new Customer(fName, lName, street, houseNo, phoneNo, email, zipCode, city);
-		int customerNo = customerDB.insertCustomer(customer);
+		int customerNo = customerDB.insertNewCustomer(customer);
 		customer.setCustomerNo(customerNo);
 		return customer;
 	}

@@ -30,7 +30,7 @@ public class OrderDB implements OrderDBIF {
 			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q,insertOrderPS.RETURN_GENERATED_KEYS);
 			findOrdersByDatePS = con.prepareStatement(FIND_ORDERS_BY_DATE_Q);
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 		
 	}
@@ -54,56 +54,18 @@ public class OrderDB implements OrderDBIF {
 	}
 
 	@Override
-	public List<Order> checkCoverAmountOnDate(Date fulfillmentdate) {
-		List<Order> orders = null;
+	public int checkCoverAmountOnDate(Date fulfillmentdate) {
+		int res = 0;
 		try {
 			findOrdersByDatePS.setDate(1, fulfillmentdate);
 			
 			ResultSet rs = findOrdersByDatePS.executeQuery();
-			orders = buildOrders(rs);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		
-		
-		
-		return orders;
-		
-		
-	}
-
-	private List<Order> buildOrders(ResultSet rs) {
-		List<Order> orders = new ArrayList<>();
-		try {
 			while(rs.next()) {
-				Order order = null;
-				order = buildOrder(rs);
-				orders.add(order);
+				res += rs.getInt("coverAmount");
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
-		return  orders;
+		return res;
 	}
-
-	private Order buildOrder(ResultSet rs) {
-		Order order = null;
-		
-		try {
-			//FIXME Hvad skal der med til en Order osv. 
-			Date creationDate = rs.getDate("date");
-			Date fulfillmentDate = rs.getDate("fulfillmentDate");
-			int coverAmount = rs.getInt("coverAmount");
-			boolean paid = rs.getBoolean("paid");
-			boolean confirmation = rs.getBoolean("confirmation");
-			int orderNo = rs.getInt("orderNo");
-			int customerNo = rs.getInt("customerNo");
-			order = new Order(creationDate, fulfillmentDate, coverAmount, paid, confirmation, orderNo);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return order;
-	}
-
 }

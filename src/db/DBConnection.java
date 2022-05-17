@@ -83,7 +83,6 @@ public class DBConnection {
 				res = rs.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw e;
 		}
 		return res;

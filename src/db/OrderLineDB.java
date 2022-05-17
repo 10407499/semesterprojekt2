@@ -18,7 +18,7 @@ public class OrderLineDB implements OrderLineDBIF {
 			con = DBConnection.getInstance().getConnection();
 			insertOrderLinesPS = con.prepareStatement(INSERT_ORDERLINES_Q);
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -33,7 +33,7 @@ public class OrderLineDB implements OrderLineDBIF {
 			insertOrderLinesPS.executeUpdate();
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 		
 		
