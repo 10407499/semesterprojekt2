@@ -16,7 +16,7 @@ public class DeliveryDB implements DeliveryDBIF {
 			con = DBConnection.getInstance().getConnection();
 			insertDeliveryPS = con.prepareStatement(INSERT_DELIVERY_Q);
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 		
 	}

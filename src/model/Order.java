@@ -121,4 +121,8 @@ public class Order {
 		return eatingTime;
 	}
 	
+	public void setOrderLines(List<OrderLine> orderLines) {
+		this.orderLines = orderLines;
+	}
+	
 }

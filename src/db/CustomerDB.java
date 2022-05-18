@@ -26,7 +26,6 @@ public class CustomerDB implements CustomerDBIF {
 
 	private Connection con;
 	private PreparedStatement findByName;
-	private PreparedStatement update;
 	private PreparedStatement insertCustomerPS;
 
 	/**

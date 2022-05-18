@@ -89,11 +89,9 @@ public class OrderUI extends JFrame {
 	private JComboBox comboBoxRole;
 	private JComboBox comboBoxProduct;
 	private JComboBox comboBoxFName;
-	private JComboBox comboBoxZipcode;
 	
 	private DefaultComboBoxModel model;
 	private DefaultComboBoxModel modelProduct;
-	private DefaultComboBoxModel modelZipcode;
 	
 	private JCheckBox chckbxDelivery;
 	private JCheckBox chckbxPickup;
@@ -104,7 +102,6 @@ public class OrderUI extends JFrame {
 	private String btnCompleteText = "Færdiggøre order";
 	private boolean error = false;
 
-	// FIXME THIS IS TESTING CUSTOMER
 	private int customerNo = 0;
 	private JTable table;
 
@@ -161,9 +158,9 @@ public class OrderUI extends JFrame {
 
 		lblFailureCovers = new JLabel("");
 		lblFailureCovers.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFailureCovers.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblFailureCovers.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
 		lblFailureCovers.setForeground(Color.RED);
-		lblFailureCovers.setBounds(168, 11, 194, 14);
+		lblFailureCovers.setBounds(135, 11, 227, 14);
 		orderInfoPanel.add(lblFailureCovers);
 
 		comboBoxEatClock = new JComboBox();
@@ -171,7 +168,7 @@ public class OrderUI extends JFrame {
 		orderInfoPanel.add(comboBoxEatClock);
 
 		lblEfternavn_12 = new JLabel("Spise tidspunkt");
-		lblEfternavn_12.setBounds(192, 92, 106, 17);
+		lblEfternavn_12.setBounds(192, 92, 152, 17);
 		orderInfoPanel.add(lblEfternavn_12);
 		lblEfternavn_12.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEfternavn_12.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -268,6 +265,7 @@ public class OrderUI extends JFrame {
 		customerorderInfoPanel.add(textFieldZipCode);
 
 		textFieldCity = new JTextField();
+		textFieldCity.setEditable(false);
 		textFieldCity.setColumns(10);
 		textFieldCity.setBounds(118, 180, 231, 20);
 		customerorderInfoPanel.add(textFieldCity);
@@ -319,34 +317,9 @@ public class OrderUI extends JFrame {
 
 		lblCustomerError = new JLabel("");
 		lblCustomerError.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCustomerError.setBounds(118, 11, 244, 14);
+		lblCustomerError.setBounds(61, 11, 301, 14);
 		customerorderInfoPanel.add(lblCustomerError);
 		lblCustomerError.setForeground(Color.RED);
-		
-		modelZipcode = new DefaultComboBoxModel();
-		comboBoxZipcode = new JComboBox(modelZipcode);
-		comboBoxZipcode.addItemListener(new ItemListener() {
-
-	public void itemStateChanged(ItemEvent e) {
-				if (e.getSource() == comboBoxZipcode) {
-					comboBoxZipcode.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							if (e.getModifiers() != 0) { // This if checks if its anything other than keyboard picking
-															// the combobox
-								if (!textFieldZipCode.getText().equals(null)) {
-									setCustomerToTextFields(comboBoxZipcode.getSelectedIndex());
-								}
-							}
-						}
-					});
-				}
-			}
-		});
-		
-		
-		comboBoxZipcode.setBounds(21, 180, 82, 20);
-		customerorderInfoPanel.add(comboBoxZipcode);
 
 		btnNewButton = new JButton("Tilbage");
 		btnNewButton.addActionListener(e -> {
@@ -382,6 +355,10 @@ public class OrderUI extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				ActionHandler.keyHandler(e, textFieldProductQuantity);
+				if(e.getKeyCode() == KeyEvent.VK_ENTER && comboBoxProduct.getSelectedIndex() != -1) {
+					addProductToOrder(comboBoxProduct.getSelectedIndex());
+					updateProductTable();
+				}
 			}
 		});
 		textFieldProductQuantity.setColumns(10);
@@ -607,7 +584,6 @@ public class OrderUI extends JFrame {
 	}
 
 	private void completeOrder() {
-
 		// 1st method call
 		setOrderInfo();
 		// 2nd method call
@@ -659,8 +635,11 @@ public class OrderUI extends JFrame {
 						textFieldEmail.getText(), textFieldZipCode.getText(), textFieldCity.getText());
 			} catch (DataAccessException e) {
 				lblCustomerError.setText("Mail eller telefonnummer findes allerede*");
+				if(e.getCause().getMessage().contains("zipcod")) {
+					lblCustomerError.setText("Postnummer og by passer ikke sammen");
+				}
 				error = true;
-			}
+			} 
 		}
 
 	}
@@ -671,7 +650,6 @@ public class OrderUI extends JFrame {
 
 		DatePicker.createDatePicker(orderInfoPanel, 22, 59, 245, 30);
 		comboBoxFName.setEnabled(false);
-		comboBoxZipcode.setEnabled(false);
 		comboBoxProduct.setEnabled(false);
 
 		addElementsToComboBoxRole();
@@ -795,12 +773,12 @@ public class OrderUI extends JFrame {
 			lblCustomerError.setText("");
 		} else {
 			error = true;
-			lblCustomerError.setText("Alle felter skal udfyldes");
+			lblCustomerError.setText("Alle felter skal udfyldes*");
 		}
 		return res;
 	}
 
-	private void setService() { // FIXME Vi er kommet hertil, check database
+	private void setService() {
 		setDelivery();
 		List<EmployeeRole> er = new ArrayList<>();
 		for (int i = 0; i < serviceList.getModel().getSize(); i++) {

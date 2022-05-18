@@ -2,13 +2,7 @@ package gui;
 
 import javax.swing.*;  
 import java.awt.*;
-import java.util.Properties;
-
 import javax.swing.border.EmptyBorder;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,7 +10,6 @@ public class MainUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtSgEfterKunde;
-	private SWINGManager jFrameMan;
 	private MainUI mainUI;
 
 	/**
@@ -80,7 +73,7 @@ public class MainUI extends JFrame {
 		  scrollPane.setBounds(49, 190, 1168, 387);
 		  contentPane.add(scrollPane);
 		  
-		  JList list = new JList();
+		  JList list = new JList<>();
 		  scrollPane.setViewportView(list);
 		  
 		  JPanel panel = new JPanel();

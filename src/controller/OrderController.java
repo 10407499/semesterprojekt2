@@ -58,7 +58,7 @@ public class OrderController implements OrderControllerIF {
 		}
 		return succes;
 	}
-
+	
 	@Override
 	public List<Customer> findCustomers(String name) {
 		customers = customerController.findCustomers(name);
@@ -105,13 +105,32 @@ public class OrderController implements OrderControllerIF {
 		return products;
 	}
 
+	private boolean checkExistOrderLine(Product product, int quantity) {
+		boolean res = false;
+		
+		for(OrderLine ol : order.getOrderLines()) {
+			if(product.getProductNo() == ol.getProduct().getProductNo()) {
+				int sum = ol.getQuantity() + quantity;
+				combineQuantityOnOrderLine(ol, sum);
+				res = true;
+			}
+		}
+		return res;
+	}
+	
+	private void combineQuantityOnOrderLine(OrderLine orderLine, int quantity) {
+		orderLine.setQuantity(quantity);
+	}
+	
 	@Override
 	public void addProduct(int productNo, int quantity) {
 		Product product = getProductByNo(productNo);
-		// Creates new orderLine Object
-		OrderLine orderLine = new OrderLine(product, quantity);
-		// Adds OrderLine object to Orders list of orderLines
-		order.addOrderLine(orderLine);
+		if(!checkExistOrderLine(product, quantity)) {
+			// Creates new orderLine Object
+			OrderLine orderLine = new OrderLine(product, quantity);
+			// Adds OrderLine object to Orders list of orderLines
+			order.addOrderLine(orderLine);
+		}
 	}
 
 	private Product getProductByNo(int productNo) {
@@ -160,7 +179,7 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public int checkCoverAmountOnDate(Date fulfillmentdate) {
 		int sumCover = 0;
-		if (!fulfillmentdate.equals(null)) {
+		if (fulfillmentdate != null) {
 			sumCover = orderDB.checkCoverAmountOnDate(fulfillmentdate);
 		}
 		return sumCover;

@@ -2,11 +2,8 @@ package gui;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.DefaultTableModel;
-
 import model.OrderLine;
-import model.Product;
 
 public class ProductListModel extends DefaultTableModel{
 	private static final long serialVersionUID = 1L;
@@ -52,10 +49,10 @@ public class ProductListModel extends DefaultTableModel{
 			res = currProduct.getProduct().getDescription();
 			break;
 		case 1: 
-			res = "" + currProduct.getQuantity(); //TODO Tjek ny l�sning
+			res = "" + currProduct.getQuantity();
 			break;
 		case 2:
-			res = "" +currProduct.getProduct().getPrice(); //TODO Tjek for ny løsning
+			res = "" +currProduct.getProduct().getPrice();
 		}
 		return res;
 	}

@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.spire.doc.DocumentObject;
-
 import model.CourseType;
 import model.Dish;
 import model.Measurement;
@@ -77,7 +74,7 @@ public class ProductDB implements ProductDBIF {
 			double price = rs.getDouble("price");
 			int productNo = rs.getInt("productno");
 			String type = rs.getString("type").toLowerCase();
-//			Gets the courseType from database and converts to enum & toUpperCase.
+			//Gets the courseType from database and converts to enum & toUpperCase.
 			CourseType courseType = CourseType.valueOf(rs.getString("courseType").toUpperCase());
 			
 			if(type.equals("dish")) {
@@ -108,7 +105,7 @@ public class ProductDB implements ProductDBIF {
 	}
 	
 	private List<Product> buildDishFromMenu(int menuno) {
-		List<Product> products = new ArrayList();
+		List<Product> products = new ArrayList<>();
 		try {
 			findMenuDishPS.setInt(1, menuno);
 			ResultSet rs = findMenuDishPS.executeQuery();

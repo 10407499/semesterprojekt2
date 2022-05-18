@@ -1,7 +1,6 @@
 package gui;
 
 import javax.swing.JFrame;
-
 import model.DocumentCreator;
 
 public class SWINGManager {

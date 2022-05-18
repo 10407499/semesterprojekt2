@@ -2,31 +2,17 @@ package model;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 
 import com.spire.doc.Document;
 import com.spire.doc.DocumentObject;
-import com.spire.doc.DocumentViewType;
 import com.spire.doc.FileFormat;
-import com.spire.doc.LineSpacingRule;
 import com.spire.doc.Section;
-import com.spire.doc.documents.BuiltinStyle;
 import com.spire.doc.documents.HorizontalAlignment;
 import com.spire.doc.documents.HyperlinkType;
-import com.spire.doc.documents.PageOrientation;
-import com.spire.doc.documents.PageSize;
 import com.spire.doc.documents.Paragraph;
 import com.spire.doc.documents.ParagraphStyle;
-import com.spire.doc.documents.VerticalOrigin;
 import com.spire.doc.fields.DocPicture;
-import com.spire.doc.formatting.ParagraphFormat;
 
 public class DocumentCreator {
 
@@ -144,7 +130,6 @@ public class DocumentCreator {
 		Paragraph menu = header.addParagraph();
 		menu.appendText("*Menu\n");
 
-		//FIXME Not used atm
 		forret = header.addParagraph();
 		hovedret = header.addParagraph();
 		buffet = header.addParagraph();

@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-
-import model.Delivery;
 import model.Employee;
 import model.ServiceLine;
 

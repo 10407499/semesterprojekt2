@@ -25,7 +25,7 @@ public class EmployeeDB implements EmployeeDBIF{
 	
 	@Override
 	public List<Employee> getEmployees() {
-		List<Employee> employees = new ArrayList();
+		List<Employee> employees = new ArrayList<>();
 		ZipCityDBIF zipCity = new ZipCityDB();
 		try {
 			ResultSet rs = getEmployeePS.executeQuery();
