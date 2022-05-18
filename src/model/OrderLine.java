@@ -8,7 +8,6 @@ public class OrderLine {
 	public OrderLine(Product product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
-		
 	}
 
 	/**
@@ -31,14 +30,4 @@ public class OrderLine {
 	public Product getProduct() {
 		return product;
 	}
-
-	/**
-	 * @param product the product to set
-	 */
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-	
-	
-	
 }

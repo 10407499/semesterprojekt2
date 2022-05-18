@@ -10,9 +10,7 @@ public class Person {
 	private String email;
 	private String zipCode;
 	private String city;
-	
-	
-	
+		
 	public Person(String fName, String lName, String street, String houseNo, String phoneNo, String email,
 			String zipCode, String city) {
 		this.fName = fName;
@@ -24,8 +22,6 @@ public class Person {
 		this.zipCode = zipCode;
 		this.city = city;
 	}
-
-
 
 	public String getfName() {
 		return fName;
@@ -39,25 +35,17 @@ public class Person {
 		return street;
 	}
 
-
-
 	public String getHouseNo() {
 		return houseNo;
 	}
-
-
 
 	public String getPhoneNo() {
 		return phoneNo;
 	}
 
-
-
 	public String getEmail() {
 		return email;
 	}
-
-
 
 	public String getZipCode() {
 		return zipCode;

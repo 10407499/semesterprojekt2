@@ -16,9 +16,7 @@ public class Order {
 	private Delivery delivery; 
 	private List<OrderLine> orderLines; 
 	private Customer customer;
-	
 	private String eatingTime;
-	
 	
 	public Order() {
 		orderLines = new ArrayList<>();
@@ -34,8 +32,6 @@ public class Order {
 		this.paid = paid;
 		this.confimation = confimation;
 		this.orderNo = orderNo;
-		
-		
 	}
 
 	public Date getCreationDate() {

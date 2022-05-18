@@ -37,7 +37,4 @@ public class Ingredient {
 	public void setIngredientNo(int ingredientNo) {
 		this.ingredientNo = ingredientNo;
 	}
-	
-	
-	
 }
