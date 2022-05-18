@@ -14,7 +14,7 @@ import com.spire.doc.documents.Paragraph;
 import com.spire.doc.documents.ParagraphStyle;
 import com.spire.doc.fields.DocPicture;
 
-public class DocumentCreator {
+public class OrderConfirmationDocument {
 
 	private String docname;
 	private Paragraph forret;
@@ -22,7 +22,7 @@ public class DocumentCreator {
 	private Paragraph buffet;
 	private Paragraph dessert;
 	
-	public DocumentCreator(Order order) {
+	public OrderConfirmationDocument(Order order) {
 
 		String templateA4 = "templateA4.docx";
 		String usefulInformationTemplate = "usefulInformationTemplate.docx";

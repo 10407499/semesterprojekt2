@@ -5,7 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import model.DocumentCreator;
+import model.OrderConfirmationDocument;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -20,7 +20,7 @@ public class CompleteOrderDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CompleteOrderDialog(OrderUI orderUi, DocumentCreator dc) {
+	public CompleteOrderDialog(OrderUI orderUi, OrderConfirmationDocument dc) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CompleteOrderDialog.class.getResource("/images/KOMNU.png")));
 		setTitle("Spændende Mad - Ordre færdiggjort");
 		setResizable(false);

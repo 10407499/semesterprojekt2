@@ -1,7 +1,7 @@
 package gui;
 
 import javax.swing.JFrame;
-import model.DocumentCreator;
+import model.OrderConfirmationDocument;
 
 public class SWINGManager {
 
@@ -22,7 +22,7 @@ public class SWINGManager {
 
 	
 	
-	public static void openCompleteOrderDialog(OrderUI orderUi, DocumentCreator dc) {
+	public static void openCompleteOrderDialog(OrderUI orderUi, OrderConfirmationDocument dc) {
 		CompleteOrderDialog cod = new CompleteOrderDialog(orderUi, dc);
 		cod.setLocationRelativeTo(null);
 		cod.setVisible(true);

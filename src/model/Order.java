@@ -16,6 +16,7 @@ public class Order {
 	private Delivery delivery; 
 	private List<OrderLine> orderLines; 
 	private Customer customer;
+	private OrderConfirmationDocument orderConfirmationDocument;
 	private String eatingTime;
 	
 	public Order() {
@@ -121,4 +122,11 @@ public class Order {
 		this.orderLines = orderLines;
 	}
 	
+	public void createOrderConfirmationDocument() {
+		orderConfirmationDocument = new OrderConfirmationDocument(this);
+	}
+	
+	public OrderConfirmationDocument getOrderConfirmationDocument() {
+		return orderConfirmationDocument;
+	}
 }

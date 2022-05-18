@@ -6,7 +6,7 @@ import java.util.List;
 
 import db.DataAccessException;
 import model.Customer;
-import model.DocumentCreator;
+import model.OrderConfirmationDocument;
 import model.Order;
 import model.OrderLine;
 import model.Product;
@@ -14,7 +14,7 @@ import model.EmployeeRole;
 
 public interface OrderControllerIF {
 
-	public Order createOrder();
+	public void createOrder();
 	
 	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate, String eatingTime);
 	
@@ -31,7 +31,7 @@ public interface OrderControllerIF {
 	
 	public void addProduct(int productNo, int quantity);
 	
-	public Order completeOrder();
+	public void completeOrder();
 	
 	public Order getOrder();
 	
@@ -52,6 +52,4 @@ public interface OrderControllerIF {
 	public String getCitiesWithZipcode(String text);
 	
 	public void setEatingTime(String eatingTime);
-	
-	public DocumentCreator getDocumentCreator();
 }

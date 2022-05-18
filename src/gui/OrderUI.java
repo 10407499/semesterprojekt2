@@ -593,7 +593,7 @@ public class OrderUI extends JFrame {
 		// 4th method call
 		if (!error) {
 			orderController.completeOrder();
-			SWINGManager.openCompleteOrderDialog(this, orderController.getDocumentCreator());
+			SWINGManager.openCompleteOrderDialog(this, orderController.getOrder().getOrderConfirmationDocument());
 		}else
 			error = false;
 	}
@@ -608,10 +608,10 @@ public class OrderUI extends JFrame {
 		customerNo = 0;
 	}
 
-	private void setCustomerToTextFields(int no) {
+	private void setCustomerToTextFields(int index) {
 		Customer c = null;
-		if (orderController.getCustomers().get(no) != null) {
-			c = orderController.getCustomers().get(no);
+		if (orderController.getCustomers().get(index) != null) {
+			c = orderController.getCustomers().get(index);
 			textFieldFName.setText(c.getfName());
 			textFieldLName.setText(c.getlName());
 			textFieldAdresse.setText(c.getStreet());

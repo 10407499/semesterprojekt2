@@ -13,7 +13,7 @@ import db.ZipCityDB;
 import db.ZipCityDBIF;
 import model.Customer;
 import model.Delivery;
-import model.DocumentCreator;
+import model.OrderConfirmationDocument;
 import model.Order;
 import model.OrderLine;
 import model.Product;
@@ -31,7 +31,6 @@ public class OrderController implements OrderControllerIF {
 	private OrderDBIF orderDB;
 	private OrderLineDBIF orderLineDB;
 	private ZipCityDBIF zipCityDb;
-	private DocumentCreator dc;
 
 	public OrderController() {
 		customerController = new CustomerController();
@@ -42,9 +41,8 @@ public class OrderController implements OrderControllerIF {
 		zipCityDb = new ZipCityDB();
 	}
 
-	public Order createOrder() {
+	public void createOrder() {
 		order = new Order();
-		return order;
 	}
 
 	@Override
@@ -148,14 +146,13 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public Order completeOrder() {
+	public void completeOrder() {
 		int orderNo = orderDB.insertOrder(order);
 		orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
 		if (order.getDelivery() != null) {
 			serviceController.insertService(orderNo);
 		}
-		dc = new DocumentCreator(order);
-		return order;
+		order.createOrderConfirmationDocument();
 	}
 
 	@Override
@@ -232,10 +229,5 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public void setEatingTime(String eatingTime) {
 		order.setEatingTime(eatingTime);
-	}
-
-	@Override
-	public DocumentCreator getDocumentCreator() {
-		return dc;
 	}
 }
