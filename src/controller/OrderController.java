@@ -58,9 +58,9 @@ public class OrderController implements OrderControllerIF {
 	}
 	
 	@Override
-	public List<Customer> findCustomers(String name) {
+	public List<String> findCustomers(String name) {
 		customers = customerController.findCustomers(name);
-		return customers;
+		return customerDetailsToString(customers);
 	}
 
 	public void setCustomer(int customerNo) {
@@ -161,9 +161,8 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public List<String> customerDetailsToString(String fname) {
+	public List<String> customerDetailsToString(List<Customer> customers) {
 		List<String> res = new ArrayList<>();
-		customers = findCustomers(fname);
 		if (customers != null) {
 			for (Customer c : customers) {
 				String currStr = "<html>" + c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();

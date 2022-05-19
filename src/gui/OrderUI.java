@@ -225,7 +225,7 @@ public class OrderUI extends JFrame {
 		textFieldFName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				addElementsToComboBoxCustomer();
+				findCustomers();
 			}
 		});
 		textFieldFName.setColumns(10);
@@ -343,7 +343,7 @@ public class OrderUI extends JFrame {
 
 	@Override
 			public void keyTyped(KeyEvent e) {
-				addElementsToComboBoxProduct();
+				findProducts();
 			}
 		});
 		textFieldProduct.setBounds(26, 59, 500, 20);
@@ -696,11 +696,11 @@ public class OrderUI extends JFrame {
 		}
 	}
 
-	private void addElementsToComboBoxCustomer() {
+	private void findCustomers() {
 		if (textFieldFName.getText().length() > 0) {
 			comboBoxFName.removeAllItems();
 			resetCustomer();
-			List<String> customerStr = orderController.customerDetailsToString(textFieldFName.getText());
+			List<String> customerStr = orderController.findCustomers(textFieldFName.getText());
 			for (String s : customerStr) {
 				if (model.getIndexOf(s) == -1) {
 					model.addElement(s);
@@ -726,7 +726,7 @@ public class OrderUI extends JFrame {
 			comboBoxEatClock.addItem(s);
 	}
 
-	private void addElementsToComboBoxProduct() {
+	private void findProducts() {
 		if (textFieldProduct.getText().length() > 0) {
 			comboBoxProduct.removeAllItems();
 
