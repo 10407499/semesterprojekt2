@@ -61,7 +61,7 @@ public class OrderDB implements OrderDBIF {
 			
 			ResultSet rs = findOrdersByDatePS.executeQuery();
 			while(rs.next()) {
-				res += rs.getInt("coverQuantity");
+				res += rs.getInt("coverAmount");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
