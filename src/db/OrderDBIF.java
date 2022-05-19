@@ -8,7 +8,7 @@ import model.Order;
 public interface OrderDBIF {
 
 	public int insertOrder(Order order);
-	public int checkCoverAmountOnDate(Date fulfillmentdate);
+	public int checkCoverQuantityOnDate(Date fulfillmentdate);
 	
 	
 }

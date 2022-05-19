@@ -9,7 +9,7 @@ public class Order {
 
 	private Date creationDate; 
 	private Date fulfillmentDate;
-	private int coverAmount; 
+	private int coverQuantity; 
 	private boolean paid; 
 	private boolean confimation;
 	private int orderNo; 
@@ -25,11 +25,11 @@ public class Order {
 		paid = false; 
 	}
 	
-	public Order(Date creationDate, Date fulfillmentDate, int coverAmount, boolean paid, boolean confimation,
+	public Order(Date creationDate, Date fulfillmentDate, int coverQuantity, boolean paid, boolean confimation,
 			int orderNo) {
 		this.creationDate = creationDate;
 		this.fulfillmentDate = fulfillmentDate;
-		this.coverAmount = coverAmount;
+		this.coverQuantity = coverQuantity;
 		this.paid = paid;
 		this.confimation = confimation;
 		this.orderNo = orderNo;
@@ -54,12 +54,12 @@ public class Order {
 		this.fulfillmentDate = fulfillmentDate;
 	}
 	
-	public int getCoverAmount() {
-		return coverAmount;
+	public int getCoverQuantity() {
+		return coverQuantity;
 	}
 	
-	public void setCoverAmount(int coverAmount) {
-		this.coverAmount = coverAmount;
+	public void setCoverQuantity(int coverQuantity) {
+		this.coverQuantity = coverQuantity;
 	}
 	
 	public boolean isPaid() {

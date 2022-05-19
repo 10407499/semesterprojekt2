@@ -46,10 +46,10 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate, String eatingTime) {
+	public boolean setOrderInfo(int coverQuantity, Date fulfillmentdate, String eatingTime) {
 		boolean succes = false;
-		if (coverAmount >= 4 && coverAmount < 10000) {
-			order.setCoverAmount(coverAmount);
+		if (coverQuantity >= 4 && coverQuantity < 10000) {
+			order.setCoverQuantity(coverQuantity);
 			succes = true;
 			order.setFulfillmentDate(fulfillmentdate);
 			order.setEatingTime(eatingTime);
@@ -174,10 +174,10 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public int checkCoverAmountOnDate(Date fulfillmentdate) {
+	public int checkCoverQuantityOnDate(Date fulfillmentdate) {
 		int sumCover = 0;
 		if (fulfillmentdate != null) {
-			sumCover = orderDB.checkCoverAmountOnDate(fulfillmentdate);
+			sumCover = orderDB.checkCoverQuantityOnDate(fulfillmentdate);
 		}
 		return sumCover;
 	}

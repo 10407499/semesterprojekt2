@@ -56,7 +56,7 @@ public class OrderConfirmationDocument {
 		String orderInfoString = "Bestilling: \n" + "Dato: " + order.getFulfillmentDateToString() + "\n" + "Mail: "
 				+ order.getCustomer().getEmail() + "\n" + "Adr: " + order.getCustomer().getStreet() + " "
 				+ order.getCustomer().getHouseNo() + ", " + order.getCustomer().getZipCode() + " "
-				+ order.getCustomer().getCity() + "\n" + "Antal: " + order.getCoverAmount() + "\n" + "Spisetid: "
+				+ order.getCustomer().getCity() + "\n" + "Antal: " + order.getCoverQuantity() + "\n" + "Spisetid: "
 				+ order.getEatingTime() + "\t";
 
 		// Paragraph for general information

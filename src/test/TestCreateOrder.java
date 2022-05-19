@@ -57,7 +57,7 @@ public class TestCreateOrder {
 		
 		// Assert
 		assertEquals(orderController.getOrder().getCustomer().getfName(), c.getfName());
-		assertEquals(orderController.getOrder().getCoverAmount(), cover);
+		assertEquals(orderController.getOrder().getCoverQuantity(), cover);
 		assertEquals(orderController.getOrder().getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
 		assertEquals(orderController.getOrder().getFulfillmentDate(), d);
 	}
@@ -81,7 +81,7 @@ public class TestCreateOrder {
 		
 		// Assert
 		assertEquals(orderController.getOrder().getCustomer().getfName(), c.getfName());
-		assertEquals(orderController.getOrder().getCoverAmount(), cover);
+		assertEquals(orderController.getOrder().getCoverQuantity(), cover);
 		assertEquals(orderController.getOrder().getFulfillmentDate(), d);
 	}
 

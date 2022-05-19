@@ -41,7 +41,7 @@ public class OrderDB implements OrderDBIF {
 		try {
 			insertOrderPS.setDate(1, order.getCreationDate());
 			insertOrderPS.setDate(2, order.getFulfillmentDate());
-			insertOrderPS.setInt(3, order.getCoverAmount());
+			insertOrderPS.setInt(3, order.getCoverQuantity());
 			insertOrderPS.setBoolean(4, order.isPaid());
 			insertOrderPS.setBoolean(5, order.isConfimation());
 			insertOrderPS.setInt(6, order.getCustomer().getCustomerNo()); 
@@ -54,14 +54,14 @@ public class OrderDB implements OrderDBIF {
 	}
 
 	@Override
-	public int checkCoverAmountOnDate(Date fulfillmentdate) {
+	public int checkCoverQuantityOnDate(Date fulfillmentdate) {
 		int res = 0;
 		try {
 			findOrdersByDatePS.setDate(1, fulfillmentdate);
 			
 			ResultSet rs = findOrdersByDatePS.executeQuery();
 			while(rs.next()) {
-				res += rs.getInt("coverAmount");
+				res += rs.getInt("coverQuantity");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

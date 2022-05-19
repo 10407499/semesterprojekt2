@@ -80,7 +80,7 @@ public class OrderUI extends JFrame {
 	private JLabel lblEfternavn_10;
 	private JLabel lblEfternavn_12;
 	private JLabel lblCustomerError;
-	private JLabel lblTotalCoverAmount;
+	private JLabel lblTotalCoverQuantity;
 	private JLabel lblPhoneNo;
 	private JLabel lblFailureCovers;
 	private JLabel lblProductQuantityError;
@@ -173,9 +173,9 @@ public class OrderUI extends JFrame {
 		lblEfternavn_12.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEfternavn_12.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		lblTotalCoverAmount = new JLabel("");
-		lblTotalCoverAmount.setBounds(73, 33, 289, 14);
-		orderInfoPanel.add(lblTotalCoverAmount);
+		lblTotalCoverQuantity = new JLabel("");
+		lblTotalCoverQuantity.setBounds(73, 33, 289, 14);
+		orderInfoPanel.add(lblTotalCoverQuantity);
 
 		customerorderInfoPanel = new JPanel();
 		String titleCustomer = "Kunde";
@@ -669,8 +669,8 @@ public class OrderUI extends JFrame {
 			@Override
 			public void run() {
 				while (true) {
-					int coverAmount = orderController.checkCoverAmountOnDate(DatePicker.getDateValue());
-					lblTotalCoverAmount.setText("Der er " + coverAmount + " kuverter på datoen");
+					int coverQuantity = orderController.checkCoverQuantityOnDate(DatePicker.getDateValue());
+					lblTotalCoverQuantity.setText("Der er " + coverQuantity + " kuverter på datoen");
 				}
 			}
 		});
@@ -679,16 +679,16 @@ public class OrderUI extends JFrame {
 
 	private void setOrderInfo() {
 		String eatingTime = comboBoxEatClock.getSelectedItem().toString();
-		int coverAmount = 0;
+		int coverQuantity = 0;
 		if (coverField.getText().isEmpty() || coverField.getText().length() > 9) {
 			error = true;
 			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 		} else {
-			coverAmount = Integer.parseInt(coverField.getText()); // Special requirement, cover amount must be minimum 4 | Maybe get it
+			coverQuantity = Integer.parseInt(coverField.getText()); // Special requirement, cover amount must be minimum 4 | Maybe get it
 													// from
 			// database
 		}
-		if (orderController.setOrderInfo(coverAmount, DatePicker.getDateValue(), eatingTime)) {
+		if (orderController.setOrderInfo(coverQuantity, DatePicker.getDateValue(), eatingTime)) {
 			lblFailureCovers.setText(null);
 		} else {
 			error = true;

@@ -16,7 +16,7 @@ public interface OrderControllerIF {
 
 	public void createOrder();
 	
-	public boolean setOrderInfo(int coverAmount, Date fulfillmentdate, String eatingTime);
+	public boolean setOrderInfo(int coverQuantity, Date fulfillmentdate, String eatingTime);
 	
 	public List<Customer> findCustomers(String name);
 	
@@ -37,7 +37,7 @@ public interface OrderControllerIF {
 	
 	public List<String> customerDetailsToString(String fname);
 	
-	public int checkCoverAmountOnDate(Date fulfillmentdate);
+	public int checkCoverQuantityOnDate(Date fulfillmentdate);
 	
 	public List<Customer> getCustomers();
 
