@@ -53,13 +53,13 @@ public class TestCreateOrder {
 		List<Product> s = orderController.findProducts("Menu1");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20);
-		Order order = orderController.completeOrder();
+		orderController.completeOrder();
 		
 		// Assert
-		assertEquals(order.getCustomer().getfName(), c.getfName());
-		assertEquals(order.getCoverAmount(), cover);
-		assertEquals(order.getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
-		assertEquals(order.getFulfillmentDate(), d);
+		assertEquals(orderController.getOrder().getCustomer().getfName(), c.getfName());
+		assertEquals(orderController.getOrder().getCoverAmount(), cover);
+		assertEquals(orderController.getOrder().getOrderLines().get(0).getProduct().getDescription(), p.getDescription());
+		assertEquals(orderController.getOrder().getFulfillmentDate(), d);
 	}
 
 	// test case 4
@@ -77,12 +77,12 @@ public class TestCreateOrder {
 		List<Customer> customers = orderController.findCustomers("IB");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-		Order order = orderController.completeOrder();
+		orderController.completeOrder();
 		
 		// Assert
-		assertEquals(order.getCustomer().getfName(), c.getfName());
-		assertEquals(order.getCoverAmount(), cover);
-		assertEquals(order.getFulfillmentDate(), d);
+		assertEquals(orderController.getOrder().getCustomer().getfName(), c.getfName());
+		assertEquals(orderController.getOrder().getCoverAmount(), cover);
+		assertEquals(orderController.getOrder().getFulfillmentDate(), d);
 	}
 
 	// test case 5
@@ -115,12 +115,12 @@ public class TestCreateOrder {
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
 		orderController.setDelivery(c.getHouseNo(), c.getStreet(), "Ibby", c.getZipCode());
-		Order order = orderController.completeOrder();
+		orderController.completeOrder();
 		
 		// Assert
-		assertEquals(delivery.getCity(), order.getDelivery().getCity());
-		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
-		assertEquals(delivery.getStreet(), order.getDelivery().getStreet());
+		assertEquals(delivery.getCity(), orderController.getOrder().getDelivery().getCity());
+		assertEquals(delivery.getHouseNo(), orderController.getOrder().getDelivery().getHouseNo());
+		assertEquals(delivery.getStreet(), orderController.getOrder().getDelivery().getStreet());
 
 	}
 
@@ -143,13 +143,13 @@ public class TestCreateOrder {
 		orderController.setCustomer(customerNo);
 		orderController.setDelivery("69IB", "Ibsevej", "Ibby", "1818");
 		orderController.addService(er);
-		Order order = orderController.completeOrder();
+		orderController.completeOrder();
 		
 		// Assert
-		assertEquals(delivery.getCity(), order.getDelivery().getCity());
-		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
-		assertEquals(delivery.getStreet(), order.getDelivery().getStreet());
-		assertEquals(EmployeeRole.Kok, order.getDelivery().getServiceLines().get(0).getRole());
+		assertEquals(delivery.getCity(), orderController.getOrder().getDelivery().getCity());
+		assertEquals(delivery.getHouseNo(), orderController.getOrder().getDelivery().getHouseNo());
+		assertEquals(delivery.getStreet(), orderController.getOrder().getDelivery().getStreet());
+		assertEquals(EmployeeRole.Kok, orderController.getOrder().getDelivery().getServiceLines().get(0).getRole());
 
 	}
 
@@ -169,12 +169,12 @@ public class TestCreateOrder {
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
 		orderController.setDelivery("69IBAlternative", "IbsevejAlternative", "Ibby", "1818");
-		Order order = orderController.completeOrder();
+		orderController.completeOrder();
 		
 		// Assert
-		assertEquals(delivery.getCity(), order.getDelivery().getCity());
-		assertEquals(delivery.getHouseNo(), order.getDelivery().getHouseNo());
-		assertEquals(delivery.getStreet(), order.getDelivery().getStreet());
+		assertEquals(delivery.getCity(), orderController.getOrder().getDelivery().getCity());
+		assertEquals(delivery.getHouseNo(), orderController.getOrder().getDelivery().getHouseNo());
+		assertEquals(delivery.getStreet(), orderController.getOrder().getDelivery().getStreet());
 	}
 	
 	// test case 9
@@ -193,10 +193,10 @@ public class TestCreateOrder {
 		List<Customer> customers = orderController.findCustomers("IBBI");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-		Order order = orderController.completeOrder();
+		orderController.completeOrder();
 		
 		// Assert
-		assertEquals(order.getCustomer().getfName(), cc.getfName());
+		assertEquals(orderController.getOrder().getCustomer().getfName(), cc.getfName());
 	}
 
 	// test case 10
