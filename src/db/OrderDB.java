@@ -11,11 +11,14 @@ import java.util.List;
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import model.Order;
+import model.OrderLine;
 
 public class OrderDB implements OrderDBIF {
 
 	private static final String INSERT_ORDER_Q = "insert into Salesorder values(?,?,?,?,?,?)";
 	private static final String FIND_ORDERS_BY_DATE_Q = "select * from Salesorder where fulfillmentDate = ?";
+	private static final String INSERT_ORDERLINES_Q = "insert into OrderLine values (?,?,?)";
+	private PreparedStatement insertOrderLinesPS;
 	private PreparedStatement insertOrderPS; 
 	private PreparedStatement findOrdersByDatePS;
 	
@@ -28,6 +31,7 @@ public class OrderDB implements OrderDBIF {
 		try {
 			con = DBConnection.getInstance().getConnection();
 			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q,insertOrderPS.RETURN_GENERATED_KEYS);
+			insertOrderLinesPS = con.prepareStatement(INSERT_ORDERLINES_Q);
 			findOrdersByDatePS = con.prepareStatement(FIND_ORDERS_BY_DATE_Q);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -67,5 +71,21 @@ public class OrderDB implements OrderDBIF {
 			System.out.println(e.getMessage());
 		}
 		return res;
+	}
+	
+	@Override
+	public void insertOrderLines(List<OrderLine> orderLines, int orderNo) {
+		try {
+		for(OrderLine orderLine: orderLines) {
+			insertOrderLinesPS.setInt(1, orderLine.getQuantity());
+			insertOrderLinesPS.setInt(2, orderNo);
+			insertOrderLinesPS.setInt(3, orderLine.getProduct().getProductNo());
+			insertOrderLinesPS.executeUpdate();
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
 	}
 }

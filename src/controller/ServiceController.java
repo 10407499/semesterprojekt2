@@ -1,8 +1,6 @@
 package controller;
 import db.DeliveryDB;
 import db.DeliveryDBIF;
-import db.ServiceLineDB;
-import db.ServiceLineDBIF;
 import model.Delivery;
 import model.EmployeeRole;
 import model.ServiceLine;
@@ -12,11 +10,9 @@ public class ServiceController implements ServiceControllerIF {
 	private Delivery delivery;
 	private ServiceLine serviceLine; 
 	private DeliveryDBIF deliveryDB;
-	private ServiceLineDBIF serviceLineDB;
 	
 	public ServiceController () {
 		deliveryDB = new DeliveryDB();
-		serviceLineDB = new ServiceLineDB();
 	}
 	
 	@Override
@@ -34,6 +30,6 @@ public class ServiceController implements ServiceControllerIF {
 	@Override
 	public void insertService(int orderNo) {
 		deliveryDB.insertDelivery(delivery, orderNo);
-		serviceLineDB.insertServiceLines(delivery.getServiceLines(), orderNo);
+		deliveryDB.insertServiceLines(delivery.getServiceLines(), orderNo);
 	}
 }

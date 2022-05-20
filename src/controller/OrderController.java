@@ -7,8 +7,6 @@ import java.util.List;
 import db.DataAccessException;
 import db.OrderDB;
 import db.OrderDBIF;
-import db.OrderLineDB;
-import db.OrderLineDBIF;
 import db.ZipCityDB;
 import db.ZipCityDBIF;
 import model.Customer;
@@ -29,7 +27,6 @@ public class OrderController implements OrderControllerIF {
 	private ProductControllerIF productController;
 
 	private OrderDBIF orderDB;
-	private OrderLineDBIF orderLineDB;
 	private ZipCityDBIF zipCityDb;
 
 	public OrderController() {
@@ -37,7 +34,6 @@ public class OrderController implements OrderControllerIF {
 		serviceController = new ServiceController();
 		productController = new ProductController();
 		orderDB = new OrderDB();
-		orderLineDB = new OrderLineDB();
 		zipCityDb = new ZipCityDB();
 	}
 
@@ -50,9 +46,9 @@ public class OrderController implements OrderControllerIF {
 		boolean succes = false;
 		if (coverQuantity >= 4 && coverQuantity < 10000) {
 			order.setCoverQuantity(coverQuantity);
-			succes = true;
 			order.setFulfillmentDate(fulfillmentdate);
 			order.setEatingTime(eatingTime);
+			succes = true;
 		}
 		return succes;
 	}
@@ -102,18 +98,18 @@ public class OrderController implements OrderControllerIF {
 		products = productController.findProducts(description);
 		return products;
 	}
-
-	private boolean checkExistOrderLine(Product product, int quantity) {
-		boolean res = false;
+	
+	private boolean checkExistingOrderLines(Product product, int quantity) {
+		boolean existing = false;
 		
 		for(OrderLine ol : order.getOrderLines()) {
 			if(product.getProductNo() == ol.getProduct().getProductNo()) {
 				int sum = ol.getQuantity() + quantity;
 				combineQuantityOnOrderLine(ol, sum);
-				res = true;
+				existing = true;
 			}
 		}
-		return res;
+		return existing;
 	}
 	
 	private void combineQuantityOnOrderLine(OrderLine orderLine, int quantity) {
@@ -123,7 +119,7 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public void addProduct(int productNo, int quantity) {
 		Product product = getProductByNo(productNo);
-		if(!checkExistOrderLine(product, quantity)) {
+		if(!checkExistingOrderLines(product, quantity)) {
 			// Creates new orderLine Object
 			OrderLine orderLine = new OrderLine(product, quantity);
 			// Adds OrderLine object to Orders list of orderLines
@@ -148,7 +144,7 @@ public class OrderController implements OrderControllerIF {
 	@Override
 	public void completeOrder() {
 		int orderNo = orderDB.insertOrder(order);
-		orderLineDB.insertOrderLines(order.getOrderLines(), orderNo);
+		orderDB.insertOrderLines(order.getOrderLines(), orderNo);
 		if (order.getDelivery() != null) {
 			serviceController.insertService(orderNo);
 		}
