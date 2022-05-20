@@ -104,10 +104,10 @@ public class ProductDB implements ProductDBIF {
 		return product;
 	}
 	
-	private List<Product> buildDishFromMenu(int menuno) {
+	private List<Product> buildDishFromMenu(int menuNo) {
 		List<Product> products = new ArrayList<>();
 		try {
-			findMenuDishPS.setInt(1, menuno);
+			findMenuDishPS.setInt(1, menuNo);
 			ResultSet rs = findMenuDishPS.executeQuery();
 			while(rs.next()) {
 				Product product = findDishByNo(rs.getInt("Dish_productno"));
@@ -119,10 +119,10 @@ public class ProductDB implements ProductDBIF {
 		return products;
 	}
 	
-	private Product findDishByNo(int productno) {
+	private Product findDishByNo(int productNo) {
 		Product product = null;
 		try {
-			findDishByNoPS.setInt(1, productno);
+			findDishByNoPS.setInt(1, productNo);
 			ResultSet rs = findDishByNoPS.executeQuery();
 			product = buildDish(rs);
 		} catch (SQLException e) {
