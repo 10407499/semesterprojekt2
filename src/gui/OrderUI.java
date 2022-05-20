@@ -98,8 +98,6 @@ public class OrderUI extends JFrame {
 	private JCheckBox chckbxAlternativeAdd;
 	
 	private JButton btnNewButton;
-	
-	private String btnCompleteText = "Færdiggøre order";
 	private boolean error = false;
 
 	private int customerNo = 0;
