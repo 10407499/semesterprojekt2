@@ -54,9 +54,8 @@ public class OrderController implements OrderControllerIF {
 	}
 	
 	@Override
-	public List<String> findCustomers(String name) {
-		customers = customerController.findCustomers(name);
-		return customerDetailsToString(customers);
+	public List<Customer> findCustomers(String name) {
+		return customers = customerController.findCustomers(name);
 	}
 
 	public void setCustomer(int customerNo) {
@@ -95,8 +94,7 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public List<Product> findProducts(String description) {
-		products = productController.findProducts(description);
-		return products;
+		return productController.findProducts(description);
 	}
 	
 	private boolean checkExistingOrderLines(Product product, int quantity) {
@@ -156,17 +154,17 @@ public class OrderController implements OrderControllerIF {
 		return order;
 	}
 
-	@Override
-	public List<String> customerDetailsToString(List<Customer> customers) {
-		List<String> res = new ArrayList<>();
-		if (customers != null) {
-			for (Customer c : customers) {
-				String currStr = "<html>" + c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
-				res.add(currStr);
-			}
-		}
-		return res;
-	}
+//	@Override
+//	public List<String> customerDetailsToString(List<Customer> customers) {
+//		List<String> res = new ArrayList<>();
+//		if (customers != null) {
+//			for (Customer c : customers) {
+//				String currStr = "<html>" + c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
+//				res.add(currStr);
+//			}
+//		}
+//		return res;
+//	}
 
 	@Override
 	public int checkCoverQuantityOnDate(Date fulfillmentdate) {
@@ -177,18 +175,17 @@ public class OrderController implements OrderControllerIF {
 		return sumCover;
 	}
 
-	@Override
-	public List<String> productDetailsToString(String description) {
-		List<String> res = new ArrayList<>();
-		products = findProducts(description);
-		if (products != null) {
-			for (Product p : products) {
-				String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
-				res.add(currStr);
-			}
-		}
-		return res;
-	}
+//	@Override
+//	public List<String> productDetailsToString(List<Customer> customers) {
+//		List<String> res = new ArrayList<>();
+//		if (products != null) {
+//			for (Product p : products) {
+//				String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
+//				res.add(currStr);
+//			}
+//		}
+//		return res;
+//	}
 	
 	@Override
 	public List<Customer> getCustomers() {
@@ -225,4 +222,5 @@ public class OrderController implements OrderControllerIF {
 	public void setEatingTime(String eatingTime) {
 		order.setEatingTime(eatingTime);
 	}
+
 }

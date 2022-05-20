@@ -698,10 +698,11 @@ public class OrderUI extends JFrame {
 		if (textFieldFName.getText().length() > 0) {
 			comboBoxFName.removeAllItems();
 			resetCustomer();
-			List<String> customerStr = orderController.findCustomers(textFieldFName.getText());
-			for (String s : customerStr) {
-				if (model.getIndexOf(s) == -1) {
-					model.addElement(s);
+			List<Customer> customers = orderController.findCustomers(textFieldFName.getText());
+			for (Customer c : customers) {
+				String currStr = "<html>" + c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
+				if (model.getIndexOf(currStr) == -1) {
+					model.addElement(currStr);
 				}
 			}
 			comboBoxFName.showPopup();
@@ -728,10 +729,11 @@ public class OrderUI extends JFrame {
 		if (textFieldProduct.getText().length() > 0) {
 			comboBoxProduct.removeAllItems();
 
-			List<String> productStr = orderController.productDetailsToString(textFieldProduct.getText());
-			for (String s : productStr) {
-				if (modelProduct.getIndexOf(s) == -1) {
-					modelProduct.addElement(s);
+			List<Product> products = orderController.findProducts(textFieldProduct.getText());
+			for (Product p : products) {
+				String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
+				if (modelProduct.getIndexOf(currStr) == -1) {
+					modelProduct.addElement(currStr);
 				}
 			}
 			comboBoxProduct.showPopup();

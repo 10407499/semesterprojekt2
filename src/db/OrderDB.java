@@ -22,8 +22,6 @@ public class OrderDB implements OrderDBIF {
 	private PreparedStatement insertOrderPS; 
 	private PreparedStatement findOrdersByDatePS;
 	
-	//private static final String Insert_Order_Q = "insert into SalesOrder values "
-	
 	private Connection con; 
 	
 	
@@ -65,7 +63,7 @@ public class OrderDB implements OrderDBIF {
 			
 			ResultSet rs = findOrdersByDatePS.executeQuery();
 			while(rs.next()) {
-				res += rs.getInt("coverAmount");
+				res += rs.getInt("coverQuantity");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
