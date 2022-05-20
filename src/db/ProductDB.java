@@ -36,7 +36,6 @@ public class ProductDB implements ProductDBIF {
 		
 	}
 	
-	
 	@Override
 	public List<Product> findProducts(String description) {
 		List<Product> products = null;
@@ -99,7 +98,7 @@ public class ProductDB implements ProductDBIF {
 				product = menu;
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + "BuildProduct");
 		}
 		return product;
 	}
@@ -151,7 +150,7 @@ public class ProductDB implements ProductDBIF {
 				product = new Dish(description, price, productNo, type, courseType, measurement, quantity);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + "BuildDish");
 		}		
 		return product;
 	}

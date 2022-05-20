@@ -1,8 +1,6 @@
 package controller;
 
-import java.sql.SQLException;
 import java.util.List;
-
 import db.DataAccessException;
 import model.Customer;
 

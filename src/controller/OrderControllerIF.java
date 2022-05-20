@@ -35,13 +35,9 @@ public interface OrderControllerIF {
 	
 	public Order getOrder();
 	
-	//public List<String> customerDetailsToString(List<Customer> customers);
-	
 	public int checkCoverQuantityOnDate(Date fulfillmentdate);
 	
 	public List<Customer> getCustomers();
-
-	//public List<String> productDetailsToString(String description);
 	
 	public List<Product> getProducts();
 

@@ -728,15 +728,16 @@ public class OrderUI extends JFrame {
 	private void findProducts() {
 		if (textFieldProduct.getText().length() > 0) {
 			comboBoxProduct.removeAllItems();
-
 			List<Product> products = orderController.findProducts(textFieldProduct.getText());
-			for (Product p : products) {
-				String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
-				if (modelProduct.getIndexOf(currStr) == -1) {
-					modelProduct.addElement(currStr);
+			if(products != null) {
+				for (Product p : products) {
+					String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
+					if (modelProduct.getIndexOf(currStr) == -1) {
+						modelProduct.addElement(currStr);
+					}
 				}
+				comboBoxProduct.showPopup();
 			}
-			comboBoxProduct.showPopup();
 		} else {
 			comboBoxProduct.removeAllItems();
 

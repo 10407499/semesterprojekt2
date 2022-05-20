@@ -94,7 +94,8 @@ public class OrderController implements OrderControllerIF {
 
 	@Override
 	public List<Product> findProducts(String description) {
-		return productController.findProducts(description);
+		products = productController.findProducts(description);
+		return products;
 	}
 	
 	private boolean checkExistingOrderLines(Product product, int quantity) {
@@ -154,18 +155,6 @@ public class OrderController implements OrderControllerIF {
 		return order;
 	}
 
-//	@Override
-//	public List<String> customerDetailsToString(List<Customer> customers) {
-//		List<String> res = new ArrayList<>();
-//		if (customers != null) {
-//			for (Customer c : customers) {
-//				String currStr = "<html>" + c.getfName() + " " + c.getlName() + "<br>" + c.getEmail();
-//				res.add(currStr);
-//			}
-//		}
-//		return res;
-//	}
-
 	@Override
 	public int checkCoverQuantityOnDate(Date fulfillmentdate) {
 		int sumCover = 0;
@@ -174,18 +163,6 @@ public class OrderController implements OrderControllerIF {
 		}
 		return sumCover;
 	}
-
-//	@Override
-//	public List<String> productDetailsToString(List<Customer> customers) {
-//		List<String> res = new ArrayList<>();
-//		if (products != null) {
-//			for (Product p : products) {
-//				String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
-//				res.add(currStr);
-//			}
-//		}
-//		return res;
-//	}
 	
 	@Override
 	public List<Customer> getCustomers() {
