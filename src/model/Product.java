@@ -46,17 +46,10 @@ public abstract class Product {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-	/**
-	 * @return the type
-	 */
 	public String getType() {
 		return type;
 	}
 
-	/**
-	 * @return the courseType
-	 */
 	public CourseType getCourseType() {
 		return courseType;
 	}

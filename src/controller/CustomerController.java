@@ -6,21 +6,10 @@ import db.CustomerDBIF;
 import db.DataAccessException;
 import model.Customer;
 
-/**
- * Customer Controller
- * 
- * @author lassehas
- *
- */
-
 public class CustomerController implements CustomerControllerIF {
 	
 	private CustomerDBIF customerDB;
 
-	/*
-	 * The constructor of the class
-	 */
-	
 	public CustomerController() {
 		customerDB = new CustomerDB();
 	}
@@ -38,6 +27,11 @@ public class CustomerController implements CustomerControllerIF {
 		// Returns the list with customers
 		return customers;
 	}
+	
+	/**
+	 * Goes into customerDB to insert a new customer with all the parameter needed & returns the new customerno 
+	 * @return Customer
+	 */
 
 	@Override
 	public Customer insertNewCustomer(String fName, String lName, String street, String houseNo, String phoneNo, String email,

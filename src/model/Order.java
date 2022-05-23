@@ -43,11 +43,15 @@ public class Order {
 		return fulfillmentDate;
 	}
 	
+	/**
+	 * This method uses DateTimeFormatter to format the localDate of fulfillmenetdate to this format "dd-MM-YY"
+	 * @return dato
+	 */
+	
 	public String getFulfillmentDateToString() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-YY");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yy");
 		LocalDate dd = getFulfillmentDate().toLocalDate();
-		String dato = dd.format(dtf);
-		return dato;
+		return dd.format(dtf);
 	}
 	
 	public void setFulfillmentDate(Date fulfillmentDate) {

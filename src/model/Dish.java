@@ -52,16 +52,10 @@ public class Dish extends Product{
 		return ingredients;
 	}
 
-	/**
-	 * @return the measurement
-	 */
 	public Measurement getMeasurement() {
 		return measurement;
 	}
 
-	/**
-	 * @param measurement the measurement to set
-	 */
 	public void setMeasurement(Measurement measurement) {
 		this.measurement = measurement;
 	}
