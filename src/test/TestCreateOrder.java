@@ -38,7 +38,7 @@ public class TestCreateOrder {
 	@Test
 	public void SuccessfullCreationOfOrdertest() {
 		// Arrange
-		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "1818", "Ibby", 1);
+		Customer c = new Customer("IB", "IBSEN", "Ibsevej", "69IB", "18181818", "ib@ib.ib", "9000", "Ibby", 1);
 		int cover = 20;
 		Product p = new Menu("Menu1", 20.00, 1, "MENU", CourseType.FORRET);
 		Date d = Date.valueOf("2023-01-01");

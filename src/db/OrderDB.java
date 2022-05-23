@@ -48,7 +48,6 @@ public class OrderDB implements OrderDBIF {
 			insertOrderPS.setBoolean(5, order.isConfimation());
 			insertOrderPS.setInt(6, order.getCustomer().getCustomerNo()); 
 			res = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
-			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}

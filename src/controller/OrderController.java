@@ -77,7 +77,7 @@ public class OrderController implements OrderControllerIF {
 		}
 		return customer;
 	}
-
+	
 	public void setDelivery(String houseNo, String street, String city, String zipcode) {
 		if (order.getDelivery() == null) {
 			Delivery delivery = serviceController.setDelivery(houseNo, street, city, zipcode);

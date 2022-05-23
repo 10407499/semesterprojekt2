@@ -663,13 +663,10 @@ public class OrderUI extends JFrame {
 	}
 
 	private void threadCheckCoverDate() {
-		Thread t1 = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					int coverQuantity = orderController.checkCoverQuantityOnDate(DatePicker.getDateValue());
-					lblTotalCoverQuantity.setText("Der er " + coverQuantity + " kuverter på datoen");
-				}
+		Thread t1 = new Thread(() -> {
+			while(true) {
+				int coverQuantity = orderController.checkCoverQuantityOnDate(DatePicker.getDateValue());
+				lblTotalCoverQuantity.setText("Der er " + coverQuantity + " kuverter på datoen");
 			}
 		});
 		t1.start();
@@ -726,7 +723,7 @@ public class OrderUI extends JFrame {
 	}
 
 	private void findProducts() {
-		if (textFieldProduct.getText().length() > 0) {
+		if (!textFieldProduct.getText().isEmpty()) { 
 			comboBoxProduct.removeAllItems();
 			List<Product> products = orderController.findProducts(textFieldProduct.getText());
 			if(products != null) {
@@ -740,13 +737,12 @@ public class OrderUI extends JFrame {
 			}
 		} else {
 			comboBoxProduct.removeAllItems();
-
 		}
 	}
 
 	private void addProductToOrder(int index) {
 		Product p = null;
-		if (!orderController.getProducts().get(index).equals(null) && !textFieldProductQuantity.getText().isEmpty()) {
+		if (orderController.getProducts().get(index) != null && !textFieldProductQuantity.getText().isEmpty()) {
 			p = orderController.getProducts().get(index);
 			orderController.addProduct(p.getProductNo(), Integer.parseInt(textFieldProductQuantity.getText()));
 		} else {
