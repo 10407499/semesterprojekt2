@@ -154,12 +154,12 @@ public class OrderConfirmationDocument {
 			}
 			
 			if(dish != null) {
-				menues = dish.getDescription() + "\t\n" + dish.getPrice() + " kr,- pr. couv \n";
+				menues = dish.getDescription() + "\t" + dish.getPrice() + " kr,- pr. couv \n";
 				checkTypeOnProduct(dish.getCourseType(), menues);
 				menues = null;
 			}else {
 				for(Dish d : m.getDishes()) {
-					menues = d.getDescription() + "\t\n" + d.getPrice() + " kr,- pr. couv \n";
+					menues = d.getDescription() + "\t" + d.getPrice() + " kr,- pr. couv \n";
 					checkTypeOnProduct(d.getCourseType(), menues);
 					menues = null;
 				}
