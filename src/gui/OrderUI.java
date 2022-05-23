@@ -16,6 +16,7 @@ import javax.swing.plaf.metal.MetalBorders.TextFieldBorder;
 
 import java.awt.Color;
 
+import controller.ErrorFeedbackException;
 import controller.OrderController;
 import controller.OrderControllerIF;
 import db.DataAccessException;
@@ -46,17 +47,17 @@ import javax.swing.JTable;
 import javax.swing.JList;
 
 public class OrderUI extends JFrame {
-	
+
 	private OrderControllerIF orderController;
-	
+
 	private JPanel contentPane;
 	private JPanel deliveryPanel2;
 	private JPanel deliveryPanel;
 	private JPanel customerorderInfoPanel;
 	private JPanel orderInfoPanel;
-	
+
 	private JScrollPane scrollPane;
-	
+
 	private JTextField coverField;
 	private JTextField textFieldFName;
 	private JTextField textFieldLName;
@@ -72,7 +73,7 @@ public class OrderUI extends JFrame {
 	private JTextField textFieldEmail;
 	private JTextField textFieldProduct;
 	private JTextField textFieldProductQuantity;
-	
+
 	private JLabel lblEmail;
 	private JLabel lblEfternavn_7;
 	private JLabel lblEfternavn_8;
@@ -84,19 +85,19 @@ public class OrderUI extends JFrame {
 	private JLabel lblPhoneNo;
 	private JLabel lblFailureCovers;
 	private JLabel lblProductQuantityError;
-	
+
 	private JComboBox comboBoxEatClock;
 	private JComboBox comboBoxRole;
 	private JComboBox comboBoxProduct;
 	private JComboBox comboBoxFName;
-	
+
 	private DefaultComboBoxModel model;
 	private DefaultComboBoxModel modelProduct;
-	
+
 	private JCheckBox chckbxDelivery;
 	private JCheckBox chckbxPickup;
 	private JCheckBox chckbxAlternativeAdd;
-	
+
 	private JButton btnNewButton;
 	private boolean error = false;
 
@@ -249,15 +250,14 @@ public class OrderUI extends JFrame {
 		textFieldZipCode.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(textFieldZipCode.getText().length() >= 4) {
-					
+				if (textFieldZipCode.getText().length() >= 4) {
+
 					String city = orderController.getCitiesWithZipcode(textFieldZipCode.getText());
 					textFieldCity.setText(city);
 				}
 			}
 		});
-		
-	
+
 		textFieldZipCode.setColumns(10);
 		textFieldZipCode.setBounds(21, 180, 82, 20);
 		customerorderInfoPanel.add(textFieldZipCode);
@@ -294,16 +294,17 @@ public class OrderUI extends JFrame {
 		comboBoxFName = new JComboBox(model);
 		comboBoxFName.addItemListener(new ItemListener() {
 
-	public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(ItemEvent e) {
 				if (e.getSource() == comboBoxFName) {
 					comboBoxFName.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if (e.getModifiers() != 0) { // This if checks if its anything other than keyboard picking
-															// the combobox
-								if (!textFieldLName.getText().equals(null)) {
-									setCustomerToTextFields(comboBoxFName.getSelectedIndex());
-								}
+							if (e.getModifiers() != 0 && textFieldLName.getText() != null) { // This if checks if its
+																								// anything other than
+																								// keyboard picking
+								// the combobox
+								setCustomerToTextFields(comboBoxFName.getSelectedIndex());
+								setCustomer();
 							}
 						}
 					});
@@ -339,7 +340,7 @@ public class OrderUI extends JFrame {
 		textFieldProduct = new JTextField();
 		textFieldProduct.addKeyListener(new KeyAdapter() {
 
-	@Override
+			@Override
 			public void keyTyped(KeyEvent e) {
 				findProducts();
 			}
@@ -353,7 +354,7 @@ public class OrderUI extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				ActionHandler.keyHandler(e, textFieldProductQuantity);
-				if(e.getKeyCode() == KeyEvent.VK_ENTER && comboBoxProduct.getSelectedIndex() != -1) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER && comboBoxProduct.getSelectedIndex() != -1) {
 					addProductToOrder(comboBoxProduct.getSelectedIndex());
 					updateProductTable();
 				}
@@ -401,7 +402,7 @@ public class OrderUI extends JFrame {
 				}
 			}
 		});
-		
+
 		scrollPane.setViewportView(table);
 		modelProduct = new DefaultComboBoxModel();
 		comboBoxProduct = new JComboBox(modelProduct);
@@ -411,8 +412,13 @@ public class OrderUI extends JFrame {
 					comboBoxProduct.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if (e.getModifiers() != 0 && comboBoxProduct.getSelectedIndex() != -1) { // This if checks if its anything other than keyboard picking
-															// the combobox
+							if (e.getModifiers() != 0 && comboBoxProduct.getSelectedIndex() != -1) { // This if checks
+																										// if its
+																										// anything
+																										// other than
+																										// keyboard
+																										// picking
+								// the combobox
 								textFieldProduct.setText(orderController.getProducts()
 										.get(comboBoxProduct.getSelectedIndex()).getDescription());
 							}
@@ -456,7 +462,7 @@ public class OrderUI extends JFrame {
 				chckbxDelivery.setEnabled(false);
 				chckbxAlternativeAdd.setEnabled(true);
 				chckbxPickup.setEnabled(true);
-				
+
 			}
 		});
 		chckbxDelivery.setBounds(28, 68, 97, 23);
@@ -469,7 +475,7 @@ public class OrderUI extends JFrame {
 				chckbxDelivery.setSelected(false);
 				chckbxAlternativeAdd.setSelected(false);
 				eList.clear();
-				
+
 				setAlternativDeliveryTextEditable(false);
 				chckbxDelivery.setEnabled(true);
 				chckbxAlternativeAdd.setEnabled(true);
@@ -485,7 +491,7 @@ public class OrderUI extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				chckbxDelivery.setSelected(false);
 				chckbxPickup.setSelected(false);
-			
+
 				setAlternativDeliveryTextEditable(true);
 				chckbxDelivery.setEnabled(true);
 				chckbxAlternativeAdd.setEnabled(false);
@@ -582,18 +588,58 @@ public class OrderUI extends JFrame {
 	}
 
 	private void completeOrder() {
-		// 1st method call
-		setOrderInfo();
-		// 2nd method call
-		setCustomer();
-		// 3rd method call
-		setService();
-		// 4th method call
-		if (!error) {
-			orderController.completeOrder();
-			SWINGManager.openCompleteOrderDialog(this, orderController.getOrder().getOrderConfirmationDocument());
-		}else
-			error = false;
+		String eatingTime = comboBoxEatClock.getSelectedItem().toString();
+		int coverQuantity = getCoverQuantity();
+
+		if (chckbxPickup.isSelected()) {
+			try {
+				setCustomer();
+				
+				if (orderController.completeOrder(coverQuantity, DatePicker.getDateValue(), eatingTime) && !error) {
+					SWINGManager.openCompleteOrderDialog(this, orderController.getOrder().getOrderConfirmationDocument());
+				}
+			} catch (ErrorFeedbackException e) {
+				if (e.getMessage().toLowerCase().contains("kunde")) {
+					lblCustomerError.setText(e.getMessage());
+				} else {
+					lblFailureCovers.setText(e.getMessage());
+				}
+			}
+		} else {
+
+			String houseNo = "";
+			String street = "";
+			String zipcode = "";
+			String city = "";
+			
+			if (checkDelivery()) {
+				houseNo = textFieldDeliveryHouseNo.getText();
+				street = textFieldDeliveryAdd.getText();
+				zipcode = textFieldDeliveryZipCode.getText();
+				city = textFieldDeliveryCity.getText();
+			} else if (orderController.getOrder().getCustomer() != null && checkCustomerTextFields()) {
+				houseNo = orderController.getOrder().getCustomer().getHouseNo();
+				street = orderController.getOrder().getCustomer().getStreet();
+				zipcode = orderController.getOrder().getCustomer().getZipCode();
+				city = orderController.getOrder().getCustomer().getCity();
+			}
+
+			try {
+				setCustomer();
+				
+				if (orderController.completeOrder(coverQuantity, DatePicker.getDateValue(), eatingTime, houseNo, street,
+						city, zipcode, getEmployeeRoles()) && !error) {
+					SWINGManager.openCompleteOrderDialog(this, orderController.getOrder().getOrderConfirmationDocument());
+				}
+			} catch (ErrorFeedbackException e) {
+				if (e.getMessage().toLowerCase().contains("kunde")) {
+					lblCustomerError.setText(e.getMessage());
+				} else {
+					lblFailureCovers.setText(e.getMessage());
+				}
+			}
+		}
+		error = false;
 	}
 
 	private void resetCustomer() {
@@ -633,13 +679,12 @@ public class OrderUI extends JFrame {
 						textFieldEmail.getText(), textFieldZipCode.getText(), textFieldCity.getText());
 			} catch (DataAccessException e) {
 				lblCustomerError.setText("Mail eller telefonnummer findes allerede*");
-				if(e.getCause().getMessage().contains("zipcod")) {
+				if (e.getCause().getMessage().contains("zipcod")) {
 					lblCustomerError.setText("Postnummer og by passer ikke sammen");
 				}
 				error = true;
-			} 
+			}
 		}
-
 	}
 
 	private void init() {
@@ -664,7 +709,7 @@ public class OrderUI extends JFrame {
 
 	private void threadCheckCoverDate() {
 		Thread t1 = new Thread(() -> {
-			while(true) {
+			while (true) {
 				int coverQuantity = orderController.checkCoverQuantityOnDate(DatePicker.getDateValue());
 				lblTotalCoverQuantity.setText("Der er " + coverQuantity + " kuverter på datoen");
 			}
@@ -672,23 +717,17 @@ public class OrderUI extends JFrame {
 		t1.start();
 	}
 
-	private void setOrderInfo() {
-		String eatingTime = comboBoxEatClock.getSelectedItem().toString();
+	private int getCoverQuantity() {
 		int coverQuantity = 0;
 		if (coverField.getText().isEmpty() || coverField.getText().length() > 9) {
 			error = true;
 			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 		} else {
-			coverQuantity = Integer.parseInt(coverField.getText()); // Special requirement, cover amount must be minimum 4 | Maybe get it
-													// from
-			// database
-		}
-		if (orderController.setOrderInfo(coverQuantity, DatePicker.getDateValue(), eatingTime)) {
+			coverQuantity = Integer.parseInt(coverField.getText()); // Special requirement, cover amount must be minimum
+																	// 4
 			lblFailureCovers.setText(null);
-		} else {
-			error = true;
-			lblFailureCovers.setText("Udfyld antal kuverter, minimum 4*");
 		}
+		return coverQuantity;
 	}
 
 	private void findCustomers() {
@@ -709,7 +748,6 @@ public class OrderUI extends JFrame {
 		}
 	}
 
-	
 	private void addElementsToComboBoxRole() {
 		EmployeeRole role[] = EmployeeRole.values();
 		for (EmployeeRole r : role) {
@@ -723,10 +761,10 @@ public class OrderUI extends JFrame {
 	}
 
 	private void findProducts() {
-		if (!textFieldProduct.getText().isEmpty()) { 
+		if (!textFieldProduct.getText().isEmpty()) {
 			comboBoxProduct.removeAllItems();
 			List<Product> products = orderController.findProducts(textFieldProduct.getText());
-			if(products != null) {
+			if (products != null) {
 				for (Product p : products) {
 					String currStr = "<html>" + p.getDescription() + "<br>" + p.getPrice();
 					if (modelProduct.getIndexOf(currStr) == -1) {
@@ -775,28 +813,25 @@ public class OrderUI extends JFrame {
 		return res;
 	}
 
-	private void setService() {
-		setDelivery();
+	private List<EmployeeRole> getEmployeeRoles() {
 		List<EmployeeRole> er = new ArrayList<>();
 		for (int i = 0; i < serviceList.getModel().getSize(); i++) {
 			String s = serviceList.getModel().getElementAt(i).toString();
 			EmployeeRole e = EmployeeRole.valueOf(s);
 			er.add(e);
 		}
-		orderController.addService(er);
+		return er;
 	}
 
-	private void setDelivery() {
+	private boolean checkDelivery() {
+		boolean delivery = false;
 		if (chckbxAlternativeAdd.isSelected()) {
 			if (!textFieldDeliveryAdd.getText().isEmpty() && !textFieldDeliveryCity.getText().isEmpty()
 					&& !textFieldDeliveryZipCode.getText().isEmpty() && !textFieldDeliveryHouseNo.getText().isEmpty()) {
-				orderController.setDelivery(textFieldDeliveryHouseNo.getText(), textFieldDeliveryAdd.getText(),
-						textFieldDeliveryCity.getText(), textFieldDeliveryZipCode.getText());
+				delivery = true;
 			}
-		} else if (chckbxDelivery.isSelected() && checkCustomerTextFields()) {
-			orderController.setDelivery(textHouseNo.getText(), textFieldAdresse.getText(), textFieldCity.getText(),
-					textFieldZipCode.getText());
 		}
+		return delivery;
 	}
 
 	private void addService() {
@@ -805,10 +840,12 @@ public class OrderUI extends JFrame {
 	}
 
 	/**
-	 * This method takes a boolean parameter and calls the alternative checkboxes seteditable with the given boolean & clears the textboxes
+	 * This method takes a boolean parameter and calls the alternative checkboxes
+	 * seteditable with the given boolean & clears the textboxes
+	 * 
 	 * @param isEditable
 	 */
-	
+
 	private void setAlternativDeliveryTextEditable(boolean isEditable) {
 		textFieldDeliveryAdd.setEditable(isEditable);
 		textFieldDeliveryCity.setEditable(isEditable);

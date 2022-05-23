@@ -41,8 +41,7 @@ public class OrderController implements OrderControllerIF {
 		order = new Order();
 	}
 
-	@Override
-	public boolean setOrderInfo(int coverQuantity, Date fulfillmentdate, String eatingTime) {
+	private boolean setOrderInfo(int coverQuantity, Date fulfillmentdate, String eatingTime) {
 		boolean succes = false;
 		if (coverQuantity >= 4 && coverQuantity < 10000) {
 			order.setCoverQuantity(coverQuantity);
@@ -55,7 +54,8 @@ public class OrderController implements OrderControllerIF {
 	
 	@Override
 	public List<Customer> findCustomers(String name) {
-		return customers = customerController.findCustomers(name);
+		customers = customerController.findCustomers(name); 
+		return customers;
 	}
 
 	public void setCustomer(int customerNo) {
@@ -141,13 +141,59 @@ public class OrderController implements OrderControllerIF {
 	}
 
 	@Override
-	public void completeOrder() {
-		int orderNo = orderDB.insertOrder(order);
-		orderDB.insertOrderLines(order.getOrderLines(), orderNo);
-		if (order.getDelivery() != null) {
-			serviceController.insertService(orderNo);
+	public boolean completeOrder(int coverQuantity, Date fulfillmentDate, String eatingTime, String houseNo, String street, String city, String zipcode, List<EmployeeRole> employeeRoles) throws ErrorFeedbackException {
+		boolean success = true;
+		
+		if(!setOrderInfo(coverQuantity, fulfillmentDate, eatingTime)) {
+			success = false;
+			throw new ErrorFeedbackException("Minimum 4 kuverter*");
 		}
-		order.createOrderConfirmationDocument();
+		
+		if(order.getCustomer() == null) {
+			success = false;
+			throw new ErrorFeedbackException("Kunde information mangler*");
+		}
+		
+		setDelivery(houseNo, street, city, zipcode);
+		
+		addService(employeeRoles);
+		
+		if(success) {
+			int orderNo = orderDB.insertOrder(order);
+			orderDB.insertOrderLines(order.getOrderLines(), orderNo);
+			if (order.getDelivery() != null) {
+				serviceController.insertService(orderNo);
+			}
+			order.createOrderConfirmationDocument();
+		}
+		
+		return success;
+	}
+	
+	@Override
+	public boolean completeOrder(int coverQuantity, Date fulfillmentDate, String eatingTime) throws ErrorFeedbackException {
+		boolean success = true;
+		
+		if(!setOrderInfo(coverQuantity, fulfillmentDate, eatingTime)) {
+			success = false;
+			throw new ErrorFeedbackException("Minimum 4 kuverter*");
+		}
+		
+		if(order.getCustomer() == null) {
+			success = false;
+			throw new ErrorFeedbackException("Kunde information mangler*");
+		}
+		
+		if(success) {
+			int orderNo = orderDB.insertOrder(order);
+			orderDB.insertOrderLines(order.getOrderLines(), orderNo);
+			if (order.getDelivery() != null) {
+				serviceController.insertService(orderNo);
+			}
+			order.createOrderConfirmationDocument();
+		}
+		
+		return success;
 	}
 
 	@Override

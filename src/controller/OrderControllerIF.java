@@ -16,8 +16,6 @@ public interface OrderControllerIF {
 
 	public void createOrder();
 	
-	public boolean setOrderInfo(int coverQuantity, Date fulfillmentdate, String eatingTime);
-	
 	public List<Customer> findCustomers(String name);
 	
 	public void setCustomer(int customerNo);
@@ -31,7 +29,9 @@ public interface OrderControllerIF {
 	
 	public void addProduct(int productNo, int quantity);
 	
-	public void completeOrder();
+	public boolean completeOrder(int coverQuantity, Date fulfillmentDate, String eatingTime, String houseNo, String street, String city, String zipcode, List<EmployeeRole> employeeRoles) throws ErrorFeedbackException;
+	
+	public boolean completeOrder(int coverQuantity, Date fulfillmentDate, String eatingTime) throws ErrorFeedbackException;
 	
 	public Order getOrder();
 	
