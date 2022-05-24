@@ -42,7 +42,7 @@ public class OrderConfirmationDocument {
 		// Paragraph for icon
 		Paragraph paraIcon = header.addParagraph();
 
-		// Flectning the icon from image package
+		// Fetching the icon from image package
 		InputStream iconstream = getClass().getResourceAsStream("/images/fullicon.png");
 		DocPicture iconPicture = paraIcon.appendPicture(iconstream);
 
@@ -82,7 +82,6 @@ public class OrderConfirmationDocument {
 				+ "Ved forespørgsel er det vigtig vi får besked om I ønsker at benytte vores tilbud.\n" + "\n";
 
 		// Control flow to check what state the order is
-
 		if (order.getDelivery() != null) {
 			orderInfoString += " Afgang fra Jebjr.: \n" + "Ankomst: I vil få besked i dagene før jeres fest. \n";
 			if (order.getDelivery().getServiceLines() != null) {
@@ -91,7 +90,6 @@ public class OrderConfirmationDocument {
 		} else {
 			orderInfoString += "Afhentes kl. \tpå Sdr. Gade 20 Jebjr. 7870 Roslev.";
 		}
-
 
 		if (order.isConfimation()) {
 			generalInfo.appendText(generalInformationComfirmedString);

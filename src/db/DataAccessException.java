@@ -1,7 +1,6 @@
 package db;
 
 /**
- * 
  * @author knol
  * @version 2018-08-30
  */

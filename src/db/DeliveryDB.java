@@ -33,7 +33,6 @@ public class DeliveryDB implements DeliveryDBIF {
 	 * @param delivery
 	 * @param orderNo
 	 */
-	
 	@Override
 	public void insertDelivery(Delivery delivery, int orderNo) {
 		try {
@@ -52,7 +51,6 @@ public class DeliveryDB implements DeliveryDBIF {
 	 * @param orderNo
 	 * @param serviceLines
 	 */
-	
 	@Override
 	public void insertServiceLines(List<ServiceLine> serviceLines, int orderNo) {
 		EmployeeDBIF employeeDB = new EmployeeDB();

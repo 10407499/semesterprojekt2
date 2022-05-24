@@ -24,7 +24,6 @@ public class OrderDB implements OrderDBIF {
 	
 	private Connection con; 
 	
-	
 	public OrderDB() {
 		try {
 			con = DBConnection.getInstance().getConnection();
@@ -34,7 +33,6 @@ public class OrderDB implements OrderDBIF {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
 	}
 	
 	/**
@@ -42,7 +40,6 @@ public class OrderDB implements OrderDBIF {
 	 * @param order
 	 * @return res
 	 */
-	
 	@Override
 	public int insertOrder(Order order) {
 		int res = -1; 
@@ -66,7 +63,6 @@ public class OrderDB implements OrderDBIF {
 	 * @param fulfillmentdate
 	 * @returns res
 	 */
-	
 	@Override
 	public int checkCoverQuantityOnDate(Date fulfillmentDate) {
 		int res = 0;
@@ -88,7 +84,6 @@ public class OrderDB implements OrderDBIF {
 	 * @param orderLines
 	 * @param orderNo
 	 */
-	
 	@Override
 	public void insertOrderLines(List<OrderLine> orderLines, int orderNo) {
 		try {
@@ -101,7 +96,5 @@ public class OrderDB implements OrderDBIF {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
 	}
 }

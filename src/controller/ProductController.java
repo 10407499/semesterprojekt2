@@ -11,7 +11,6 @@ public class ProductController implements ProductControllerIF {
 	/**
 	 * Constructor of productController class
 	 */
-	
 	public ProductController() {
 		this.productDB = new ProductDB();
 	}
@@ -20,7 +19,6 @@ public class ProductController implements ProductControllerIF {
 	 * Goes to the productDB class to do a SQL select with the parameter "description" & returns a list of product that contains this parameter
 	 * @return products
 	 */
-	
 	@Override
 	public List<Product> findProducts(String description) {
 		List<Product> products = null; 

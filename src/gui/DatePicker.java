@@ -19,7 +19,6 @@ public abstract class DatePicker {
 	 * This method checks if datePicker text is equals to empty, then it sets the text to LocalDate.now()
 	 * @return date
 	 */
-	
 	public static Date getDateValue() {
 		Date date = null;
 		if (datePicker.getJFormattedTextField().getText().equals("")) {
@@ -39,7 +38,6 @@ public abstract class DatePicker {
 	 * @param width
 	 * @param height
 	 */
-	
 	public static void createDatePicker(JPanel panel, int x, int y, int width, int height) {
 		// We found this solution on stackoverflow as seen in the following link
 		// https://stackoverflow.com/questions/64668114/implementing-jdatepicker-in-swing-java		

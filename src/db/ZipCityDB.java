@@ -25,7 +25,6 @@ public class ZipCityDB implements ZipCityDBIF {
 	 * @param String
 	 * @return city
 	 */
-	
 	@Override
 	public String getCityByZipCode(String zipcode) {
 		String city = null;

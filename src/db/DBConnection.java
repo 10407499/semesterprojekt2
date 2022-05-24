@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * @author knol
+ * @version 2018-08-30
+ */
+
 public class DBConnection {
 	
 	private Connection connection = null;
@@ -99,7 +104,6 @@ public class DBConnection {
 				res = rs.getInt(1);
 			}
 			//s.close(); -- the try block does this for us now
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
@@ -124,7 +128,6 @@ public class DBConnection {
 	 * Checks if there is a connection between database or not
 	 * @return Connection
 	 */
-	
 	public Connection getConnection() {
 		return connection;
 	}
@@ -132,7 +135,6 @@ public class DBConnection {
 	/**
 	 * Closes the connection with the database
 	 */
-	
 	public void disconnect() {
 		try {
 			connection.close();

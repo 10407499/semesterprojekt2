@@ -54,7 +54,6 @@ public class TestCreateOrder {
 		List<Product> s = orderController.findProducts("langtids");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20);
-
 		try {
 			orderController.completeOrder(cover, d, eatingTime);
 		} catch (ErrorFeedbackException e) {
@@ -67,7 +66,7 @@ public class TestCreateOrder {
 		assertEquals(orderController.getOrder().getFulfillmentDate(), d);
 	}
 
-	// test case 2
+	// Test case 2
 	@Test
 	public void OrderWithoutProducts() { 
 		// Arrange
@@ -79,11 +78,9 @@ public class TestCreateOrder {
 
 		// Act
 		orderController.createOrder();
-
 		List<Customer> customers = orderController.findCustomers("Lasse");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-
 		try {
 			orderController.completeOrder(cover, d, eatingTime);
 		} catch (ErrorFeedbackException e) {
@@ -96,21 +93,20 @@ public class TestCreateOrder {
 		assertEquals(orderController.getOrder().getFulfillmentDate(), d);
 	}
 
-	// test case 3
+	// Test case 3
 	@Test
 	public void ProductNotFound() {
 		// Arrange
 
 		// Act
 		orderController.createOrder();
-
 		List<Product> s = orderController.findProducts("WrongProduct");
 
 		// Assert
 		assertEquals(s.size(), 0);
 	}
 
-	// test case 4
+	// Test case 4
 	@Test
 	public void addDelivery() {
 		// Arrange
@@ -120,11 +116,9 @@ public class TestCreateOrder {
 
 		// Act
 		orderController.createOrder();
-
 		List<Customer> customers = orderController.findCustomers("Lasse");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-
 		orderController.setDelivery(c.getHouseNo(), c.getStreet(), "Aalborg", c.getZipCode());
 
 		// Assert
@@ -134,7 +128,7 @@ public class TestCreateOrder {
 
 	}
 
-	// test case 5
+	// Test case 5
 	@Test
 	public void addDeliveryAndService() {
 		// Arrange
@@ -145,7 +139,6 @@ public class TestCreateOrder {
 
 		// Act
 		orderController.createOrder();
-
 		List<Customer> customers = orderController.findCustomers("Lasse");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -161,7 +154,7 @@ public class TestCreateOrder {
 
 	}
 
-	// test case 6
+	// Test case 6
 	@Test
 	public void AlternativeDeliveryAddress() {
 		// Arrange
@@ -169,7 +162,6 @@ public class TestCreateOrder {
 
 		// Act
 		orderController.createOrder();
-
 		List<Customer> customers = orderController.findCustomers("Lasse");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
@@ -181,43 +173,39 @@ public class TestCreateOrder {
 		assertEquals(delivery.getStreet(), orderController.getOrder().getDelivery().getStreet());
 	}
 
-	// test case 7
-//	@Test
-//	public void CustomerIsNotInTheSystem() throws DataAccessException {
-//		// Arrange
-//		Customer cc = new Customer("John", "IBBISEN", "Ibbisevej", "694BBI", "19191919", "ibbt@ibbi.ibbi", "9000",
-//				"Aalborg");
-//
-//		// Act
-//		orderController.createOrder();
-//		// parameterne skal ændre efter hver test, da cc bliver sendt op til vores db
-//		orderController.insertNewCustomer(cc.getfName(), cc.getlName(), cc.getStreet(), cc.getHouseNo(),
-//				cc.getPhoneNo(), cc.getEmail(), cc.getZipCode(), cc.getCity());
-//
-////		List<Customer> customers = orderController.findCustomers("John");
-////		int customerNo = customers.get(0).getCustomerNo();
-////		orderController.setCustomer(customerNo);
-//
-//		// Assert
-////		assertEquals(orderController.getOrder().getCustomer().getfName(), cc.getfName());
-//	}
+	// Test case 7
+	@Test
+	public void CustomerIsNotInTheSystem() throws DataAccessException {
+		// Arrange
+		Customer cc = new Customer("John", "IBBISEN", "Ibbisevej", "694BBI", "19191919", "ibbt@ibbi.ibbi", "9000",
+				"Aalborg");
 
-	// test case 8
+		// Act
+		orderController.createOrder();
+		// parameterne skal ændre efter hver test, da cc bliver sendt op til vores db
+		orderController.insertNewCustomer(cc.getfName(), cc.getlName(), cc.getStreet(), cc.getHouseNo(),
+				cc.getPhoneNo(), cc.getEmail(), cc.getZipCode(), cc.getCity());
+		List<Customer> customers = orderController.findCustomers("John");
+		int customerNo = customers.get(0).getCustomerNo();
+		orderController.setCustomer(customerNo);
+
+		// Assert
+		assertEquals(orderController.getOrder().getCustomer().getfName(), cc.getfName());
+	}
+
+	// Test case 8
 	@Test
 	public void NotEnoughCovers() {
 		// Arrange
 		int cover = 2;
-
 		Date d = Date.valueOf("2023-01-01");
 		String eatingTime = "17:45";
 
 		// Act
 		orderController.createOrder();
-
 		List<Customer> customers = orderController.findCustomers("Lasse");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-
 		List<Product> s = orderController.findProducts("langtids");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20);
@@ -230,22 +218,19 @@ public class TestCreateOrder {
 		}
 	}
 
-	// test case 9
+	// Test case 9
 	@Test
 	public void OrderWithoutCover() {
 		// Arrange
 		int cover = 0;
-
 		Date d = Date.valueOf("2023-01-01");
 		String eatingTime = "17:45";
 
 		// Act
 		orderController.createOrder();
-
 		List<Customer> customers = orderController.findCustomers("Lasse");
 		int customerNo = customers.get(0).getCustomerNo();
 		orderController.setCustomer(customerNo);
-
 		List<Product> s = orderController.findProducts("langtids");
 		int productNo = s.get(0).getProductNo();
 		orderController.addProduct(productNo, 20);

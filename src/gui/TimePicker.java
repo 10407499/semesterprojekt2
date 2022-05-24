@@ -10,7 +10,6 @@ public class TimePicker {
 	 * with 15 while minutes < 45
 	 * @return timeList
 	 */
-
 	public static List<String> generateTime() {
 		List<String> timeList = new ArrayList<>();
 		int hour = 0;

@@ -41,7 +41,6 @@ public class ProductDB implements ProductDBIF {
 	 * @param description
 	 * @return products
 	 */
-	
 	@Override
 	public List<Product> findProducts(String description) {
 		List<Product> products = null;
@@ -61,7 +60,6 @@ public class ProductDB implements ProductDBIF {
 	 * @param ResultSet
 	 * @return products
 	 */
-	
 	private List<Product> buildProducts(ResultSet rs) {
 		List<Product> products = new ArrayList<>();
 
@@ -84,7 +82,6 @@ public class ProductDB implements ProductDBIF {
 	 * @param resultset
 	 * @return product
 	 */
-	
 	private Product buildProduct(ResultSet rs) {
 		Product product = null;
 		try {
@@ -127,7 +124,6 @@ public class ProductDB implements ProductDBIF {
 	 * @param menuNo
 	 * @return products
 	 */
-	
 	private List<Product> buildDishFromMenu(int menuNo) {
 		List<Product> products = new ArrayList<>();
 		try {
@@ -148,8 +144,6 @@ public class ProductDB implements ProductDBIF {
 	 * @param productNo
 	 * @return product
 	 */
-	
-	
 	private Product findDishByNo(int productNo) {
 		Product product = null;
 		try {
@@ -167,7 +161,6 @@ public class ProductDB implements ProductDBIF {
 	 * @param ResultSet
 	 * @return product
 	 */
-
 	private Product buildDish(ResultSet rs) {
 		Product product = null;
 		try {

@@ -18,7 +18,6 @@ public class CustomerDB implements CustomerDBIF {
 	/**
 	 * SQL injects
 	 */
-
 	private static final String FIND_BY_NAME_Q = "select * from Customer where fname like ?";
 	private static final String INSERT_Q = "insert into Customer values (?, ?, ?, ?, ?, ?, ?)";
 
@@ -30,7 +29,6 @@ public class CustomerDB implements CustomerDBIF {
 	 * The constructor of the class. Try to make connection with the database and
 	 * prepares statements, when created
 	 */
-
 	public CustomerDB() {
 		try {
 			con = DBConnection.getInstance().getConnection();
@@ -46,7 +44,6 @@ public class CustomerDB implements CustomerDBIF {
 	 * @param name : String
 	 * @return Customer
 	 */
-
 	@Override
 	public List<Customer> findCustomers(String name) {
 		List<Customer> customers = null;
@@ -69,7 +66,6 @@ public class CustomerDB implements CustomerDBIF {
 	 * @param rs : ResultSet
 	 * @return Customers
 	 */
-
 	private List<Customer> buildObjects(ResultSet rs) {
 		List<Customer> customers = new ArrayList<>();
 		try {
@@ -94,7 +90,6 @@ public class CustomerDB implements CustomerDBIF {
 	 * @param rs : ResultSet
 	 * @return Customer
 	 */
-
 	private Customer buildObject(ResultSet rs) {
 		ZipCityDBIF zipCity = new ZipCityDB();
 		Customer c = null;
@@ -122,7 +117,6 @@ public class CustomerDB implements CustomerDBIF {
 	 * @param customer
 	 * @return res
 	 */
-	
 	@Override
 	public int insertNewCustomer(Customer customer) throws DataAccessException {
 		//This method throws the SQLException, so we can catch it at the UI to display an error if customer is already in the database

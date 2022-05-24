@@ -244,7 +244,6 @@ public class OrderUI extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (textFieldZipCode.getText().length() >= 4) {
-
 					String city = orderController.getCitiesWithZipcode(textFieldZipCode.getText());
 					textFieldCity.setText(city);
 				}
@@ -455,7 +454,6 @@ public class OrderUI extends JFrame {
 				chckbxDelivery.setEnabled(false);
 				chckbxAlternativeAdd.setEnabled(true);
 				chckbxPickup.setEnabled(true);
-
 			}
 		});
 		chckbxDelivery.setBounds(28, 68, 97, 23);
@@ -468,7 +466,6 @@ public class OrderUI extends JFrame {
 				chckbxDelivery.setSelected(false);
 				chckbxAlternativeAdd.setSelected(false);
 				eList.clear();
-
 				setAlternativDeliveryTextEditable(false);
 				chckbxDelivery.setEnabled(true);
 				chckbxAlternativeAdd.setEnabled(true);
@@ -484,7 +481,6 @@ public class OrderUI extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				chckbxDelivery.setSelected(false);
 				chckbxPickup.setSelected(false);
-
 				setAlternativDeliveryTextEditable(true);
 				chckbxDelivery.setEnabled(true);
 				chckbxAlternativeAdd.setEnabled(false);
@@ -545,7 +541,6 @@ public class OrderUI extends JFrame {
 			if (!chckbxPickup.isSelected()) {
 				addService();
 			}
-
 		});
 
 		btnAddServiceRole.setBounds(152, 28, 89, 23);
@@ -585,7 +580,6 @@ public class OrderUI extends JFrame {
 	 * It goes to the orderController with the information from the UI is holding, and check if it the method in the orderController takes the information
 	 * If it does, it will generate a order confirmation document as a .docx file.
 	 */
-	
 	private void completeOrder() {
 		String eatingTime = comboBoxEatClock.getSelectedItem().toString();
 		int coverQuantity = getCoverQuantity();
@@ -655,7 +649,6 @@ public class OrderUI extends JFrame {
 	 * This method auto fills the rest of textfields of the customer, when the user picks a existing customer from the comboBoxFName 
 	 * @param index
 	 */
-	
 	private void setCustomerToTextFields(int index) {
 		Customer c = null;
 		if (orderController.getCustomers().get(index) != null) {
@@ -675,7 +668,6 @@ public class OrderUI extends JFrame {
 	/**
 	 * This method checks if the user has entered the right information and if the customer exists in the db or not. If the customer doesnt exists in the db, this method will go to orderController to send the new information about the new customer who is about to be inserted to db
 	 */
-	
 	private void setCustomer() {
 		// This checks if all the textFields in customer panel isnt null
 		if (checkCustomerTextFields() && customerNo != 0) {
@@ -719,7 +711,6 @@ public class OrderUI extends JFrame {
 	 * This method creates a new thread, then we uses lambda to simplify the implements of runnable since it is a functional interface.
 	 * The purposes of this method is to check if total quantity of covers on the given date.
 	 */
-	
 	private void threadCheckCoverDate() {
 		Thread t1 = new Thread(() -> {
 			while (true) {
@@ -734,7 +725,6 @@ public class OrderUI extends JFrame {
 	 * This method checks if the coverField is empty or not, and the length of text in the textfield is not higher than the length of 9. it will display feedback to the user if the user doesnt meet the req of the checks in the method
 	 * @return coverQuantity
 	 */
-	
 	private int getCoverQuantity() {
 		int coverQuantity = 0;
 		if (coverField.getText().isEmpty() || coverField.getText().length() > 9) {
@@ -752,7 +742,6 @@ public class OrderUI extends JFrame {
 	 * This method checks if the textfieldFName length of text is higher than 0, then it will removeAllItems from comboBoxFName & reset all the customer textfields. Then it will go to orderController to find a list of customer that contains text that the user have typed into the textfieldFName and returns the list of customer to here.
 	 * Then it will build strings to display in the comboBoxFName as fname, lname and email. And lastly call showPopup to show the user their options
 	 */
-	
 	private void findCustomers() {
 		if (textFieldFName.getText().length() > 0) {
 			comboBoxFName.removeAllItems();
@@ -787,7 +776,6 @@ public class OrderUI extends JFrame {
 	 * This method checks if the textfieldProduct isnt empty, then it will go to the orderController and get a list of products that contains the description of what the user types into the textfieldProduct.
 	 * It will display the description and price as string and add the string into comboboxProduct
 	 */
-	
 	private void findProducts() {
 		if (!textFieldProduct.getText().isEmpty()) {
 			comboBoxProduct.removeAllItems();
@@ -810,7 +798,6 @@ public class OrderUI extends JFrame {
 	 * This method takes a parameter and being to used to find the product in orderController and add the product to the order object in the orderController
 	 * @param index
 	 */
-	
 	private void addProductToOrder(int index) {
 		Product p = null;
 		if (orderController.getProducts().get(index) != null && !textFieldProductQuantity.getText().isEmpty()) {
@@ -824,7 +811,6 @@ public class OrderUI extends JFrame {
 	/**
 	 * This method updates the proudct table, that contains orderLines when called 
 	 */
-	
 	private void updateProductTable() {
 		List<OrderLine> orderLines = orderController.getOrder().getOrderLines();
 		this.productModel.setModelData(orderLines);
@@ -834,7 +820,6 @@ public class OrderUI extends JFrame {
 	 * This method takes a parameter of index and being to used to remove orderLines from the display of orderLines in the jTable
 	 * @param index
 	 */
-	
 	private void deleteProductFromTable(int index) {
 		orderController.removeProductFromOrder(index);
 		updateProductTable();
@@ -844,7 +829,6 @@ public class OrderUI extends JFrame {
 	 * This method checks if all the customer textfields are not empty, if they are not empty all the textfields, it will return true, otherwise it will return false and display feedback to the user
 	 * @return res
 	 */
-	
 	private boolean checkCustomerTextFields() {
 		boolean res = false;
 		if (!textFieldFName.getText().isEmpty() && !textFieldLName.getText().isEmpty()
@@ -864,7 +848,6 @@ public class OrderUI extends JFrame {
 	 * This method uses a classic for loop to check the serviceList on UI if it contains any employeeRoles as string, if it does, it will convert the string to EmloyeeRole enum and then add it to er a list of EmloyeeRoles
 	 * @return er
 	 */
-	
 	private List<EmployeeRole> getEmployeeRoles() {
 		List<EmployeeRole> er = new ArrayList<>();
 		for (int i = 0; i < serviceList.getModel().getSize(); i++) {
@@ -879,7 +862,6 @@ public class OrderUI extends JFrame {
 	 * This method checks if chckbxAlternativeAdd is selected if so, it checks the textfields isnt empty then it will return true otherwise it returns false
 	 * @return delivery
 	 */
-	
 	private boolean checkDelivery() {
 		boolean delivery = false;
 		if (chckbxAlternativeAdd.isSelected()) {
@@ -894,7 +876,6 @@ public class OrderUI extends JFrame {
 	/**
 	 * This methods gets the selected item from the comboboxRole to make it a EmloyeeRole to add it to eList
 	 */
-	
 	private void addService() {
 		EmployeeRole er = (EmployeeRole) comboBoxRole.getSelectedItem();
 		eList.addElement(er);
@@ -905,7 +886,6 @@ public class OrderUI extends JFrame {
 	 * seteditable with the given boolean & clears the textboxes
 	 * @param isEditable
 	 */
-
 	private void setAlternativDeliveryTextEditable(boolean isEditable) {
 		textFieldDeliveryAdd.setEditable(isEditable);
 		textFieldDeliveryCity.setEditable(isEditable);

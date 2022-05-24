@@ -15,7 +15,6 @@ public class Dish extends Product{
 	 * @param courseType
 	 * @param quantity
 	 */
-	
 	public Dish(String description, double price, int productNo, String type, CourseType courseType, Measurement measurement, double quantity) {
 		super(description, price, productNo, type, courseType);
 		this.measurement = measurement;
@@ -29,7 +28,6 @@ public class Dish extends Product{
 	 * @param productNo
 	 * @param type
 	 */
-	
 	public Dish(String description, double price, String type, CourseType courseType) {
 		super(description, price, type, courseType);
 	}

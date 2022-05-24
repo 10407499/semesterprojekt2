@@ -18,7 +18,6 @@ public class CustomerController implements CustomerControllerIF {
 	 * Goes into customerDB to get the customer objects built and returned as a list of customers
 	 * @return Customers
 	 */
-	
 	public List<Customer> findCustomers(String name) {
 		// Create new List of customer objects
 		List<Customer> customers = null;
@@ -32,7 +31,6 @@ public class CustomerController implements CustomerControllerIF {
 	 * Goes into customerDB to insert a new customer with all the parameter needed & returns the new customerno 
 	 * @return Customer
 	 */
-
 	@Override
 	public Customer insertNewCustomer(String fName, String lName, String street, String houseNo, String phoneNo, String email,
 			String zipCode, String city) throws DataAccessException {

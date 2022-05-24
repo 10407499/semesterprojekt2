@@ -55,8 +55,4 @@ public class Delivery {
 		return serviceLines;
 	}
 
-	
-	
-	
-	
 }
