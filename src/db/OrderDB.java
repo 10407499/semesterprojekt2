@@ -37,6 +37,12 @@ public class OrderDB implements OrderDBIF {
 		
 	}
 	
+	/**
+	 * This method takes a parameter of order object, that uses the order objects values to do SQL insert and execute as it returns the identity number the table has for the new inserted information
+	 * @param order
+	 * @return res
+	 */
+	
 	@Override
 	public int insertOrder(Order order) {
 		int res = -1; 
@@ -54,11 +60,18 @@ public class OrderDB implements OrderDBIF {
 		return res; 
 	}
 
+	/**
+	 * This method takes a parameter "fulfillmentDate" which is used to change a ? on a preparedstatement, then it executeQuery to return a resultset.
+	 * After getting the resultset return, it uses "rs.next()" in a while loop to sum coverQuantity that the resultset contains a column with the coverQuantity 
+	 * @param fulfillmentdate
+	 * @returns res
+	 */
+	
 	@Override
-	public int checkCoverQuantityOnDate(Date fulfillmentdate) {
+	public int checkCoverQuantityOnDate(Date fulfillmentDate) {
 		int res = 0;
 		try {
-			findOrdersByDatePS.setDate(1, fulfillmentdate);
+			findOrdersByDatePS.setDate(1, fulfillmentDate);
 			
 			ResultSet rs = findOrdersByDatePS.executeQuery();
 			while(rs.next()) {
@@ -69,6 +82,12 @@ public class OrderDB implements OrderDBIF {
 		}
 		return res;
 	}
+	
+	/**
+	 * This methods takes 2 parameters, then uses a foreach loop to insert each orderLine in the list of orderLines to our orderlineDB
+	 * @param orderLines
+	 * @param orderNo
+	 */
 	
 	@Override
 	public void insertOrderLines(List<OrderLine> orderLines, int orderNo) {

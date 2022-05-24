@@ -2,7 +2,6 @@ package gui;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 import javax.swing.JPanel;
@@ -12,9 +11,15 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 public abstract class DatePicker {
+	
 	private static JDatePickerImpl datePicker;
 	private static UtilDateModel model;
 
+	/**
+	 * This method checks if datePicker text is equals to empty, then it sets the text to LocalDate.now()
+	 * @return date
+	 */
+	
 	public static Date getDateValue() {
 		Date date = null;
 		if (datePicker.getJFormattedTextField().getText().equals("")) {
@@ -26,8 +31,18 @@ public abstract class DatePicker {
 		return date;
 	}
 
+	/**
+	 * This method is creating the date picker panel and placing the date panel onto the JPanel
+	 * @param panel
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
+	
 	public static void createDatePicker(JPanel panel, int x, int y, int width, int height) {
-		// https://stackoverflow.com/questions/64668114/implementing-jdatepicker-in-swing-java
+		// We found this solution on stackoverflow as seen in the following link
+		// https://stackoverflow.com/questions/64668114/implementing-jdatepicker-in-swing-java		
 		model = new UtilDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");

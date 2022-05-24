@@ -23,6 +23,11 @@ public class EmployeeDB implements EmployeeDBIF{
 		}
 	}
 	
+	/**
+	 * This method gets all the employee in the db and returns a list of employees
+	 * @return employees
+	 */
+	
 	@Override
 	public List<Employee> getEmployees() {
 		List<Employee> employees = new ArrayList<>();

@@ -47,10 +47,6 @@ public class Delivery {
 		return zipcode;
 	}
 
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
-
 	public void addService(ServiceLine serviceLine) {
 		serviceLines.add(serviceLine); 
 	}

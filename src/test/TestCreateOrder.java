@@ -58,7 +58,7 @@ public class TestCreateOrder {
 		try {
 			orderController.completeOrder(cover, d, eatingTime);
 		} catch (ErrorFeedbackException e) {
-			// TODO
+			System.out.println(e.getMessage());
 		}
 		// Assert
 		assertEquals(orderController.getOrder().getCustomer().getfName(), c.getfName());
@@ -74,7 +74,6 @@ public class TestCreateOrder {
 		Customer c = new Customer("Lasse", "Haslund", "Riishøjsvej 109", "st 6", "70707010", "haslund@lasse.com",
 				"9000", "Aalborg", 1);
 		int cover = 20;
-		Product p = new Menu("Langtidshævet flutes", 20.00, 1, "MENU", CourseType.FORRET);
 		Date d = Date.valueOf("2023-01-01");
 		String eatingTime = "17:45";
 
@@ -88,7 +87,7 @@ public class TestCreateOrder {
 		try {
 			orderController.completeOrder(cover, d, eatingTime);
 		} catch (ErrorFeedbackException e) {
-			// TODO
+			System.out.println(e.getMessage());
 		}
 
 		// Assert
@@ -227,7 +226,7 @@ public class TestCreateOrder {
 		try {
 			assertEquals(orderController.completeOrder(cover, d, eatingTime), false);
 		} catch (ErrorFeedbackException e) {
-			// TODO
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -255,7 +254,7 @@ public class TestCreateOrder {
 		try {
 			assertEquals(orderController.completeOrder(cover, d, eatingTime), false);
 		} catch (ErrorFeedbackException e) {
-			// TODO
+			System.out.println(e.getMessage());
 		}
 	}
 }

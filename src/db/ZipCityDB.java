@@ -19,14 +19,19 @@ public class ZipCityDB implements ZipCityDBIF {
 			System.out.println(e.getMessage());
 		}
 	}
-
+ 
+	/**
+	 * This method takes a parameter "zipcode", it does executeQuery to return a resultset that contains the city of the zipcode
+	 * @param String
+	 * @return city
+	 */
+	
 	@Override
 	public String getCityByZipCode(String zipcode) {
-		ResultSet rs = null;
 		String city = null;
 		try {
 			findCityByZipcodeps.setString(1, zipcode);
-			rs = findCityByZipcodeps.executeQuery();
+			ResultSet rs = findCityByZipcodeps.executeQuery();
 			if(rs.next()) {
 				city = rs.getString("city");
 			}
