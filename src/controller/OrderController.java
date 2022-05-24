@@ -204,6 +204,12 @@ public class OrderController implements OrderControllerIF {
 		return product;
 	}
 
+	/**
+	 * This method completes the order object by taking many parameters and using them to first check setOrderInfo what it returns, then checks if customer object exists on the order object. After that it calls setDelivery & addService onto our order object. 
+	 * Finally it checks if the local boolean success is true and if so, it goes to the orderDB to insert order & orderLines, then goes to serviceController for inserting the serviceLines. Lastly it generate the order confirmation document
+	 * @return success
+	 */
+	
 	@Override
 	public boolean completeOrder(int coverQuantity, Date fulfillmentDate, String eatingTime, String houseNo, String street, String city, String zipcode, List<EmployeeRole> employeeRoles) throws ErrorFeedbackException {
 		boolean success = true;
@@ -233,6 +239,12 @@ public class OrderController implements OrderControllerIF {
 		
 		return success;
 	}
+	
+	/**
+	 * This method completes the order object by taking many parameters and using them to first check setOrderInfo what it returns, then checks if customer object exists on the order object. 
+	 * After that, it checks if the local boolean success is true and if so, it goes to the orderDB to insert order & orderLines, then goes to serviceController for inserting the serviceLines. Lastly it generate the order confirmation document
+	 * @return success
+	 */
 	
 	@Override
 	public boolean completeOrder(int coverQuantity, Date fulfillmentDate, String eatingTime) throws ErrorFeedbackException {

@@ -8,8 +8,7 @@ public class TimePicker {
 	/**
 	 * Generates a list of the time from 00:00 to 23:45 by increasing the minutes
 	 * with 15 while minutes < 45
-	 * 
-	 * @return
+	 * @return timeList
 	 */
 
 	public static List<String> generateTime() {
@@ -37,7 +36,6 @@ public class TimePicker {
 				minute = 0;
 			}
 		}
-
 		return timeList;
 	}
 }

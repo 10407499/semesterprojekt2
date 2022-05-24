@@ -66,7 +66,7 @@ public class CompleteOrderDialog extends JDialog {
 		btnNej.setBounds(230, 144, 89, 23);
 		contentPanel.add(btnNej);
 	}
-
+	
 	private void closeDialog(OrderUI orderUi) {
 		dispose();
 		SWINGManager.goToMainUI(orderUi);

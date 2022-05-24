@@ -11,8 +11,6 @@ import model.Customer;
 
 /**
  * Flectning data from db and use it to build new Customer & returns it/them
- * 
- * @author lassehas
  */
 
 public class CustomerDB implements CustomerDBIF {
@@ -45,7 +43,6 @@ public class CustomerDB implements CustomerDBIF {
 
 	/**
 	 * Search by name in db and returns list of all customers with the name
-	 * 
 	 * @param name : String
 	 * @return Customer
 	 */
@@ -120,6 +117,12 @@ public class CustomerDB implements CustomerDBIF {
 		return c;
 	}
 	
+	/**
+	 * This method takes a parameter customer object, then it uses the object to change a preparedstatement values with the customer objects. It then calls execute in our DBConnection which inserts the new customer to db and returns the customerNo of the new customer
+	 * @param customer
+	 * @return res
+	 */
+	
 	@Override
 	public int insertNewCustomer(Customer customer) throws DataAccessException {
 		//This method throws the SQLException, so we can catch it at the UI to display an error if customer is already in the database
@@ -134,7 +137,6 @@ public class CustomerDB implements CustomerDBIF {
 			insertCustomerPS.setString(7, customer.getZipCode());
 			res = DBConnection.getInstance().executeInsertWithIdentity(insertCustomerPS);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new DataAccessException("Fejl i SQL i CustomerDB klassen", e);
 		}
 		return res;

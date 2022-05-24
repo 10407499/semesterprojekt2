@@ -10,11 +10,12 @@ import model.Employee;
 import model.ServiceLine;
 
 public class DeliveryDB implements DeliveryDBIF {
-	public final static String INSERT_DELIVERY_Q = "insert into Delivery values(?,?,?,?)";
-	private final static String INSERT_SERVICELINE_Q = "insert into ServiceLine values(?,?,?,?,?)";
+	
+	private static final String INSERT_DELIVERY_Q = "insert into Delivery values(?,?,?,?)";
+	private static final String INSERT_SERVICELINE_Q = "insert into ServiceLine values(?,?,?,?,?)";
 	private PreparedStatement insertServiceLinesPS;
-	public PreparedStatement insertDeliveryPS;
-	public Connection con;
+	private PreparedStatement insertDeliveryPS;
+	private Connection con;
 	
 	public DeliveryDB() {
 		try {
@@ -27,6 +28,12 @@ public class DeliveryDB implements DeliveryDBIF {
 		
 	}
 
+	/**
+	 * This method takes 2 parameters, which it uses to change a preparedstatement values, then it calls executeUpdate to insert the delivery to the db
+	 * @param delivery
+	 * @param orderNo
+	 */
+	
 	@Override
 	public void insertDelivery(Delivery delivery, int orderNo) {
 		try {
@@ -39,6 +46,12 @@ public class DeliveryDB implements DeliveryDBIF {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	/**
+	 * This method takes 2 parameters, it uses a classic for loop to go through the size of the list of serviceLines and inserting them by the index while adding an employee onto the serviceLine on the db
+	 * @param orderNo
+	 * @param serviceLines
+	 */
 	
 	@Override
 	public void insertServiceLines(List<ServiceLine> serviceLines, int orderNo) {
