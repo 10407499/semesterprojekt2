@@ -12,10 +12,6 @@ public class Menu extends Product {
 		dishes = new ArrayList<>();
 	}
 
-	public void setDishes(List<Dish> dishes) {
-		this.dishes = dishes;
-	}
-
 	public void addDish(Dish dish) {
 		dishes.add(dish);
 	}
